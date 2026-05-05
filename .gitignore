@@ -1,0 +1,23 @@
+venv/
+.venv/
+env/
+ENV/
+# Ignore venv inside AI-Model specifically
+AI-Model/venv/
+
+# (Optional) also ignore common virtual env names inside that folder
+AI-Model/.venv/
+AI-Model/env/
+AI-Model/ENV/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment variables
+.env
+node_modules/
+Backend/node_modules/
+package-lock.json
