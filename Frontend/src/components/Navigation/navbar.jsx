@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import "../Navigation/navbar.css";
+import LanguageSwitcher from "../Navigation/language-switcher"; // ← NEW IMPORT
 
 // ── Navigation Menu Items ──────────────────────────────────────────────────
 // add menu section: Add or remove nav links here. Set `dropdown` for sub-items.
@@ -194,6 +195,10 @@ export default function Navbar() {
             className="vt-navbar__avatar"
           />
         </div>
+
+        {/* ── RIGHT: Language Switcher ── */}
+        {/* NEW: replaces the static "LNG" button */}
+        <LanguageSwitcher />
       </nav>
 
       {/* ── MOBILE DRAWER ── */}
