@@ -1,46 +1,46 @@
-/* ── Google Fonts import ─────────────────────────────────────────────────── */
-/* Using Montserrat for headings, Lato for body — matches the premium feel */
+/* -------------- Google Fonts import -------------- */
+/* -------------- Using Montserrat for headings, Lato for body — matches the premium feel -------------- */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap");
 
-/* ── Design Tokens ───────────────────────────────────────────────────────── */
+/* -------------- Design Tokens -------------- */
 .vt-home {
-  /* Colors */
-  --vt-home-accent: #3b9eff; /* "Sri Lanka" blue highlight */
+  /* -------------- Colors -------------- */
+  --vt-home-accent: #3b9eff;
   --vt-home-white: #ffffff;
   --vt-home-subtext: rgba(255, 255, 255, 0.88);
   --vt-home-overlay-start: rgba(10, 15, 40, 0.55);
   --vt-home-overlay-end: rgba(5, 10, 30, 0.2);
 
-  /* CTA button */
+  /* -------------- CTA button -------------- */
   --vt-home-cta-bg: rgba(255, 255, 255, 0.18);
   --vt-home-cta-border: rgba(255, 255, 255, 0.55);
   --vt-home-cta-hover-bg: rgba(255, 255, 255, 0.3);
 
-  /* Dots */
+  /* -------------- Dots -------------- */
   --vt-home-dot-idle: rgba(255, 255, 255, 0.4);
   --vt-home-dot-active: #3b9eff;
   --vt-home-dot-size: 10px;
   --vt-home-dot-active-size: 28px; /* elongated pill when active */
 
-  /* Arrows */
+  /* -------------- Arrows -------------- */
   --vt-home-arrow-bg: rgba(255, 255, 255, 0.12);
   --vt-home-arrow-hover-bg: rgba(255, 255, 255, 0.25);
   --vt-home-arrow-size: 48px;
 
-  /* Slide transition */
+  /* -------------- Slide transition -------------- */
   --vt-home-transition: 0.7s cubic-bezier(0.77, 0, 0.18, 1);
 
-  /* Layout */
+  /* -------------- Layout -------------- */
   position: relative;
   width: 100%;
-  height: 92.5svh;
+  height: 95svh;
   min-height: 520px;
   overflow: hidden;
   font-family: "Lato", sans-serif;
   /*user-select: none;*/
 }
 
-/* ── Slideshow Track ─────────────────────────────────────────────────────── */
+/* -------------- Slideshow Track -------------- */
 /* Holds all slide layers stacked on top of each other */
 .vt-home__track {
   position: absolute;
@@ -48,7 +48,7 @@
   z-index: 0;
 }
 
-/* ── Individual Slide ────────────────────────────────────────────────────── */
+/* -------------- Individual Slide -------------- */
 .vt-home__slide {
   position: absolute;
   inset: 0;
@@ -58,16 +58,14 @@
   will-change: opacity, transform;
 }
 
-/* Active slide — fully visible */
+/* -------------- Active slide — fully visible -------------- */
 .vt-home__slide--active {
   opacity: 1;
   pointer-events: auto;
   z-index: 1;
 }
 
-/* ── Slide Background Image ──────────────────────────────────────────────── */
-/* add images: background-image is set via inline data attribute in JSX.
-   Size, position and Ken Burns zoom animation controlled here. */
+/* -------------- Slide Background Image -------------- */
 .vt-home__slide-bg {
   position: absolute;
   inset: 0;
@@ -77,9 +75,12 @@
   transform: scale(1);
   animation: vt-kenburns 8s ease-in-out forwards;
   will-change: transform;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
 }
 
-/* Ken Burns subtle zoom on each active slide */
+/* -------------- Ken Burns subtle zoom on each active slide -------------- */
 @keyframes vt-kenburns {
   0% {
     transform: scale(1);
@@ -89,8 +90,7 @@
   }
 }
 
-/* ── Dark Gradient Overlay ───────────────────────────────────────────────── */
-/* Ensures text readability over any background image */
+/* -------------- Dark Gradient Overlay -------------- */
 .vt-home__overlay {
   position: absolute;
   inset: 0;
@@ -103,8 +103,7 @@
   z-index: 1;
 }
 
-/* ── Slide Content (text + CTA) ──────────────────────────────────────────── */
-/* Sits above the slide track — centered with slight left-bias */
+/* -------------- Slide Content (text + CTA) ──────────────────────────────────────────── */
 .vt-home__content {
   position: absolute;
   inset: 0;
@@ -115,9 +114,7 @@
   justify-content: center;
   text-align: center;
   padding: 0 1.5rem;
-  padding-bottom: 5rem; /* lift above dots */
-
-  /* Content entrance animation */
+  padding-bottom: 5rem;
   animation: vt-content-in 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -132,7 +129,7 @@
   }
 }
 
-/* ── Heading ─────────────────────────────────────────────────────────────── */
+/* -------------- Heading -------------- */
 .vt-home__heading {
   font-family: "Montserrat", sans-serif;
   font-size: clamp(2rem, 5.5vw, 3.6rem);
@@ -148,14 +145,14 @@
   display: inline;
 }
 
-/* ── "Sri Lanka" blue highlight ──────────────────────────────────────────── */
+/* -------------- "Sri Lanka" blue highlight -------------- */
 .vt-home__heading-highlight {
   color: var(--vt-home-accent);
   display: inline-block;
   text-shadow: 0 0 40px rgba(59, 158, 255, 0.55);
 }
 
-/* ── Subtext ─────────────────────────────────────────────────────────────── */
+/* -------------- Subtext -------------- */
 .vt-home__subtext {
   font-family: "Lato", sans-serif;
   font-size: clamp(0.95rem, 2vw, 1.15rem);
@@ -168,8 +165,7 @@
   letter-spacing: 0.01em;
 }
 
-/* ── CTA Button ──────────────────────────────────────────────────────────── */
-/* Frosted glass pill button — matches the design's "Taxi Service" button */
+/* -------------- CTA Button -------------- */
 .vt-home__cta {
   display: inline-flex;
   align-items: center;
@@ -210,8 +206,7 @@
   line-height: 1;
 }
 
-/* ── Arrow Controls ──────────────────────────────────────────────────────── */
-/* Prev / Next buttons — vertically centered on sides */
+/* -------------- Arrow Controls -------------- */
 .vt-home__arrow {
   position: absolute;
   top: 50%;
@@ -250,8 +245,7 @@
   right: 1.25rem;
 }
 
-/* ── Dot / Bullet Indicators ─────────────────────────────────────────────── */
-/* Row of dots centered at bottom of hero — active dot turns into elongated pill */
+/* -------------- Dot / Bullet Indicators -------------- */
 .vt-home__dots {
   position: absolute;
   bottom: 1.75rem;
@@ -276,14 +270,13 @@
     width 0.35s ease;
 }
 
-/* Active dot: wider pill + accent color */
+/* -------------- Active dot: wider pill + accent color -------------- */
 .vt-home__dot--active {
   width: var(--vt-home-dot-active-size);
   background-color: var(--vt-home-dot-active);
 }
 
-/* ── Slide Counter ───────────────────────────────────────────────────────── */
-/* Optional "01 / 06" counter shown at bottom-right */
+/* -------------- Slide Counter -------------- */
 .vt-home__counter {
   position: absolute;
   bottom: 1.6rem;
@@ -309,9 +302,9 @@
   opacity: 0.5;
 }
 
-/* ── Responsive ──────────────────────────────────────────────────────────── */
+/* -------------- Responsive -------------- */
 
-/* Tablet */
+/* -------------- Tablet -------------- */
 @media (max-width: 768px) {
   .vt-home {
     min-height: 480px;
@@ -351,11 +344,11 @@
   }
 
   .vt-home__counter {
-    display: none; /* hide counter on tablet */
+    display: none;
   }
 }
 
-/* Mobile */
+/* -------------- Mobile -------------- */
 @media (max-width: 480px) {
   .vt-home {
     min-height: 420px;
@@ -413,7 +406,7 @@
   }
 }
 
-/* Reduced motion accessibility */
+/* -------------- Reduced motion accessibility -------------- */
 @media (prefers-reduced-motion: reduce) {
   .vt-home__slide-bg {
     animation: none;
@@ -428,35 +421,35 @@
   }
 }
 
-/* ==========================================================================
+/* -------------- 
    REAL-TIME ENVIRONMENT SYSTEM — vt-home section only
    All visual changes are class-driven. No inline styles used.
 
    Architecture:
-   • .vt-home--env-<period>      → sky colour, overlay tint, ambient light,
-                                   sun/moon visibility, star brightness
-   • .vt-home--weather-<variant> → cloud opacity, rain/mist/lightning layers
+   • .vt-home--env-<period>      -> sky colour, overlay tint, ambient light,
+    sun/moon visibility, star brightness
+   • .vt-home--weather-<variant> -> cloud opacity, rain/mist/lightning layers
    • CSS custom-property overrides cascade down to all child selectors
 
    Periods   : dawn | morning | noon | evening | night
    Weather   : clear | sunny | partly-cloudy | cloudy | rainy | stormy |
-               misty | starry | golden
-   ========================================================================== */
+    misty | starry | golden
+   --------------  */
 
-/* ── Environment CSS Variables (defaults = morning) ──────────────────────── */
+/* -------------- Environment CSS Variables (defaults = morning) -------------- */
 /* Each period class below overrides only what differs from these defaults.  */
 .vt-home {
-  /* Sky gradient colours — top to horizon */
-  --env-sky-top: rgba(90, 160, 230, 0); /* transparent by default */
+  /* -------------- Sky gradient colours — top to horizon -------------- */
+  --env-sky-top: rgba(90, 160, 230, 0);
   --env-sky-mid: rgba(90, 160, 230, 0);
   --env-sky-horizon: rgba(90, 160, 230, 0);
 
-  /* Overlay tint — stacks on top of the slide image */
-  --env-overlay-start: rgba(10, 15, 40, 0.55); /* mirrors existing defaults */
+  /* -------------- Overlay tint — stacks on top of the slide image -------------- */
+  --env-overlay-start: rgba(10, 15, 40, 0.55);
   --env-overlay-end: rgba(5, 10, 30, 0.2);
   --env-overlay-mid: rgba(5, 10, 30, 0.35);
 
-  /* Sun */
+  /* -------------- Sun -------------- */
   --env-sun-opacity: 0;
   --env-sun-x: 50%;
   --env-sun-y: 40%;
@@ -464,141 +457,124 @@
   --env-sun-color: #ffe066;
   --env-sun-glow: rgba(255, 200, 50, 0.45);
 
-  /* Moon */
+  /* -------------- Moon -------------- */
   --env-moon-opacity: 0;
   --env-moon-x: 70%;
   --env-moon-y: 18%;
 
-  /* Stars */
+  /* -------------- Stars -------------- */
   --env-stars-opacity: 0;
 
-  /* Clouds */
+  /* -------------- Clouds -------------- */
   --env-cloud-opacity: 0;
 
-  /* Rain */
+  /* -------------- Rain -------------- */
   --env-rain-opacity: 0;
 
-  /* Mist */
+  /* -------------- Mist -------------- */
   --env-mist-opacity: 0;
 
-  /* Lens flare */
+  /* -------------- Lens flare -------------- */
   --env-flare-opacity: 0;
 
-  /* Dawn horizon glow */
+  /* -------------- Dawn horizon glow -------------- */
   --env-dawn-opacity: 0;
 
-  /* Lightning */
+  /* -------------- Lightning -------------- */
   --env-lightning-opacity: 0;
   --env-lightning-duration: 8s;
 
-  /* Transition speed for all environment property changes — 5s as per design brief */
+  /* -------------- Transition speed for all environment property changes — 5s as per design brief -------------- */
   --env-transition: 5s ease-in-out;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   PERIOD CLASSES — override CSS variables per time-of-day
-   ──────────────────────────────────────────────────────────────────────────── */
+/*  -------------- PERIOD CLASSES — override CSS variables per time-of-day --------------  */
 
-/* ── DAWN (04:00 – 05:59) ─────────────────────────────────────────────────── */
-/* Soft pink-lavender pre-sunrise glow; moon fading; first stars disappearing  */
+/* -------------- DAWN (04:00 – 05:59)  -------------- */
+/* -------------- Soft pink-lavender pre-sunrise glow; moon fading; first stars disappearing -------------- */
 .vt-home--env-dawn {
   --env-overlay-start: rgba(80, 30, 80, 0.52);
   --env-overlay-end: rgba(20, 10, 40, 0.18);
   --env-overlay-mid: rgba(50, 20, 60, 0.3);
-
-  /* Sun barely creeping above horizon */
+  /* -------------- Sun barely creeping above horizon -------------- */
   --env-sun-opacity: 0.45;
   --env-sun-x: 50%;
   --env-sun-y: 82%;
   --env-sun-size: 60px;
   --env-sun-color: #ffb347;
   --env-sun-glow: rgba(255, 140, 50, 0.5);
-
-  /* Moon still visible — fading */
+  /* -------------- Moon still visible — fading -------------- */
   --env-moon-opacity: 0.4;
   --env-moon-x: 25%;
   --env-moon-y: 20%;
-
-  /* Faint stars still present */
-  --env-stars-opacity: 0.35;
-
-  /* Thin wispy clouds */
-  --env-cloud-opacity: 0.25;
-
-  /* Horizon dawn glow prominent */
-  --env-dawn-opacity: 0.85;
-
-  /* Gentle flare at horizon */
-  --env-flare-opacity: 0.3;
+  /* -------------- Faint stars still present -------------- */
+  --env-stars-opacity: 1;
+  /* -------------- Thin wispy clouds -------------- */
+  --env-cloud-opacity: 1;
+  /* -------------- Horizon dawn glow prominent -------------- */
+  --env-dawn-opacity: 0.95;
+  /* -------------- Gentle flare at horizon -------------- */
+  --env-flare-opacity: 0.9;
 }
 
-/* ── MORNING (06:00 – 11:59) ──────────────────────────────────────────────── */
-/* Warm golden hour → bright daylight; sun rising from horizon toward zenith   */
+/*  -------------- MORNING (06:00 – 11:59) -------------- */
+/* -------------- Warm golden hour -> bright daylight; sun rising from horizon toward zenith -------------- */
 .vt-home--env-morning {
   --env-overlay-start: rgba(10, 25, 60, 0.45);
   --env-overlay-end: rgba(5, 15, 30, 0.18);
   --env-overlay-mid: rgba(8, 20, 45, 0.28);
-
-  /* Sun mid-rise — warm golden */
+  /* -------------- Sun mid-rise — warm golden -------------- */
   --env-sun-opacity: 0.9;
   --env-sun-x: 25%;
   --env-sun-y: 30%;
   --env-sun-size: 90px;
   --env-sun-color: #ffe566;
   --env-sun-glow: rgba(255, 220, 80, 0.55);
-
-  /* Moon gone */
+  /* -------------- Moon gone -------------- */
   --env-moon-opacity: 0;
-
-  /* Stars gone */
+  /* -------------- Stars gone -------------- */
   --env-stars-opacity: 0;
-
-  /* Light morning clouds */
-  --env-cloud-opacity: 0.3;
-
-  /* Dawn glow fading */
-  --env-dawn-opacity: 0.15;
-
-  /* Lens flare — golden hour effect */
-  --env-flare-opacity: 0.55;
+  /* -------------- Distinct visible morning clouds — increased opacity -------------- */
+  --env-cloud-opacity: 10;
+  /* -------------- Dawn glow fading -------------- */
+  --env-dawn-opacity: 10;
+  /* -------------- Lens flare — golden hour effect -------------- */
+  --env-flare-opacity: 10;
 }
 
-/* ── NOON (12:00 – 16:59) ─────────────────────────────────────────────────── */
-/* High-sun blue sky; harsh bright overhead light; minimal warmth              */
+/*  --------------  NOON (12:00 – 16:59)  -------------- */
+/* -------------- High-sun blue sky; harsh bright overhead light; minimal warmth -------------- */
 .vt-home--env-noon {
   --env-overlay-start: rgba(5, 18, 50, 0.38);
   --env-overlay-end: rgba(2, 10, 25, 0.12);
   --env-overlay-mid: rgba(4, 14, 40, 0.22);
-
-  /* Sun high overhead */
+  /* -------------- Sun high overhead -------------- */
   --env-sun-opacity: 0.95;
   --env-sun-x: 50%;
   --env-sun-y: 12%;
   --env-sun-size: 100px;
   --env-sun-color: #fff7a0;
   --env-sun-glow: rgba(255, 245, 140, 0.45);
-
   --env-moon-opacity: 0;
   --env-stars-opacity: 0;
-
-  /* Occasional fair-weather clouds */
+  /* -------------- Occasional fair-weather clouds -------------- */
   --env-cloud-opacity: 0.2;
-
-  /* No dawn glow */
+  /* -------------- No dawn glow -------------- */
   --env-dawn-opacity: 0;
-
-  /* Minimal flare — direct overhead sun */
+  /* -------------- Minimal flare — direct overhead sun -------------- */
   --env-flare-opacity: 0.2;
 }
 
-/* ── EVENING (17:00 – 19:59) ─────────────────────────────────────────────── */
-/* Orange/amber sunset palette; sun descending toward horizon                  */
+/*  -------------- EVENING (17:00 – 19:59)  -------------- */
+/* -------------- Orange/amber sunset palette; sun descending toward horizon.
+   Overlay reduced to 15-20% transparency — underlying scene (Buddha statue)
+   is far more visible and distinct beneath the thin warm wash.               */
 .vt-home--env-evening {
-  --env-overlay-start: rgba(80, 30, 10, 0.5);
-  --env-overlay-end: rgba(20, 10, 5, 0.2);
-  --env-overlay-mid: rgba(60, 20, 10, 0.32);
+  --env-overlay-start: rgba(80, 30, 10, 0.18);
+  --env-overlay-end: rgba(20, 10, 5, 0.1);
+  --env-overlay-mid: rgba(60, 20, 10, 0.15);
 
-  /* Sun low on horizon — deep amber */
+  /* -------------- Sun low on horizon — deep amber -------------- */
   --env-sun-opacity: 0.85;
   --env-sun-x: 75%;
   --env-sun-y: 75%;
@@ -606,102 +582,96 @@
   --env-sun-color: #ff7e2f;
   --env-sun-glow: rgba(255, 100, 30, 0.6);
 
-  /* Moon just appearing */
+  /* -------------- Moon just appearing -------------- */
   --env-moon-opacity: 0.15;
   --env-moon-x: 60%;
   --env-moon-y: 22%;
-
   --env-stars-opacity: 0;
-
-  /* Richer evening clouds */
+  /* -------------- Richer evening clouds -------------- */
   --env-cloud-opacity: 0.45;
-
-  /* Prominent sunset glow */
+  /* -------------- Prominent sunset glow -------------- */
   --env-dawn-opacity: 0.7;
-
-  /* Strong warm lens flare */
+  /* -------------- Strong warm lens flare -------------- */
   --env-flare-opacity: 0.75;
 }
 
-/* ── NIGHT (20:00 – 03:59) ─────────────────────────────────────────────────── */
-/* Deep navy/indigo sky; full moon; stars; no sun                               */
+/* -------------- NIGHT (20:00 – 03:59) -------------- */
+/* -------------- Deep navy/indigo sky; full moon; stars; no sun -------------- */
 .vt-home--env-night {
   --env-overlay-start: rgba(5, 8, 30, 0.72);
   --env-overlay-end: rgba(2, 4, 18, 0.4);
   --env-overlay-mid: rgba(4, 6, 24, 0.55);
-
-  /* Sun gone */
+  /* -------------- Sun gone -------------- */
   --env-sun-opacity: 0;
-
-  /* Moon prominent */
+  /* -------------- Moon prominent -------------- */
   --env-moon-opacity: 0.92;
   --env-moon-x: 72%;
   --env-moon-y: 15%;
-
-  /* Stars fully visible */
+  /* -------------- Stars fully visible -------------- */
   --env-stars-opacity: 0.85;
-
-  /* Thin night clouds */
+  /* -------------- Thin night clouds -------------- */
   --env-cloud-opacity: 0.18;
-
-  /* No dawn/sunset */
+  /* -------------- No dawn/sunset -------------- */
   --env-dawn-opacity: 0;
   --env-flare-opacity: 0;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   WEATHER MODIFIER CLASSES — stack on top of period variable overrides
-   ──────────────────────────────────────────────────────────────────────────── */
-
-/* ── Clear / Sunny ────────────────────────────────────────────────────────── */
+/* -------------- WEATHER MODIFIER CLASSES — stack on top of period variable overrides -------------- */
+/*  -------------- Clear / Sunny -------------- */
 .vt-home--weather-clear {
-  --env-cloud-opacity: 0;
+  --env-cloud-opacity: 10;
   --env-rain-opacity: 0;
   --env-mist-opacity: 0;
 }
 .vt-home--weather-sunny {
-  --env-cloud-opacity: 0.08;
+  --env-cloud-opacity: 0.8;
   --env-rain-opacity: 0;
   --env-mist-opacity: 0;
   --env-flare-opacity: 0.85;
 }
 
-/* ── Partly cloudy ────────────────────────────────────────────────────────── */
+/* -------------- Partly cloudy -------------- */
 .vt-home--weather-partly-cloudy {
-  --env-cloud-opacity: 0.55;
+  --env-cloud-opacity: 0.95;
   --env-rain-opacity: 0;
 }
 
-/* ── Cloudy ───────────────────────────────────────────────────────────────── */
+/* -------------- Cloudy -------------- */
 .vt-home--weather-cloudy {
   --env-cloud-opacity: 0.85;
   --env-sun-opacity: 0.15;
   --env-flare-opacity: 0;
 }
 
-/* ── Rainy ────────────────────────────────────────────────────────────────── */
+/* -------------- Rainy -------------- */
+/* -------------- Overlay reduced to ~30% — elephant herd details are clearly visible. Storm clouds and rain layers provide the atmospheric rainy feel without
+   burying the scene in excessive darkness. --------------  */
 .vt-home--weather-rainy {
   --env-cloud-opacity: 0.9;
-  --env-rain-opacity: 0.65;
-  --env-mist-opacity: 0.25;
-  --env-sun-opacity: 0.05;
+  --env-rain-opacity: 0.95;
+  --env-mist-opacity: 0.65;
+  --env-sun-opacity: 0.5;
   --env-flare-opacity: 0;
-  --env-overlay-start: rgba(10, 15, 40, 0.65);
+  --env-overlay-start: rgba(10, 15, 37, 0.26);
+  --env-overlay-mid: rgba(10, 15, 37, 0.21);
+  --env-overlay-end: rgba(10, 15, 37, 0.19);
 }
 
-/* ── Stormy ───────────────────────────────────────────────────────────────── */
+/* -------------- Stormy -------------- /
+/* -------------- Overlay at ~30% — stormy atmosphere visible but scene details preserved. -------------- */
 .vt-home--weather-stormy {
   --env-cloud-opacity: 0.95;
-  --env-rain-opacity: 0.85;
-  --env-mist-opacity: 0.35;
-  --env-sun-opacity: 0;
+  --env-rain-opacity: 0.95;
+  --env-mist-opacity: 0.65;
+  --env-sun-opacity: 0.5;
   --env-flare-opacity: 0;
   --env-lightning-opacity: 1;
-  --env-overlay-start: rgba(5, 8, 25, 0.78);
-  --env-overlay-end: rgba(2, 4, 14, 0.45);
+  --env-overlay-start: rgba(10, 15, 37, 0.26);
+  --env-overlay-mid: rgba(10, 15, 37, 0.21);
+  --env-overlay-end: rgba(10, 15, 37, 0.19);
 }
 
-/* ── Misty ────────────────────────────────────────────────────────────────── */
+/* -------------- Misty -------------- */
 .vt-home--weather-misty {
   --env-cloud-opacity: 0.4;
   --env-mist-opacity: 0.65;
@@ -709,40 +679,38 @@
   --env-flare-opacity: 0.15;
 }
 
-/* ── Starry (night variant) ────────────────────────────────────────────────── */
+/* -------------- Starry (night variant) -------------- */
 .vt-home--weather-starry {
   --env-cloud-opacity: 0;
   --env-stars-opacity: 1;
   --env-moon-opacity: 1;
 }
 
-/* ── Golden (evening variant) ─────────────────────────────────────────────── */
+/* -------------- Golden (evening variant) -------------- */
 .vt-home--weather-golden {
   --env-flare-opacity: 0.95;
   --env-dawn-opacity: 0.9;
   --env-cloud-opacity: 0.35;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   ENVIRONMENT LAYER CONTAINER
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- ENVIRONMENT LAYER CONTAINER --------------  */
 
-/* Master wrapper — sits above slide track, below content */
+/* -------------- Master wrapper — sits above slide track, below content -------------- */
 .vt-home__env {
   position: absolute;
   inset: 0;
-  z-index: 2; /* above slide track (z:0), below landmarks (z:3) and content (z:10) */
-  pointer-events: none; /* never intercepts clicks */
+  z-index: 2;
+  pointer-events: none;
   overflow: hidden;
 }
 
-/* ── Z-Index Layer Order (full hero stack from bottom to top) ────────────────
+/*  -------------- Z-Index Layer Order (full hero stack from bottom to top)  -------------- 
    z:0  — .vt-home__track         (slide background images)
    z:2  — .vt-home__env           (sky, sun, moon, clouds, rain — env system)
             Within .vt-home__env:
-              sky-enhanced → sky → env-landmarks → stormclouds → sunrays
-              → back-cloud-layer → sun/moon/moonrays/stars/flare/dawn → lightning
-              → front-cloud-layer (rendered last = on top within env)
+              sky-enhanced -> sky -> env-landmarks -> stormclouds -> sunrays
+              -> back-cloud-layer -> sun/moon/moonrays/stars/flare/dawn -> lightning
+              -> front-cloud-layer (rendered last = on top within env)
    z:3  — .vt-home__landmarks     (CSS-art/PNG landmark silhouettes)
    z:3  — .vt-home__landmarks-spotlight (active location landmark PNG)
    z:4  — .vt-home__slide6-mosaic (Slide 6 special 6-image grid — above landmarks)
@@ -754,16 +722,13 @@
    z:20 — .vt-home__counter       (slide counter)
    z:25 — .vt-home__env-controls  (location selector + time slider)
    z:25 — .vt-home__env-badge     (period/weather badge top-left)
-   ──────────────────────────────────────────────────────────────────────────── */
+   -------------- */
 
-/* ────────────────────────────────────────────────────────────────────────────
-   SKY GRADIENT LAYER
-   add images: pure CSS gradient — no image needed
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- SKY GRADIENT LAYER add images: pure CSS gradient — no image needed -------------- */
 .vt-home__env-sky {
   position: absolute;
   inset: 0;
-  /* Sky gradient is composed via CSS variables set per period */
+  /* -------------- Sky gradient is composed via CSS variables set per period -------------- */
   background: linear-gradient(
     to bottom,
     var(--env-sky-top, transparent) 0%,
@@ -771,13 +736,12 @@
     var(--env-sky-horizon, transparent) 100%
   );
   opacity: 0.6;
-  /* 5s ease-in-out ensures sky colours never jump between periods */
   transition:
     opacity 5s ease-in-out,
     background 5s ease-in-out;
 }
 
-/* ── Six Sri Lankan Landmark Silhouette Images ───────────────────────────────
+/* -------------- Six Sri Lankan Landmark Silhouette Images  -------------- 
    Placed ABOVE the sky gradient and BELOW the cloud layer so they appear
    nestled between the sky and clouds — giving realistic atmospheric depth.
 
@@ -787,31 +751,30 @@
    per-landmark modifier rule below.
 
    Layer order in .vt-home__env (z-index 2):
-     sky → [THESE LANDMARKS] → stormclouds → clouds → sun/moon → stars
+     sky -> [THESE LANDMARKS] -> stormclouds -> clouds -> sun/moon -> stars
 
    Period brightness — landmarks dim at night, glow subtly at dawn/morning:
-     All transitions use filter: brightness() driven by the env period class.
-   ─────────────────────────────────────────────────────────────────────────── */
+     All transitions use filter: brightness() driven by the env period class. -------------- */
 
-/* Base landmark image rule — shared by all 6 env landmarks */
+/* -------------- Base landmark image rule — shared by all 6 env landmarks -------------- */
 .vt-home__env-landmark {
   position: absolute;
-  bottom: 0; /* anchor to horizon line */
-  background-size: contain; /* preserve image proportions */
+  bottom: 0;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom center;
-  pointer-events: none; /* never intercept mouse events */
-  /* Smooth brightness transition between day/night periods */
+  pointer-events: none;
+  /* -------------- Smooth brightness transition between day/night periods -------------- */
   transition:
     filter 5s ease-in-out,
     opacity 5s ease-in-out;
   opacity: 0.92;
-  /* env-landmarks sit above sky (z:1-2) but BELOW cloud layers (z:10-20) */
-  /* Individual landmarks have their own z-index set per modifier class below */
+  /* -------------- env-landmarks sit above sky (z:1-2) but BELOW cloud layers (z:10-20) -------------- */
+  /* -------------- Individual landmarks have their own z-index set per modifier class below -------------- */
   z-index: 4;
 }
 
-/* Period-responsive brightness: brighter at dawn/noon, darker at night */
+/* -------------- Period-responsive brightness: brighter at dawn/noon, darker at night -------------- */
 .vt-home--env-dawn .vt-home__env-landmark {
   filter: brightness(0.72) sepia(0.18);
 }
@@ -829,10 +792,8 @@
   opacity: 0.85;
 }
 
-/* ── Image change: Sigiriya Rock Fortress ────────────────────────────────────
-   Dominant rightmost column — the iconic flat-topped rock rising high.
-   Image: /assets/landmarks/sigiriya-silhouette.png  (transparent PNG)
-   Z-index: 8 within .vt-home__env (below cloud layers at z:10/15) */
+/* -------------- Image change: Sigiriya Rock Fortress Dominant rightmost column — the iconic flat-topped rock rising high.
+   Image: /assets/landmarks/sigiriya-silhouette.png  (transparent PNG) Z-index: 8 within .vt-home__env (below cloud layers at z:10/15) -------------- */
 .vt-home__env-landmark--sigiriya {
   right: 4%;
   width: 18%;
@@ -840,9 +801,8 @@
   z-index: 8; /* front-most landmark, just below cloud layers */
 }
 
-/* ── Image change: Aukana Buddha Statue ──────────────────────────────────────
-   Tall narrow standing figure, far left. Good at ~15–20% width.
-   Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) */
+/* -------------- Image change: Aukana Buddha Statue Tall narrow standing figure, far left. Good at ~15–20% width.
+Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) -------------- */
 .vt-home__env-landmark--aukana {
   left: 2%;
   width: 12%;
@@ -850,9 +810,8 @@
   z-index: 4;
 }
 
-/* ── Image change: Polonnaruwa Ancient City ──────────────────────────────────
-   Low-spread pillar ruins, centre-right. Horizontally wide image.
-   Image: /assets/landmarks/polonnaruwa-silhouette.png  (transparent PNG) */
+/* -------------- Image change: Polonnaruwa Ancient City Low-spread pillar ruins, centre-right. Horizontally wide image.
+   Image: /assets/landmarks/polonnaruwa-silhouette.png  (transparent PNG) -------------- */
 .vt-home__env-landmark--polonnaruwa {
   right: 22%;
   width: 22%;
@@ -860,9 +819,8 @@
   z-index: 3;
 }
 
-/* ── Image change: Sri Pada (Adam's Peak) ────────────────────────────────────
-   Triangular mountain peak centred, tip pierces cloud base.
-   Image: /assets/landmarks/sripada-silhouette.png  (transparent PNG) */
+/* -------------- Image change: Sri Pada (Adam's Peak) Triangular mountain peak centred, tip pierces cloud base.
+   Image: /assets/landmarks/sripada-silhouette.png  (transparent PNG) -------------- */
 .vt-home__env-landmark--sripada {
   left: 50%;
   transform: translateX(-50%);
@@ -871,9 +829,8 @@
   z-index: 2;
 }
 
-/* ── Image change: Ruwanweli Maha Seya Stupa ─────────────────────────────────
-   Dome-shaped dagoba, centre-left. Symmetrical circular silhouette.
-   Image: /assets/landmarks/ruwanweli-silhouette.png  (transparent PNG) */
+/* -------------- Image change: Ruwanweli Maha Seya Stupa Dome-shaped dagoba, centre-left. Symmetrical circular silhouette.
+   Image: /assets/landmarks/ruwanweli-silhouette.png  (transparent PNG) -------------- */
 .vt-home__env-landmark--ruwanweli {
   left: 18%;
   width: 16%;
@@ -881,9 +838,8 @@
   z-index: 3;
 }
 
-/* ── Image change: Sri Maha Bodhi Sacred Tree ────────────────────────────────
-   Wide sprawling canopy, mid-left. Should be broader than it is tall.
-   Image: /assets/landmarks/srimaha-silhouette.png  (transparent PNG) */
+/* -------------- Image change: Sri Maha Bodhi Sacred Tree Wide sprawling canopy, mid-left. Should be broader than it is tall.
+   Image: /assets/landmarks/srimaha-silhouette.png  (transparent PNG) -------------- */
 .vt-home__env-landmark--srimaha {
   left: 34%;
   width: 18%;
@@ -891,10 +847,8 @@
   z-index: 2;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   OVERLAY — tint shifts per period via CSS variables
-   ──────────────────────────────────────────────────────────────────────────── */
-/* Override existing overlay colours with environment-aware variables */
+/* -------------- OVERLAY — tint shifts per period via CSS variables -------------- */
+/* -------------- Override existing overlay colours with environment-aware variables -------------- */
 .vt-home__overlay {
   background: linear-gradient(
     160deg,
@@ -906,21 +860,18 @@
   transition: background 5s ease-in-out;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   SUN ORB
-   add images: CSS radial-gradient disc — no image; position driven by variables
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- SUN ORB add images: CSS radial-gradient disc — no image; position driven by variables -------------- */
 .vt-home__env-sun {
   position: absolute;
-  /* Position controlled by CSS custom properties set per period */
+  /* -------------- Position controlled by CSS custom properties set per period -------------- */
   left: var(--env-sun-x, 50%);
   top: var(--env-sun-y, 40%);
   width: var(--env-sun-size, 80px);
   height: var(--env-sun-size, 80px);
   transform: translate(-50%, -50%);
   border-radius: 50%;
-
-  /* Sun disc — radial gradient using variable colour */
+  z-index: 3;
+  /* -------------- Sun disc — radial gradient using variable colour -------------- */
   background: radial-gradient(
     circle,
     #fffbe0 0%,
@@ -932,7 +883,7 @@
   opacity: var(--env-sun-opacity, 0);
   box-shadow: 0 0 60px 30px var(--env-sun-glow, rgba(255, 200, 50, 0.2));
 
-  /* Slow pulse simulates heat shimmer */
+  /* -------------- Slow pulse simulates heat shimmer -------------- */
   animation: vt-env-sun-pulse 4s ease-in-out infinite;
   transition:
     opacity var(--env-transition),
@@ -942,7 +893,7 @@
     height var(--env-transition);
 }
 
-/* Sun gentle breathing pulse */
+/* -------------- Sun gentle breathing pulse -------------- */
 @keyframes vt-env-sun-pulse {
   0%,
   100% {
@@ -953,10 +904,7 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   MOON ORB
-   add images: CSS radial-gradient disc for moon — no image
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- MOON ORB add images: CSS radial-gradient disc for moon — no image -------------- */
 .vt-home__env-moon {
   position: absolute;
   left: var(--env-moon-x, 70%);
@@ -966,7 +914,7 @@
   transform: translate(-50%, -50%);
   border-radius: 50%;
 
-  /* Moon disc — cool silver glow */
+  /* -------------- Moon disc — cool silver glow -------------- */
   background: radial-gradient(
     circle,
     #fffdf5 0%,
@@ -982,20 +930,19 @@
     opacity var(--env-transition),
     left var(--env-transition),
     top var(--env-transition);
+  z-index: 3;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   STAR FIELD
-   add images: CSS dot particles — no image
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- STAR FIELD add images: CSS dot particles — no image -------------- */
 .vt-home__env-stars {
   position: absolute;
   inset: 0;
   opacity: var(--env-stars-opacity, 0);
   transition: opacity var(--env-transition);
+  z-index: 2;
 }
 
-/* Individual star dot — positioned using nth-child CSS spread trick */
+/* -------------- Individual star dot — positioned using nth-child CSS spread trick -------------- */
 .vt-home__env-star {
   position: absolute;
   border-radius: 50%;
@@ -1003,7 +950,7 @@
   animation: vt-env-twinkle var(--star-dur, 2.5s) ease-in-out infinite;
 }
 
-/* Three size variants for depth */
+/* -------------- Three size variants for depth -------------- */
 .vt-home__env-star--1 {
   width: 1px;
   height: 1px;
@@ -1020,8 +967,8 @@
   --star-dur: 1.8s;
 }
 
-/* Distribute stars across the sky area using nth-child position calculations */
-/* Stars occupy the top 65% of the hero vertically */
+/* -------------- Distribute stars across the sky area using nth-child position calculations -------------- */
+/* -------------- Stars occupy the top 65% of the hero vertically -------------- */
 .vt-home__env-star:nth-child(1) {
   left: 2%;
   top: 5%;
@@ -1263,7 +1210,7 @@
   top: 58%;
 }
 
-/* Twinkle keyframes */
+/* -------------- Twinkle keyframes -------------- */
 @keyframes vt-env-twinkle {
   0%,
   100% {
@@ -1276,25 +1223,22 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   CLOUD SYSTEM — 2 Layers (Walakulu / වලාකුළු)
-   Two distinct cloud layers provide atmospheric depth and parallax illusion.
+/* -------------- CLOUD SYSTEM — 2 Layers Two distinct cloud layers provide atmospheric depth and parallax illusion.
 
-   LAYER ARCHITECTURE:
-     vt-home__env-clouds--back  (Layer 2 — background, slower, higher altitude)
-     vt-home__env-clouds--front (Layer 1 — foreground, faster, lower altitude)
+   LAYER ARCHITECTURE: vt-home__env-clouds--back  (Layer 2 — background, slower, higher altitude)
+                      vt-home__env-clouds--front (Layer 1 — foreground, faster, lower altitude)
 
    OPACITY SPECIFICATION:
-     Back  layer: clouds 1,3,4,7 → 50% opacity  |  clouds 2,5,6 → 100% opacity
-     Front layer: clouds 1,3,4,7 → 100% opacity |  clouds 2,5,6 → 50%  opacity
+     Back  layer: clouds 1,3,4,7 -> 50% opacity  |  clouds 2,5,6 -> 100% opacity
+     Front layer: clouds 1,3,4,7 -> 100% opacity |  clouds 2,5,6 -> 50%  opacity
      Both layers are additionally controlled by --env-cloud-opacity so the
      entire cloud system reacts to period (dawn/morning/noon/evening/night)
      and weather (clear/cloudy/rainy/stormy) identically.
 
    Z-INDEX ORDER (within .vt-home__env, z:2):
-     sky-enhanced → sky → [env-landmarks] → stormclouds →
-     sunrays → [BACK CLOUD LAYER] → sun/moon → [FRONT CLOUD LAYER] →
-     rain → mist → fog → rainsplash → stars → flare → dawn-glow → lightning
+     sky-enhanced -> sky -> [env-landmarks] -> stormclouds ->
+     sunrays -> [BACK CLOUD LAYER] -> sun/moon -> [FRONT CLOUD LAYER] ->
+     rain -> mist -> fog -> rainsplash -> stars -> flare -> dawn-glow -> lightning
 
    ENVIRONMENT RESPONSIVENESS:
      Cloud tint shifts per period via filter: hue-rotate + brightness. This
@@ -1309,66 +1253,82 @@
         Add data-bg="/assets/clouds/walakulu-back-N.png"  to each back cloud div
      3. Override the CSS background on those individual cloud rules to `none`
         (or remove the radial-gradient background property)
-     4. The useEffect data-bg handler will auto-apply backgroundImage — done!
-   ──────────────────────────────────────────────────────────────────────────── */
+     4. The useEffect data-bg handler will auto-apply backgroundImage — done! -------------- */
 
-/* ── Shared cloud layer wrapper ─────────────────────────────────────────────
-   Both front and back layers inherit --env-cloud-opacity so they dim/brighten
-   in unison when the period or weather class changes.                          */
+/* -------------- Shared cloud layer wrapper Both front and back layers inherit --env-cloud-opacity so they dim/brighten
+   in unison when the period or weather class changes. -------------- */
 .vt-home__env-clouds {
   position: absolute;
   inset: 0;
-  /* Global opacity driven by weather/period CSS variables */
+  /* -------------- Global opacity driven by weather/period CSS variables -------------- */
   opacity: var(--env-cloud-opacity, 0);
   transition: opacity var(--env-transition);
   pointer-events: none;
 }
 
-/* ── Back Layer — Layer 2 (higher altitude, slower drift) ──────────────────
-   Rendered below the front layer. Slower animation duration = sense of
-   greater distance. Slightly smaller clouds = smaller apparent size at distance. */
+/* -------------- Back Layer — Layer 2 (higher altitude, slower drift) Rendered below the front layer. Slower animation duration = sense of
+   greater distance. Slightly smaller clouds = smaller apparent size at distance. -------------- */
 .vt-home__env-clouds--back {
-  /* Back clouds use a slightly slower base multiplier via CSS (handled per cloud) */
-  /* z-index 10 — above all env-landmarks (max z:8), below front clouds (z:15) */
+  /* -------------- Back clouds use a slightly slower base multiplier via CSS (handled per cloud) -------------- */
+  /* -------------- z-index 10 — above all env-landmarks (max z:8), below front clouds (z:15) -------------- */
   z-index: 10;
-  /* Subtle period-responsive tint — back clouds reflect sky colour more strongly */
+  /* -------------- Subtle period-responsive tint — back clouds reflect sky colour more strongly -------------- */
 }
 
-/* ── Front Layer — Layer 1 (lower altitude, faster drift) ──────────────────
-   Rendered above the back layer. Faster animation = closer to the viewer.
-   Slightly larger clouds = more prominent in the foreground.                   */
+/* -------------- Front Layer — Layer 1 (lower altitude, faster drift) Rendered above the back layer. Faster animation = closer to the viewer.
+   Slightly larger clouds = more prominent in the foreground. -------------- */
 .vt-home__env-clouds--front {
   /* z-index 15 — above back clouds (z:10), keeps front layer on top */
   z-index: 15;
 }
 
-/* ── Individual Cloud Base Style ────────────────────────────────────────────
-   Shared visual properties for all 14 clouds (7 front + 7 back).
-   Cloud shape: radial-gradient ellipse blurred into a soft puffy form.
-   add images: Override background with background-image when using real PNGs. */
+/* -------------- Individual Cloud Base Style Shared visual properties for all 14 clouds (7 front + 7 back).
+   Cloud shape: layered radial-gradient ellipses to form distinct cumulus puffs. add images: Override background with background-image when using real PNGs. -------------- */
 .vt-home__env-cloud {
   position: absolute;
-  border-radius: 50%;
-  /* Soft cloud shape via blurred radial gradient ellipse */
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 255, 255, 0.88) 0%,
-    rgba(235, 240, 250, 0.55) 45%,
-    transparent 100%
-  );
-  filter: blur(18px);
+  border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+  /* -------------- Distinct cumulus cloud shape — multiple radial blobs layered -------------- */
+  background:
+    /* -------------- Main central puff — brightest core -------------- */
+    radial-gradient(
+      ellipse 55% 60% at 50% 45%,
+      rgba(255, 255, 255, 0.96) 0%,
+      rgba(245, 248, 255, 0.82) 35%,
+      transparent 75%
+    ),
+    /* -------------- Left lobe — secondary puff -------------- */
+    radial-gradient(
+        ellipse 40% 55% at 28% 50%,
+        rgba(255, 255, 255, 0.88) 0%,
+        rgba(240, 244, 252, 0.65) 40%,
+        transparent 72%
+      ),
+    /* -------------- Right lobe — tertiary puff -------------- */
+    radial-gradient(
+        ellipse 38% 52% at 74% 52%,
+        rgba(255, 255, 255, 0.85) 0%,
+        rgba(240, 244, 252, 0.6) 40%,
+        transparent 70%
+      ),
+    /* -------------- Base shadow — subtle grey underside for depth -------------- */
+    radial-gradient(
+        ellipse 80% 30% at 50% 90%,
+        rgba(180, 195, 220, 0.38) 0%,
+        transparent 70%
+      );
+  filter: blur(6px);
   animation: vt-env-cloud-drift linear infinite;
-  /* add images: when using real cloud PNGs, add:
+  /* -------------- add images: when using real cloud PNGs, add:
      background-size: contain;
      background-repeat: no-repeat;
      background-position: center;
-     filter: none;  (remove blur when using image)  */
+     filter: none;  (remove blur when using image)  -------------- */
 }
 
-/* ── Cloud Opacity Modifiers ─────────────────────────────────────────────────
-   .vt-home__env-cloud--dim    → 50%  individual cloud alpha
-   .vt-home__env-cloud--bright → 100% individual cloud alpha
-   These stack with the parent layer's --env-cloud-opacity via CSS opacity.    */
+/* -------------- Cloud Opacity Modifiers 
+   .vt-home__env-cloud--dim    -> 50%  individual cloud alpha
+   .vt-home__env-cloud--bright -> 100% individual cloud alpha
+   These stack with the parent layer's --env-cloud-opacity via CSS opacity. -------------- */
 .vt-home__env-cloud--dim {
   /* 50% opacity for dim clouds (back:1,3,4,7 | front:2,5,6) */
   opacity: 0.5;
@@ -1378,40 +1338,34 @@
   opacity: 1;
 }
 
-/* ── Period-Responsive Cloud Tint ────────────────────────────────────────────
-   Cloud colour shifts with environment period using filter adjustments.
-   This ensures clouds look correct at dawn (pink), noon (white), night (blue). */
+/* -------------- Period-Responsive Cloud Tint Cloud colour shifts with environment period using filter adjustments.
+   This ensures clouds look correct at dawn (pink), noon (white), night (blue). -------------- */
 
-/* Dawn: soft pink-lavender tint on clouds */
+/* -------------- Dawn: soft pink-lavender tint on clouds -------------- */
 .vt-home--env-dawn .vt-home__env-cloud {
-  filter: blur(18px) sepia(0.2) hue-rotate(280deg) brightness(0.85);
+  filter: blur(8px) sepia(0.2) hue-rotate(280deg) brightness(0.85);
 }
-/* Morning: warm golden-white */
+/* -------------- Morning: warm golden-white — sharper blur for distinct cumulus definition -------------- */
 .vt-home--env-morning .vt-home__env-cloud {
-  filter: blur(18px) sepia(0.08) brightness(1);
+  filter: blur(5px) sepia(0.06) brightness(1.05);
 }
-/* Noon: pure bright white */
+/* -------------- Noon: pure bright white — crisp sharp cumulus clouds -------------- */
 .vt-home--env-noon .vt-home__env-cloud {
-  filter: blur(18px) brightness(1.1);
+  filter: blur(4px) brightness(1.12);
 }
-/* Evening: amber-orange sunset tint on clouds */
+/* -------------- Evening: amber-orange sunset tint on clouds -------------- */
 .vt-home--env-evening .vt-home__env-cloud {
-  filter: blur(18px) sepia(0.35) hue-rotate(-15deg) brightness(0.9);
+  filter: blur(7px) sepia(0.35) hue-rotate(-15deg) brightness(0.9);
 }
-/* Night: cool blue-grey tint on clouds */
+/* -------------- Night: cool blue-grey tint on clouds -------------- */
 .vt-home--env-night .vt-home__env-cloud {
-  filter: blur(18px) sepia(0.1) hue-rotate(200deg) brightness(0.55);
+  filter: blur(10px) sepia(0.1) hue-rotate(200deg) brightness(0.55);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   BACK LAYER CLOUD POSITIONS & TIMING
-   7 clouds — opacity: 1,3,4,7 = dim (50%) | 2,5,6 = bright (100%)
-   Back clouds drift slower (larger animation-duration values) and start
-   at higher vertical positions to simulate altitude.
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* -------------- BACK LAYER CLOUD POSITIONS & TIMING 7 clouds — opacity: 1,3,4,7 = dim (50%) | 2,5,6 = bright (100%)
+   Back clouds drift slower (larger animation-duration values) and start at higher vertical positions to simulate altitude. -------------- */
 
-/* Back Cloud 1 — dim (50%) — large, upper-left starting position */
-/* add images: data-bg="/assets/clouds/walakulu-back-1.png" */
+/* -------------- Back Cloud 1 — dim (50%) — large, upper-left starting position add images: data-bg="/assets/clouds/walakulu-back-1.png" -------------- */
 .vt-home__env-cloud--b1 {
   width: 460px;
   height: 110px;
@@ -1421,8 +1375,7 @@
   animation-delay: 0s;
 }
 
-/* Back Cloud 2 — bright (100%) — medium, upper-centre-left */
-/* add images: data-bg="/assets/clouds/walakulu-back-2.png" */
+/* -------------- Back Cloud 2 — bright (100%) — medium, upper-centre-left add images: data-bg="/assets/clouds/walakulu-back-2.png" -------------- */
 .vt-home__env-cloud--b2 {
   width: 320px;
   height: 85px;
@@ -1432,8 +1385,7 @@
   animation-delay: -40s;
 }
 
-/* Back Cloud 3 — dim (50%) — small, high upper-centre */
-/* add images: data-bg="/assets/clouds/walakulu-back-3.png" */
+/* -------------- Back Cloud 3 — dim (50%) — small, high upper-centre add images: data-bg="/assets/clouds/walakulu-back-3.png" -------------- */
 .vt-home__env-cloud--b3 {
   width: 240px;
   height: 65px;
@@ -1443,8 +1395,7 @@
   animation-delay: -25s;
 }
 
-/* Back Cloud 4 — dim (50%) — wide, mid-left */
-/* add images: data-bg="/assets/clouds/walakulu-back-4.png" */
+/* -------------- Back Cloud 4 — dim (50%) — wide, mid-left add images: data-bg="/assets/clouds/walakulu-back-4.png" -------------- */
 .vt-home__env-cloud--b4 {
   width: 400px;
   height: 95px;
@@ -1454,8 +1405,8 @@
   animation-delay: -65s;
 }
 
-/* Back Cloud 5 — bright (100%) — large, mid-centre-right */
-/* add images: data-bg="/assets/clouds/walakulu-back-5.png" */
+/* -------------- Back Cloud 5 — bright (100%) — large, mid-centre-right add images: data-bg="/assets/clouds/walakulu-back-5.png" -------------- */
+/* -------------- add images: data-bg="/assets/clouds/walakulu-back-5.png" -------------- */
 .vt-home__env-cloud--b5 {
   width: 380px;
   height: 100px;
@@ -1465,8 +1416,8 @@
   animation-delay: -80s;
 }
 
-/* Back Cloud 6 — bright (100%) — medium, upper-right */
-/* add images: data-bg="/assets/clouds/walakulu-back-6.png" */
+/* -------------- Back Cloud 6 — bright (100%) — medium, upper-right add images: data-bg="/assets/clouds/walakulu-back-6.png" -------------- */
+/* -------------- add images: data-bg="/assets/clouds/walakulu-back-6.png" -------------- */
 .vt-home__env-cloud--b6 {
   width: 290px;
   height: 75px;
@@ -1476,8 +1427,8 @@
   animation-delay: -15s;
 }
 
-/* Back Cloud 7 — dim (50%) — small, lower mid-right edge */
-/* add images: data-bg="/assets/clouds/walakulu-back-7.png" */
+/* -------------- Back Cloud 7 — dim (50%) — small, lower mid-right edge add images: data-bg="/assets/clouds/walakulu-back-7.png" -------------- */
+/* -------------- add images: data-bg="/assets/clouds/walakulu-back-7.png" -------------- */
 .vt-home__env-cloud--b7 {
   width: 350px;
   height: 80px;
@@ -1487,26 +1438,20 @@
   animation-delay: -50s;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   FRONT LAYER CLOUD POSITIONS & TIMING
-   7 clouds — opacity: 1,3,4,7 = bright (100%) | 2,5,6 = dim (50%)
-   Front clouds drift faster (smaller animation-duration values) and sit
-   at lower vertical positions to simulate closer proximity to viewer.
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* -------------- FRONT LAYER CLOUD POSITIONS & TIMING 7 clouds — opacity: 1,3,4,7 = bright (100%) | 2,5,6 = dim (50%)
+   Front clouds drift faster (smaller animation-duration values) and sit at lower vertical positions to simulate closer proximity to viewer. -------------- */
 
-/* Front Cloud 1 — bright (100%) — large, mid-left foreground */
-/* add images: data-bg="/assets/clouds/walakulu-front-1.png" */
+/* -------------- Front Cloud 1 — bright (100%) — large, mid-left foreground add images: data-bg="/assets/clouds/walakulu-front-1.png" -------------- */
 .vt-home__env-cloud--f1 {
   width: 500px;
   height: 130px;
-  top: 20%; /* lower than back clouds = closer visual depth */
+  top: 20%;
   left: -18%;
-  animation-duration: 80s; /* faster than back layer */
+  animation-duration: 80s;
   animation-delay: 0s;
 }
 
-/* Front Cloud 2 — dim (50%) — medium, centre */
-/* add images: data-bg="/assets/clouds/walakulu-front-2.png" */
+/* -------------- Front Cloud 2 — dim (50%) — medium, centre add images: data-bg="/assets/clouds/walakulu-front-2.png" -------------- */
 .vt-home__env-cloud--f2 {
   width: 300px;
   height: 85px;
@@ -1516,8 +1461,7 @@
   animation-delay: -30s;
 }
 
-/* Front Cloud 3 — bright (100%) — large, centre-right foreground */
-/* add images: data-bg="/assets/clouds/walakulu-front-3.png" */
+/* -------------- Front Cloud 3 — bright (100%) — large, centre-right foreground add images: data-bg="/assets/clouds/walakulu-front-3.png" -------------- */
 .vt-home__env-cloud--f3 {
   width: 460px;
   height: 120px;
@@ -1527,8 +1471,7 @@
   animation-delay: -55s;
 }
 
-/* Front Cloud 4 — bright (100%) — wide, right-of-centre */
-/* add images: data-bg="/assets/clouds/walakulu-front-4.png" */
+/* -------------- Front Cloud 4 — bright (100%) — wide, right-of-centre add images: data-bg="/assets/clouds/walakulu-front-4.png" -------------- */
 .vt-home__env-cloud--f4 {
   width: 420px;
   height: 115px;
@@ -1538,8 +1481,7 @@
   animation-delay: -20s;
 }
 
-/* Front Cloud 5 — dim (50%) — medium, right foreground */
-/* add images: data-bg="/assets/clouds/walakulu-front-5.png" */
+/* -------------- Front Cloud 5 — dim (50%) — medium, right foreground add images: data-bg="/assets/clouds/walakulu-front-5.png" -------------- */
 .vt-home__env-cloud--f5 {
   width: 340px;
   height: 90px;
@@ -1549,8 +1491,8 @@
   animation-delay: -70s;
 }
 
-/* Front Cloud 6 — dim (50%) — small, far right */
-/* add images: data-bg="/assets/clouds/walakulu-front-6.png" */
+/* -------------- Front Cloud 6 — dim (50%) — small, far right add images: data-bg="/assets/clouds/walakulu-front-6.png" -------------- */
+
 .vt-home__env-cloud--f6 {
   width: 260px;
   height: 70px;
@@ -1560,8 +1502,7 @@
   animation-delay: -45s;
 }
 
-/* Front Cloud 7 — bright (100%) — large, trailing left edge */
-/* add images: data-bg="/assets/clouds/walakulu-front-7.png" */
+/* -------------- Front Cloud 7 — bright (100%) — large, trailing left edge add images: data-bg="/assets/clouds/walakulu-front-7.png" -------------- */
 .vt-home__env-cloud--f7 {
   width: 480px;
   height: 125px;
@@ -1571,9 +1512,8 @@
   animation-delay: -10s;
 }
 
-/* ── Cloud drift keyframe (shared by all 14 clouds) ─────────────────────────
-   Clouds drift left-to-right across the full hero width and then loop.
-   Using translateX only keeps GPU compositor layer — no layout thrashing.     */
+/* -------------- Cloud drift keyframe (shared by all 14 clouds) Clouds drift left-to-right across the full hero width and then loop.
+   Using translateX only keeps GPU compositor layer — no layout thrashing. -------------- */
 @keyframes vt-env-cloud-drift {
   0% {
     transform: translateX(0);
@@ -1590,10 +1530,7 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   RAIN STREAKS
-   add images: CSS animated line elements — no image
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- RAIN STREAKS add images: CSS animated line elements — no image -------------- */
 .vt-home__env-rain {
   position: absolute;
   inset: 0;
@@ -1602,7 +1539,7 @@
   overflow: hidden;
 }
 
-/* Individual raindrop */
+/* -------------- Individual raindrop -------------- */
 .vt-home__env-raindrop {
   position: absolute;
   width: 1px;
@@ -1611,34 +1548,33 @@
   animation: vt-env-rain-fall linear infinite;
 }
 
-/* Five raindrop speed/size variants spread across the width */
-/* add images: Raindrop visual variant 1 — fast, thin */
+/* -------------- Five raindrop speed/size variants spread across the width  add images: Raindrop visual variant 1 — fast, thin -------------- */
 .vt-home__env-raindrop--1 {
   height: 22px;
   animation-duration: 0.7s;
 }
-/* add images: Raindrop visual variant 2 — medium speed */
+/* -------------- Raindrop visual variant 2 — medium speed -------------- */
 .vt-home__env-raindrop--2 {
   height: 30px;
   animation-duration: 0.9s;
 }
-/* add images: Raindrop visual variant 3 — slow, longer */
+/* -------------- Raindrop visual variant 3 — slow, longer -------------- */
 .vt-home__env-raindrop--3 {
   height: 18px;
   animation-duration: 0.65s;
 }
-/* add images: Raindrop visual variant 4 */
+/* -------------- Raindrop visual variant 4 -------------- */
 .vt-home__env-raindrop--4 {
   height: 26px;
   animation-duration: 0.8s;
 }
-/* add images: Raindrop visual variant 5 — slowest */
+/* -------------- Raindrop visual variant 5 — slowest -------------- */
 .vt-home__env-raindrop--5 {
   height: 20px;
   animation-duration: 1s;
 }
 
-/* Spread 40 raindrops evenly across the width */
+/* -------------- Spread 40 raindrops evenly across the width -------------- */
 .vt-home__env-raindrop:nth-child(1) {
   left: 2%;
   animation-delay: 0s;
@@ -1800,7 +1736,7 @@
   animation-delay: 0.54s;
 }
 
-/* Rain falls at a slight diagonal angle */
+/* -------------- Rain falls at a slight diagonal angle -------------- */
 @keyframes vt-env-rain-fall {
   0% {
     transform: translateY(-30px) translateX(0);
@@ -1818,14 +1754,11 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   MIST LAYER
-   add images: CSS blur gradient layer — no image
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- MIST LAYER add images: CSS blur gradient layer — no image -------------- */
 .vt-home__env-mist {
   position: absolute;
   inset: 0;
-  /* Mist rises from bottom — bottom 40% affected */
+  /* -------------- Mist rises from bottom — bottom 40% affected -------------- */
   background: linear-gradient(
     to top,
     rgba(200, 215, 230, 0.55) 0%,
@@ -1838,7 +1771,7 @@
   animation: vt-env-mist-breathe 12s ease-in-out infinite;
 }
 
-/* Mist gently shifts horizontally — breathing effect */
+/* -------------- Mist gently shifts horizontally — breathing effect -------------- */
 @keyframes vt-env-mist-breathe {
   0%,
   100% {
@@ -1849,13 +1782,10 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   LENS FLARE / GOLDEN-HOUR GLOW
-   add images: CSS radial gradient flare — no image
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- LENS FLARE / GOLDEN-HOUR GLOW add images: CSS radial gradient flare — no image -------------- */
 .vt-home__env-flare {
   position: absolute;
-  /* Flare positioned near sun — tied loosely to sun position via similar values */
+  /* -------------- Flare positioned near sun — tied loosely to sun position via similar values -------------- */
   left: var(--env-sun-x, 50%);
   top: var(--env-sun-y, 40%);
   transform: translate(-50%, -50%);
@@ -1878,7 +1808,7 @@
     top var(--env-transition);
 }
 
-/* Flare shimmer */
+/* -------------- Flare shimmer -------------- */
 @keyframes vt-env-flare-pulse {
   0%,
   100% {
@@ -1889,17 +1819,14 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   DAWN / SUNSET HORIZON GLOW
-   add images: CSS gradient glow at the bottom of the sky — no image
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- DAWN / SUNSET HORIZON GLOW add images: CSS gradient glow at the bottom of the sky — no image -------------- */
 .vt-home__env-dawn-glow {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: 55%;
-  /* Warm pink-orange-amber gradient rising from horizon */
+  /* -------------- Warm pink-orange-amber gradient rising from horizon -------------- */
   background: linear-gradient(
     to top,
     rgba(255, 100, 50, 0.55) 0%,
@@ -1912,7 +1839,7 @@
   animation: vt-env-dawn-shimmer 10s ease-in-out infinite;
 }
 
-/* Gentle horizon shimmer for dawn/sunset */
+/* -------------- Gentle horizon shimmer for dawn/sunset -------------- */
 @keyframes vt-env-dawn-shimmer {
   0%,
   100% {
@@ -1923,22 +1850,19 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   LIGHTNING FLASH
-   add images: CSS white flash overlay — no image; only visible during stormy weather
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- LIGHTNING FLASH add images: CSS white flash overlay — no image; only visible during stormy weather -------------- */
 .vt-home__env-lightning {
   position: absolute;
   inset: 0;
   background: rgba(200, 220, 255, 0.92);
   opacity: 0;
   pointer-events: none;
-  /* Lightning only activates when stormy class raises --env-lightning-opacity */
+  /* -------------- Lightning only activates when stormy class raises --env-lightning-opacity -------------- */
   animation: vt-env-lightning-flash var(--env-lightning-duration, 8s) ease
     infinite;
 }
 
-/* Lightning strikes: quick double-flash with long quiet period */
+/* -------------- Lightning strikes: quick double-flash with long quiet period -------------- */
 @keyframes vt-env-lightning-flash {
   0%,
   6%,
@@ -1954,9 +1878,7 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   ENVIRONMENT BADGE (top-left period indicator)
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- ENVIRONMENT BADGE (top-left period indicator) --------------  */
 .vt-home__env-badge {
   position: absolute;
   top: 1.25rem;
@@ -1977,14 +1899,14 @@
   color: rgba(255, 255, 255, 0.88);
   letter-spacing: 0.06em;
   text-transform: capitalize;
-  /* Badge colour shifts subtly per period */
+  /* -------------- Badge colour shifts subtly per period -------------- */
   transition:
     background 2s ease,
     border-color 2s ease;
   pointer-events: none; /* decorative — never blocks UI */
 }
 
-/* Period-specific badge accent tints */
+/* -------------- Period-specific badge accent tints -------------- */
 .vt-home--env-dawn .vt-home__env-badge {
   background: rgba(80, 30, 90, 0.45);
   border-color: rgba(220, 150, 255, 0.3);
@@ -2014,9 +1936,7 @@
   font-size: 0.75rem;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   REDUCED MOTION — pause all environment animations
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- REDUCED MOTION — pause all environment animations -------------- */
 @media (prefers-reduced-motion: reduce) {
   .vt-home__env-sun,
   .vt-home__env-star,
@@ -2030,24 +1950,23 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   SLIDE 6 — Special 6-Image Mosaic Layout
-   When the slideshow reaches Slide 6 (index 5), the hero switches from the
+/* -------------- SLIDE 6 — Special 6-Image Mosaic Layout 
+/* When the slideshow reaches Slide 6 (index 5), the hero switches from the
    standard full-bleed slide background to a 3×2 grid mosaic of adventure images.
 
    ACTIVATION:
      .vt-home--slide6 is added to .vt-home when current === 5 in JSX.
-     When present → mosaic fades in (opacity 1, transform scale(1)).
-     When absent  → mosaic is invisible (opacity 0, transform scale(0.97)).
+     When present -> mosaic fades in (opacity 1, transform scale(1)).
+     When absent  -> mosaic is invisible (opacity 0, transform scale(0.97)).
      Transition matches --vt-home-transition for consistency with slide changes.
 
    Z-INDEX:
      .vt-home__slide6-mosaic sits at z-index: 4.
      Visual hierarchy from bottom to top:
-       Slide track (z:0) → env layer (z:2) → landmarks (z:3) →
-       [THIS MOSAIC z:4] → birds/bats (z:5) → content (z:10) → arrows (z:20)
+       Slide track (z:0) -> env layer (z:2) -> landmarks (z:3) ->
+       [THIS MOSAIC z:4] -> birds/bats (z:5) -> content (z:10) -> arrows (z:20)
      This places the mosaic between the landmark PNG layer and the UI content,
-     satisfying: Sky → Main Images → Cloud Layers → Content.
+     satisfying: Sky -> Main Images -> Cloud Layers -> Content.
 
    GRID LAYOUT:
      3 columns × 2 rows, edge-to-edge, no gaps between cells.
@@ -2060,53 +1979,47 @@
 
    add images: Images are set via data-bg attributes in JSX (SLIDE_6_IMAGES array).
    The existing useEffect data-bg handler applies backgroundImage automatically.
-   ──────────────────────────────────────────────────────────────────────────── */
+   -------------- */
 
-/* Mosaic container — overlays the entire hero */
+/* -------------- Mosaic container — overlays the entire hero -------------- */
 .vt-home__slide6-mosaic {
   position: absolute;
   inset: 0;
-
-  /* 3 columns × 2 rows — no gap so images fill edge to edge */
+  /* -------------- 3 columns × 2 rows — no gap so images fill edge to edge -------------- */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
   gap: 3px; /* hairline dividers between cells */
   background: rgba(0, 0, 0, 0.6); /* gap colour — dark tint */
-
-  /* Z-index: above landmarks (z:3), below content (z:10) */
+  /* -------------- Z-index: above landmarks (z:3), below content (z:10) -------------- */
   z-index: 4;
-
-  /* Initial state — invisible and slightly scaled down */
+  /* -------------- Initial state — invisible and slightly scaled down -------------- */
   opacity: 0;
   transform: scale(0.97);
   pointer-events: none; /* non-interactive when hidden */
-
-  /* Smooth enter/exit matching the slide transition speed */
+  /* -------------- Smooth enter/exit matching the slide transition speed -------------- */
   transition:
     opacity 0.7s cubic-bezier(0.77, 0, 0.18, 1),
     transform 0.7s cubic-bezier(0.77, 0, 0.18, 1);
 }
 
-/* Active state — triggered by .vt-home--slide6 class on .vt-home */
+/* -------------- Active state — triggered by .vt-home--slide6 class on .vt-home -------------- */
 .vt-home--slide6 .vt-home__slide6-mosaic {
   opacity: 1;
   transform: scale(1);
   pointer-events: auto; /* restore pointer events when visible */
 }
 
-/* Individual mosaic image cell */
+/* -------------- Individual mosaic image cell -------------- */
 .vt-slide6__img {
-  /* Each cell fills its grid area */
+  /* -------------- Each cell fills its grid area -------------- */
   width: 100%;
   height: 100%;
-
-  /* Background image (set via data-bg useEffect) */
+  /* -------------- Background image (set via data-bg useEffect) -------------- */
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-
-  /* Subtle interactive scale on hover — adds depth without leaving the grid */
+  /* -------------- Subtle interactive scale on hover — adds depth without leaving the grid -------------- */
   transition:
     transform 0.35s ease,
     filter 0.35s ease;
@@ -2114,62 +2027,61 @@
   position: relative;
 }
 
-/* Hover: slight zoom-in on individual cell */
+/* -------------- Hover: slight zoom-in on individual cell -------------- */
 .vt-home--slide6 .vt-slide6__img:hover {
   transform: scale(1.04);
   z-index: 1; /* lift above sibling cells on hover */
   filter: brightness(1.1) saturate(1.15);
 }
 
-/* Subtle overlay on each cell to unify brightness */
+/* -------------- Subtle overlay on each cell to unify brightness -------------- */
 .vt-slide6__img::after {
   content: "";
   position: absolute;
   inset: 0;
-  /* Slight vignette at cell edges — gives cohesive feel to the grid */
+  /* -------------- Slight vignette at cell edges — gives cohesive feel to the grid -------------- */
   background: linear-gradient(
     135deg,
     rgba(0, 0, 0, 0.1) 0%,
     transparent 50%,
     rgba(0, 0, 0, 0.08) 100%
   );
-  /* Fade out the overlay on hover (handled by the parent hover filter) */
+  /* -------------- Fade out the overlay on hover (handled by the parent hover filter) -------------- */
   transition: opacity 0.35s ease;
 }
 
-/* ── Mosaic Environment Responsiveness ───────────────────────────────────────
-   The mosaic dims slightly at night and warms at morning/evening to match
-   the ambient period lighting across the rest of the hero section.            */
+/* -------------- Mosaic Environment Responsiveness The mosaic dims slightly at night and warms at morning/evening to match
+   the ambient period lighting across the rest of the hero section. -------------- */
 .vt-home--env-dawn.vt-home--slide6 .vt-home__slide6-mosaic {
-  /* Dawn: cool-pink muted feel */
+  /* -------------- Dawn: cool-pink muted feel -------------- */
   filter: brightness(0.75) sepia(0.1) saturate(0.9);
 }
 .vt-home--env-morning.vt-home--slide6 .vt-home__slide6-mosaic {
-  /* Morning: warm, vivid */
+  /* -------------- Morning: warm, vivid -------------- */
   filter: brightness(0.95) saturate(1.1);
 }
 .vt-home--env-noon.vt-home--slide6 .vt-home__slide6-mosaic {
-  /* Noon: full brightness */
+  /* -------------- Noon: full brightness -------------- */
   filter: brightness(1);
 }
 .vt-home--env-evening.vt-home--slide6 .vt-home__slide6-mosaic {
-  /* Evening: warm amber cast */
+  /* -------------- Evening: warm amber cast -------------- */
   filter: brightness(0.88) sepia(0.2) hue-rotate(-8deg);
 }
 .vt-home--env-night.vt-home--slide6 .vt-home__slide6-mosaic {
-  /* Night: dark, cool, desaturated */
+  /* -------------- Night: dark, cool, desaturated -------------- */
   filter: brightness(0.55) saturate(0.7) hue-rotate(10deg);
 }
 
-/* ── Mosaic Responsive Layout ─────────────────────────────────────────────── */
-/* Tablet: 2 columns × 3 rows to better fit portrait/narrower viewports */
+/* -------------- Mosaic Responsive Layout -------------- */
+/* -------------- Tablet: 2 columns × 3 rows to better fit portrait/narrower viewports */
 @media (max-width: 768px) {
   .vt-home__slide6-mosaic {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, 1fr);
   }
 }
-/* Mobile: single column stacked scroll — mosaic still works */
+/* -------------- Mobile: single column stacked scroll — mosaic still works -------------- */
 @media (max-width: 480px) {
   .vt-home__slide6-mosaic {
     grid-template-columns: repeat(2, 1fr);
@@ -2178,9 +2090,7 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   RESPONSIVE — environment badge on mobile
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- RESPONSIVE — environment badge on mobile --------------  */
 @media (max-width: 480px) {
   .vt-home__env-badge {
     top: 0.75rem;
@@ -2190,30 +2100,25 @@
   }
 }
 
-/* ==========================================================================
-   ENHANCED ENVIRONMENT SYSTEM — Birds, Fireflies, Landmarks, Parallax
-   All changes are HERO SECTION ONLY (.vt-home scope).
-   No inline styles used anywhere. All visual changes are CSS-class-driven.
-   ========================================================================== */
+/*  -------------- ENHANCED ENVIRONMENT SYSTEM — Birds, Fireflies, Landmarks, Parallax All changes are HERO SECTION ONLY (.vt-home scope).
+   No inline styles used anywhere. All visual changes are CSS-class-driven. -------------- */
 
-/* ── Additional Sky Gradient Colours per Period ──────────────────────────────
-   These complement the existing --env-sky-* variables with richer per-period
-   sky gradients rendered directly on .vt-home__env-sky-enhanced.
-   The existing .vt-home__env-sky is kept; this layer adds cinematic depth.    */
+/* -------------- Additional Sky Gradient Colours per Period These complement the existing --env-sky-* variables with richer per-period
+   sky gradients rendered directly on .vt-home__env-sky-enhanced. The existing .vt-home__env-sky is kept; this layer adds cinematic depth. -------------- */
 
-/* Sky enhanced layer — stacked above base sky, below sun/moon */
+/* -------------- Sky enhanced layer — stacked above base sky, below sun/moon -------------- */
 .vt-home__env-sky-enhanced {
   position: absolute;
   inset: 0;
   opacity: 0;
-  /* 5s smooth transition as required by the technical design brief */
+  /* -------------- 5s smooth transition as required by the technical design brief -------------- */
   transition:
     opacity 5s ease-in-out,
     background 5s ease-in-out;
   pointer-events: none;
 }
 
-/* Dawn sky — purple-pink gradient fading to dark navy above */
+/* -------------- Dawn sky — purple-pink gradient fading to dark navy above -------------- */
 .vt-home--env-dawn .vt-home__env-sky-enhanced {
   background: linear-gradient(
     180deg,
@@ -2226,7 +2131,7 @@
   opacity: 1;
 }
 
-/* Morning sky — warm gold fading upward to clear blue */
+/* -------------- Morning sky — warm gold fading upward to clear blue -------------- */
 .vt-home--env-morning .vt-home__env-sky-enhanced {
   background: linear-gradient(
     180deg,
@@ -2239,7 +2144,7 @@
   opacity: 1;
 }
 
-/* Noon sky — bright cerulean with minimal tint */
+/* -------------- Noon sky — bright cerulean with minimal tint -------------- */
 .vt-home--env-noon .vt-home__env-sky-enhanced {
   background: linear-gradient(
     180deg,
@@ -2251,7 +2156,7 @@
   opacity: 1;
 }
 
-/* Evening sky — dramatic sunset palette */
+/* -------------- Evening sky — dramatic sunset palette -------------- */
 .vt-home--env-evening .vt-home__env-sky-enhanced {
   background: linear-gradient(
     180deg,
@@ -2265,19 +2170,19 @@
   opacity: 1;
 }
 
-/* Night sky — deep navy indigo */
+/* -------------- Night sky — deep navy indigo -------------- */
 .vt-home--env-night .vt-home__env-sky-enhanced {
   background: linear-gradient(
     180deg,
     rgba(5, 5, 25, 0.8) 0%,
-    rgba(10, 15, 50, 0.65) 40%,
+    rgba(10, 15, 50, 0.65) 10%,
     rgba(20, 25, 70, 0.45) 70%,
     rgba(15, 20, 55, 0.25) 100%
   );
   opacity: 1;
 }
 
-/* ── Stormy Sky Enhancement ──────────────────────────────────────────────── */
+/* -------------- Stormy Sky Enhancement -------------- */
 .vt-home--weather-stormy .vt-home__env-sky-enhanced {
   background: linear-gradient(
     180deg,
@@ -2288,35 +2193,31 @@
   opacity: 1;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   LANDMARK SILHOUETTES — Sri Lankan tourism landmarks as layered SVG-like
-   CSS shapes in the background, visible through the environment layers.
-   add images: Each landmark section below is a CSS-art landmark silhouette.
-               To use actual images, replace with img/background-image elements
-               in JSX and mark with "add images" comment.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- LANDMARK SILHOUETTES — Sri Lankan tourism landmarks as layered SVG-like
+   CSS shapes in the background, visible through the environment layers. add images: Each landmark section below is a CSS-art landmark silhouette.
+               To use actual images, replace with img/background-image elements in JSX and mark with "add images" comment. -------------- */
 
-/* Landmark parallax container — sits just above the slide track */
+/* -------------- Landmark parallax container — sits just above the slide track -------------- */
 .vt-home__landmarks {
   position: absolute;
   inset: 0;
-  z-index: 3; /* above env (z:2), below content (z:10) */
+  z-index: 3;
   pointer-events: none;
   overflow: hidden;
 }
 
-/* Base landmark element — common shape traits */
+/* -------------- Base landmark element — common shape traits -------------- */
 .vt-home__landmark {
   position: absolute;
   bottom: 0;
   opacity: 0;
   transition: opacity 4s ease;
   will-change: transform, opacity;
-  /* Parallax drift — animates slowly to create depth */
+  /* -------------- Parallax drift — animates slowly to create depth -------------- */
   animation: vt-landmark-drift 30s ease-in-out infinite alternate;
 }
 
-/* Landmarks are visible during all periods but dim at night */
+/* -------------- Landmarks are visible during all periods but dim at night -------------- */
 .vt-home--env-dawn .vt-home__landmark {
   opacity: 0.45;
   filter: brightness(0.6) sepia(0.4);
@@ -2338,7 +2239,7 @@
   filter: brightness(0.35) saturate(0.4);
 }
 
-/* Misty weather dims landmarks further */
+/* -------------- Misty weather dims landmarks further -------------- */
 .vt-home--weather-misty .vt-home__landmark {
   opacity: 0.25;
   filter: blur(2px) brightness(0.6);
@@ -2352,7 +2253,7 @@
   filter: blur(1px) brightness(0.55);
 }
 
-/* Subtle parallax drift for cinematic depth */
+/* -------------- Subtle parallax drift for cinematic depth -------------- */
 @keyframes vt-landmark-drift {
   0% {
     transform: translateX(0) translateY(0);
@@ -2362,43 +2263,37 @@
   }
 }
 
-/* ── Sigiriya Rock Fortress — real transparent PNG via data-bg ───────────────
-   Image change: The JSX div now carries data-bg="/assets/landmarks/sigiriya-silhouette.png"
-   The useEffect data-bg handler applies it as backgroundImage automatically.
-   CSS below positions, sizes, and filters the image in sync with env periods.
-   No clip-path art needed — the transparent PNG provides the correct silhouette. */
+/* -------------- Sigiriya Rock Fortress — real transparent PNG via data-bg Image change: The JSX div now carries data-bg="/assets/landmarks/sigiriya-silhouette.png"
+   The useEffect data-bg handler applies it as backgroundImage automatically. CSS below positions, sizes, and filters the image in sync with env periods.
+   No clip-path art needed — the transparent PNG provides the correct silhouette. -------------- */
 .vt-home__landmark--sigiriya {
-  /* Position — dominant rightmost landmark */
+  /* -------------- Position — dominant rightmost landmark -------------- */
   right: 8%;
   bottom: 0;
-
-  /* Size — tall enough to dominate the hero but not overwhelm */
+  /* -------------- Size — tall enough to dominate the hero but not overwhelm -------------- */
   width: 180px;
   height: 360px;
-
-  /* Image display — background-image is set dynamically by the data-bg useEffect */
+  /* -------------- Image display — background-image is set dynamically by the data-bg useEffect -------------- */
   background-size: contain;
   background-position: bottom center;
   background-repeat: no-repeat;
-  /* No clip-path — the transparent PNG handles the silhouette shape */
-
-  /* Subtle parallax drift inherited from .vt-home__landmark base class */
+  /* -------------- No clip-path — the transparent PNG handles the silhouette shape -------------- */
+  /* -------------- Subtle parallax drift inherited from .vt-home__landmark base class -------------- */
   animation-delay: 0s;
   animation-duration: 28s;
 }
 
-/* Remove the CSS-art ::before platform detail — the real image handles it */
+/* -------------- Remove the CSS-art ::before platform detail — the real image handles it -------------- */
 .vt-home__landmark--sigiriya::before {
   content: none;
 }
 
-/* Remove the CSS-art ::after tree base detail — the real image handles it */
+/* -------------- Remove the CSS-art ::after tree base detail — the real image handles it -------------- */
 .vt-home__landmark--sigiriya::after {
   content: none;
 }
 
-/* ── Aukana Buddha Statue — CSS art silhouette ───────────────────────────────
-   add images: Replace with background-image of Aukana Buddha for detail.      */
+/* -------------- Aukana Buddha Statue — CSS art silhouette add images: Replace with background-image of Aukana Buddha for detail. -------------- */
 .vt-home__landmark--aukana {
   left: 5%;
   bottom: 0;
@@ -2412,14 +2307,14 @@
   );
   clip-path: polygon(
     40% 0%,
-    /* head top */ 60% 0%,
+    /* -------------- head top -------------- */ 60% 0%,
     65% 5%,
-    /* shoulder right */ 80% 15%,
-    /* arm right */ 82% 25%,
-    /* hand right extended up */ 75% 28%,
+    /* -------------- shoulder right -------------- */ 80% 15%,
+    /* -------------- arm right -------------- */ 82% 25%,
+    /* -------------- hand right extended up -------------- */ 75% 28%,
     70% 30%,
-    /* body right */ 75% 60%,
-    /* robe base right */ 80% 100%,
+    /* body right -------------- */ 75% 60%,
+    /* robe base right -------------- */ 80% 100%,
     20% 100%,
     25% 60%,
     30% 30%,
@@ -2431,7 +2326,7 @@
   animation-duration: 32s;
 }
 
-/* Aukana halo / ushnisha detail */
+/* -------------- Aukana halo / ushnisha detail -------------- */
 .vt-home__landmark--aukana::before {
   content: "";
   position: absolute;
@@ -2445,8 +2340,7 @@
   box-shadow: 0 0 0 6px rgba(120, 100, 65, 0.5);
 }
 
-/* ── Yapahuwa Rock Fortress — CSS art silhouette ─────────────────────────────
-   add images: Replace with background-image of Yapahuwa for photorealism.     */
+/* -------------- Yapahuwa Rock Fortress — CSS art silhouette add images: Replace with background-image of Yapahuwa for photorealism. -------------- */
 .vt-home__landmark--yapahuwa {
   left: 18%;
   bottom: 0;
@@ -2474,7 +2368,7 @@
   animation-duration: 35s;
 }
 
-/* Yapahuwa staircase detail */
+/* -------------- Yapahuwa staircase detail -------------- */
 .vt-home__landmark--yapahuwa::before {
   content: "";
   position: absolute;
@@ -2491,21 +2385,19 @@
   );
 }
 
-/* ── Polonnaruwa Ruins — CSS art silhouette ──────────────────────────────────
-   add images: Replace with background-image of Polonnaruwa temple ruins.      */
+/* -------------- Polonnaruwa Ruins — CSS art silhouette add images: Replace with background-image of Polonnaruwa temple ruins. -------------- */
 .vt-home__landmark--polonnaruwa {
   right: 22%;
   bottom: 0;
   width: 200px;
   height: 140px;
   background: transparent;
-  /* Multiple temple columns via box-shadow */
-  box-shadow: 0px 0px 0px 0px transparent; /* reset */
+  box-shadow: 0px 0px 0px 0px transparent;
   animation-delay: -5s;
   animation-duration: 40s;
 }
 
-/* Polonnaruwa main dagoba */
+/* -------------- Polonnaruwa main dagoba -------------- */
 .vt-home__landmark--polonnaruwa::before {
   content: "";
   position: absolute;
@@ -2518,7 +2410,7 @@
     rgba(130, 110, 80, 0.9) 0%,
     rgba(100, 85, 60, 0.95) 100%
   );
-  /* Dagoba (stupa) dome shape */
+  /* -------------- Dagoba (stupa) dome shape -------------- */
   clip-path: polygon(
     50% 0%,
     65% 15%,
@@ -2534,7 +2426,7 @@
   );
 }
 
-/* Polonnaruwa pillars */
+/* -------------- Polonnaruwa pillars -------------- */
 .vt-home__landmark--polonnaruwa::after {
   content: "";
   position: absolute;
@@ -2573,8 +2465,7 @@
       90% 0% / 10px 55px no-repeat;
 }
 
-/* ── Tea Plantation Hills — CSS art silhouette ───────────────────────────────
-   add images: Replace with background-image of Sri Lankan tea terraces.        */
+/* -------------- Tea Plantation Hills — CSS art silhouette add images: Replace with background-image of Sri Lankan tea terraces. -------------- */
 .vt-home__landmark--teaplantation {
   left: 0;
   bottom: 0;
@@ -2610,7 +2501,7 @@
   animation-duration: 45s;
 }
 
-/* Tea plantation terraced rows detail */
+/* -------------- Tea plantation terraced rows detail -------------- */
 .vt-home__landmark--teaplantation::before {
   content: "";
   position: absolute;
@@ -2625,8 +2516,7 @@
   clip-path: inherit;
 }
 
-/* ── Temple / Ancient Stupa — CSS art silhouette ─────────────────────────────
-   add images: Replace with background-image of Sri Lankan ancient temple.     */
+/* -------------- Temple / Ancient Stupa — CSS art silhouette add images: Replace with background-image of Sri Lankan ancient temple. -------------- */
 .vt-home__landmark--temple {
   right: 38%;
   bottom: 0;
@@ -2636,7 +2526,7 @@
   animation-duration: 38s;
 }
 
-/* Temple spire */
+/* -------------- Temple spire -------------- */
 .vt-home__landmark--temple::before {
   content: "";
   position: absolute;
@@ -2661,7 +2551,7 @@
   );
 }
 
-/* Temple base platform */
+/* -------------- Temple base platform -------------- */
 .vt-home__landmark--temple::after {
   content: "";
   position: absolute;
@@ -2687,8 +2577,7 @@
   );
 }
 
-/* ── Ground / Terrain Base Layer ─────────────────────────────────────────────
-   Unifies the base of all landmarks with a dark ground plane.                 */
+/* -------------- Ground / Terrain Base Layer Unifies the base of all landmarks with a dark ground plane. -------------- */
 .vt-home__landmark--ground {
   left: 0;
   right: 0;
@@ -2701,8 +2590,8 @@
     rgba(10, 20, 8, 0.65) 60%,
     rgba(5, 12, 5, 0.85) 100%
   );
-  animation: none; /* ground doesn't drift */
-  opacity: 0 !important; /* overridden by period classes below */
+  animation: none;
+  opacity: 0 !important;
 }
 
 .vt-home--env-dawn .vt-home__landmark--ground {
@@ -2721,11 +2610,8 @@
   opacity: 0.8 !important;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   BIRDS — SVG-drawn bird silhouettes flying across the hero sky
-   add images: Birds are CSS/SVG shapes. Replace with animated SVG bird images
-               for even more realism if desired.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- BIRDS — SVG-drawn bird silhouettes flying across the hero sky add images: Birds are CSS/SVG shapes. Replace with animated SVG bird images
+               for even more realism if desired. --------------  */
 
 /* Bird flock container */
 .vt-home__env-birds {
@@ -2733,12 +2619,11 @@
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  /* Birds visible during dawn, morning, evening. Hidden at night (opacity toggled). */
   opacity: 0;
   transition: opacity 3s ease;
 }
 
-/* Show birds during appropriate periods */
+/* -------------- Show birds during appropriate periods -------------- */
 .vt-home--env-dawn .vt-home__env-birds {
   opacity: 0.8;
 }
@@ -2755,7 +2640,7 @@
   opacity: 0;
 }
 
-/* Hide birds during heavy weather */
+/* -------------- Hide birds during heavy weather -------------- */
 .vt-home--weather-stormy .vt-home__env-birds {
   opacity: 0.1;
 }
@@ -2763,10 +2648,10 @@
   opacity: 0.25;
 }
 
-/* Individual bird — uses CSS clip-path for V-wing shape */
+/* -------------- Individual bird — uses CSS clip-path for V-wing shape -------------- */
 .vt-home__env-bird {
   position: absolute;
-  /* Bird silhouette via clip-path — two wing arcs forming classic bird shape */
+  /* -------------- Bird silhouette via clip-path — two wing arcs forming classic bird shape -------------- */
   clip-path: polygon(
     50% 60%,
     /* body center bottom */ 0% 20%,
@@ -2784,23 +2669,23 @@
 }
 
 /* Bird size variants for natural depth illusion */
-/* add images: Bird size 1 — large close bird */
+/* -------------- Bird size 1 — large close bird -------------- */
 .vt-home__env-bird--sm {
   width: 12px;
   height: 8px;
 }
-/* add images: Bird size 2 — medium mid-distance bird */
+/* -------------- Bird size 2 — medium mid-distance bird -------------- */
 .vt-home__env-bird--md {
   width: 18px;
   height: 12px;
 }
-/* add images: Bird size 3 — large foreground bird */
+/* -------------- Bird size 3 — large foreground bird -------------- */
 .vt-home__env-bird--lg {
   width: 24px;
   height: 16px;
 }
 
-/* Flight path: flies from off-screen left to off-screen right */
+/* -------------- Flight path: flies from off-screen left to off-screen right -------------- */
 @keyframes vt-bird-fly {
   0% {
     transform: translateX(-15vw) translateY(0);
@@ -2819,7 +2704,7 @@
   }
 }
 
-/* Wing flap — alternates clip-path to simulate flapping wings */
+/* -------------- Wing flap — alternates clip-path to simulate flapping wings -------------- */
 @keyframes vt-bird-flap {
   0%,
   100% {
@@ -2830,8 +2715,7 @@
   }
 }
 
-/* Bird 1 — large, upper sky, slow */
-/* add images: Bird 1 flight configuration */
+/* -------------- Bird 1 — large, upper sky, slow -------------- */
 .vt-home__env-bird--1 {
   top: 12%;
   left: -15%;
@@ -2839,8 +2723,7 @@
   animation-delay: 0s, 0s;
 }
 
-/* Bird 2 — small, high up, faster */
-/* add images: Bird 2 flight configuration */
+/* -------------- Bird 2 — small, high up, faster -------------- */
 .vt-home__env-bird--2 {
   top: 7%;
   left: -15%;
@@ -2851,7 +2734,6 @@
 }
 
 /* Bird 3 — medium, mid-sky */
-/* add images: Bird 3 flight configuration */
 .vt-home__env-bird--3 {
   top: 20%;
   left: -15%;
@@ -2861,8 +2743,7 @@
     -0.5s;
 }
 
-/* Bird 4 — small, very high */
-/* add images: Bird 4 flight configuration */
+/* -------------- Bird 4 — small, very high -------------- */
 .vt-home__env-bird--4 {
   top: 5%;
   left: -15%;
@@ -2872,8 +2753,7 @@
     -0.1s;
 }
 
-/* Bird 5 — large, lower sky */
-/* add images: Bird 5 flight configuration */
+/* -------------- Bird 5 — large, lower sky -------------- */
 .vt-home__env-bird--5 {
   top: 28%;
   left: -15%;
@@ -2883,8 +2763,7 @@
     -0.6s;
 }
 
-/* Bird 6 — medium, second wave */
-/* add images: Bird 6 flight configuration */
+/* -------------- Bird 6 — medium, second wave -------------- */
 .vt-home__env-bird--6 {
   top: 15%;
   left: -15%;
@@ -2894,8 +2773,7 @@
     -0.4s;
 }
 
-/* Bird 7 — small, high altitude straggler */
-/* add images: Bird 7 flight configuration */
+/* -------------- Bird 7 — small, high altitude straggler -------------- */
 .vt-home__env-bird--7 {
   top: 9%;
   left: -15%;
@@ -2905,8 +2783,7 @@
     -0.2s;
 }
 
-/* Bird 8 — evening return flock, flies slightly different height */
-/* add images: Bird 8 flight configuration */
+/* -------------- Bird 8 — evening return flock, flies slightly different height -------------- */
 .vt-home__env-bird--8 {
   top: 18%;
   left: -15%;
@@ -2916,12 +2793,7 @@
     -0.7s;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   FIREFLIES — subtle ambient floating particles for night / dawn periods
-   add images: CSS radial-gradient glowing dots — no image required.
-   ──────────────────────────────────────────────────────────────────────────── */
-
-/* Firefly container — only in lower half of hero */
+/* -------------- FIREFLIES — subtle ambient floating particles for night / dawn periods add images: CSS radial-gradient glowing dots — no image required. -------------- */
 .vt-home__env-fireflies {
   position: absolute;
   left: 0;
@@ -2933,7 +2805,7 @@
   transition: opacity 4s ease;
 }
 
-/* Show fireflies at night and dawn */
+/* -------------- Show fireflies at night and dawn -------------- */
 .vt-home--env-night .vt-home__env-fireflies {
   opacity: 1;
 }
@@ -2941,7 +2813,7 @@
   opacity: 0.55;
 }
 
-/* Hide during storms/rain */
+/* -------------- Hide during storms/rain -------------- */
 .vt-home--weather-rainy .vt-home__env-fireflies {
   opacity: 0;
 }
@@ -2949,7 +2821,7 @@
   opacity: 0;
 }
 
-/* Individual firefly particle */
+/* -------------- Individual firefly particle -------------- */
 .vt-home__env-firefly {
   position: absolute;
   width: 4px;
@@ -2968,7 +2840,7 @@
   will-change: transform, opacity;
 }
 
-/* Firefly gentle floating drift */
+/* -------------- Firefly gentle floating drift -------------- */
 @keyframes vt-firefly-drift {
   0% {
     transform: translateX(0) translateY(0);
@@ -2987,7 +2859,7 @@
   }
 }
 
-/* Firefly bioluminescent glow pulse */
+/* -------------- Firefly bioluminescent glow pulse -------------- */
 @keyframes vt-firefly-glow {
   0%,
   100% {
@@ -3006,8 +2878,7 @@
   }
 }
 
-/* 16 firefly positions scattered across the lower hero */
-/* add images: Firefly 1 position/timing */
+/* -------------- 16 firefly positions scattered across the lower hero add images: Firefly 1 position/timing -------------- */
 .vt-home__env-firefly:nth-child(1) {
   left: 5%;
   bottom: 30%;
@@ -3135,17 +3006,14 @@
     -3.2s;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   MOONLIGHT RAYS — subtle crepuscular rays during night / dawn
-   add images: CSS gradient rays — no image.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- MOONLIGHT RAYS — subtle crepuscular rays during night / dawn add images: CSS gradient rays — no image. -------------- */
 .vt-home__env-moonrays {
   position: absolute;
   inset: 0;
   pointer-events: none;
   opacity: 0;
   transition: opacity 4s ease;
-  /* Origin near moon position (top-right) */
+  /* -------------- Origin near moon position (top-right) -------------- */
   background: conic-gradient(
     from 200deg at 72% 15%,
     transparent 0deg,
@@ -3160,7 +3028,7 @@
   animation: vt-moonrays-shift 20s ease-in-out infinite;
 }
 
-/* Moon rays: visible at night + dawn */
+/* -------------- Moon rays: visible at night + dawn -------------- */
 .vt-home--env-night .vt-home__env-moonrays {
   opacity: 1;
 }
@@ -3185,10 +3053,7 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   SUN RAYS / CREPUSCULAR RAYS — visible morning and evening
-   add images: CSS gradient sun rays — no image.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- SUN RAYS / CREPUSCULAR RAYS — visible morning and evening add images: CSS gradient sun rays — no image. -------------- */
 .vt-home__env-sunrays {
   position: absolute;
   inset: 0;
@@ -3198,7 +3063,7 @@
   mix-blend-mode: screen;
 }
 
-/* Morning sun rays — origin lower-left (sun rise position) */
+/* -------------- Morning sun rays — origin lower-left (sun rise position) -------------- */
 .vt-home--env-morning .vt-home__env-sunrays {
   background: conic-gradient(
     from 310deg at 25% 30%,
@@ -3215,7 +3080,7 @@
   animation: vt-sunrays-pulse 8s ease-in-out infinite;
 }
 
-/* Evening sun rays — origin lower-right (sun set position) */
+/* -------------- Evening sun rays — origin lower-right (sun set position) -------------- */
 .vt-home--env-evening .vt-home__env-sunrays {
   background: conic-gradient(
     from 210deg at 75% 75%,
@@ -3232,7 +3097,7 @@
   animation: vt-sunrays-pulse 10s ease-in-out infinite;
 }
 
-/* Noon sun rays — direct overhead */
+/* -------------- Noon sun rays — direct overhead -------------- */
 .vt-home--env-noon .vt-home__env-sunrays {
   background: conic-gradient(
     from 260deg at 50% 12%,
@@ -3247,7 +3112,7 @@
   animation: vt-sunrays-pulse 12s ease-in-out infinite;
 }
 
-/* Hide sun rays when cloudy/stormy */
+/* -------------- Hide sun rays when cloudy/stormy -------------- */
 .vt-home--weather-cloudy .vt-home__env-sunrays {
   opacity: 0 !important;
 }
@@ -3269,10 +3134,7 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   HORIZON FOG — environmental mist band at the landmark horizon line
-   add images: CSS gradient fog layer — no image.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- HORIZON FOG — environmental mist band at the landmark horizon line add images: CSS gradient fog layer — no image. -------------- */
 .vt-home__env-fog {
   position: absolute;
   bottom: 0;
@@ -3292,23 +3154,23 @@
   animation: vt-fog-drift 18s ease-in-out infinite;
 }
 
-/* Morning fog — most prominent */
+/* -------------- Morning fog — most prominent -------------- */
 .vt-home--env-morning .vt-home__env-fog {
   opacity: 0.7;
 }
-/* Dawn fog — heavy pre-sunrise */
+/* -------------- Dawn fog — heavy pre-sunrise -------------- */
 .vt-home--env-dawn .vt-home__env-fog {
   opacity: 0.85;
 }
-/* Evening light fog near horizon */
+/* -------------- Evening light fog near horizon -------------- */
 .vt-home--env-evening .vt-home__env-fog {
   opacity: 0.4;
 }
-/* Night mist */
+/* -------------- Night mist -------------- */
 .vt-home--env-night .vt-home__env-fog {
   opacity: 0.3;
 }
-/* Heavy in misty weather */
+/* -------------- Heavy in misty weather -------------- */
 .vt-home--weather-misty .vt-home__env-fog {
   opacity: 1;
   filter: blur(16px);
@@ -3320,7 +3182,7 @@
   opacity: 0.55;
 }
 
-/* Fog gently breathes and shifts */
+/* -------------- Fog gently breathes and shifts -------------- */
 @keyframes vt-fog-drift {
   0% {
     transform: scaleX(1) translateX(0);
@@ -3336,91 +3198,145 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   STORM CLOUDS — extra dark layered clouds during rainy/stormy weather
-   add images: CSS gradient storm cloud layers — no image.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- STORM CLOUDS — extra dark layered clouds during rainy/stormy weather add images: CSS gradient storm cloud layers — no image. -------------- */
 .vt-home__env-stormclouds {
   position: absolute;
   inset: 0;
   pointer-events: none;
   opacity: 0;
   transition: opacity 3s ease;
+  z-index: 6;
 }
 
-/* Only visible during rainy/stormy weather */
+/* -------------- Only visible during rainy/stormy weather -------------- */
 .vt-home--weather-rainy .vt-home__env-stormclouds {
-  opacity: 0.65;
+  opacity: 0.82;
 }
 .vt-home--weather-stormy .vt-home__env-stormclouds {
   opacity: 1;
 }
 
-/* Storm cloud bank 1 — upper dark mass */
+/* -------------- Storm cloud bank 1 — upper dark mass: distinct heavy cumulonimbus formation -------------- */
 .vt-home__env-stormclouds::before {
   content: "";
   position: absolute;
-  top: -20px;
-  left: -10%;
-  right: -10%;
-  height: 50%;
+  top: -30px;
+  left: -15%;
+  right: -15%;
+  height: 55%;
   background:
+    /* Central dark thunderhead — densest part */
     radial-gradient(
-      ellipse 80% 60% at 30% 40%,
-      rgba(25, 25, 40, 0.9) 40%,
-      transparent 80%
+      ellipse 55% 65% at 50% 38%,
+      rgba(18, 18, 30, 0.95) 0%,
+      rgba(22, 22, 38, 0.88) 35%,
+      rgba(30, 28, 45, 0.55) 60%,
+      transparent 82%
     ),
+    /* Left storm lobe */
     radial-gradient(
-      ellipse 70% 55% at 70% 35%,
-      rgba(20, 20, 35, 0.85) 40%,
-      transparent 80%
-    ),
+        ellipse 42% 58% at 22% 42%,
+        rgba(15, 15, 28, 0.92) 0%,
+        rgba(20, 18, 35, 0.75) 40%,
+        transparent 72%
+      ),
+    /* Right storm lobe */
     radial-gradient(
-      ellipse 60% 50% at 50% 50%,
-      rgba(30, 28, 45, 0.8) 40%,
-      transparent 80%
-    );
-  filter: blur(20px);
-  animation: vt-stormcloud-roll 60s linear infinite;
+        ellipse 38% 55% at 78% 35%,
+        rgba(16, 16, 30, 0.88) 0%,
+        rgba(22, 20, 38, 0.7) 40%,
+        transparent 70%
+      ),
+    /* Mid secondary cloud — adds depth and volume */
+    radial-gradient(
+        ellipse 35% 48% at 62% 55%,
+        rgba(25, 24, 40, 0.82) 0%,
+        rgba(28, 26, 42, 0.58) 45%,
+        transparent 75%
+      ),
+    /* Wispy edges — diffuse outer fringe */
+    radial-gradient(
+        ellipse 90% 40% at 50% 85%,
+        rgba(30, 28, 45, 0.35) 0%,
+        transparent 65%
+      );
+  filter: blur(12px);
+  animation: vt-stormcloud-drift-1 55s linear infinite;
 }
 
-/* Storm cloud bank 2 — lower looming mass */
+/* -------------- Storm cloud bank 2 — lower looming mass with distinct edges -------------- */
 .vt-home__env-stormclouds::after {
   content: "";
   position: absolute;
-  top: 20%;
-  left: -15%;
-  right: -15%;
-  height: 45%;
+  top: 18%;
+  left: -20%;
+  right: -20%;
+  height: 50%;
   background:
+    /* Main lower mass */
     radial-gradient(
-      ellipse 90% 65% at 40% 50%,
-      rgba(18, 18, 32, 0.85) 35%,
-      transparent 75%
+      ellipse 70% 62% at 42% 48%,
+      rgba(14, 14, 26, 0.9) 0%,
+      rgba(18, 16, 32, 0.78) 38%,
+      rgba(24, 22, 38, 0.45) 62%,
+      transparent 80%
     ),
+    /* Right rolling mass */
     radial-gradient(
-      ellipse 75% 60% at 75% 45%,
-      rgba(22, 20, 38, 0.8) 35%,
-      transparent 75%
-    );
-  filter: blur(25px);
-  animation: vt-stormcloud-roll 80s linear infinite reverse;
+        ellipse 55% 58% at 76% 42%,
+        rgba(16, 15, 30, 0.85) 0%,
+        rgba(20, 18, 36, 0.68) 42%,
+        transparent 72%
+      ),
+    /* Lower anvil shelf — flat base of cumulonimbus */
+    radial-gradient(
+        ellipse 100% 25% at 50% 95%,
+        rgba(12, 12, 22, 0.55) 0%,
+        rgba(16, 14, 28, 0.32) 50%,
+        transparent 80%
+      ),
+    /* Far left mass */
+    radial-gradient(
+        ellipse 38% 50% at 15% 50%,
+        rgba(18, 16, 32, 0.8) 0%,
+        transparent 68%
+      );
+  filter: blur(14px);
+  animation: vt-stormcloud-drift-2 75s linear infinite reverse;
 }
 
-/* Storm clouds rolling in */
-@keyframes vt-stormcloud-roll {
+/* -------------- Distinct drifting storm clouds rolling slowly across the sky -------------- */
+@keyframes vt-stormcloud-drift-1 {
   0% {
-    transform: translateX(0);
+    transform: translateX(0%) translateY(0px);
+  }
+  40% {
+    transform: translateX(5%) translateY(-4px);
+  }
+  70% {
+    transform: translateX(9%) translateY(2px);
   }
   100% {
-    transform: translateX(8%);
+    transform: translateX(12%) translateY(0px);
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   RAIN SPLASH PUDDLE REFLECTIONS — bottom of hero wet ground effect
-   add images: CSS animated reflection — no image.
-   ──────────────────────────────────────────────────────────────────────────── */
+@keyframes vt-stormcloud-drift-2 {
+  0% {
+    transform: translateX(0%) translateY(0px);
+  }
+  35% {
+    transform: translateX(-6%) translateY(3px);
+  }
+  65% {
+    transform: translateX(-10%) translateY(-2px);
+  }
+  100% {
+    transform: translateX(-14%) translateY(0px);
+  }
+}
+
+/* --------------  RAIN SPLASH PUDDLE REFLECTIONS — bottom of hero wet ground effect add images: CSS animated reflection — no image. -------------- */
 .vt-home__env-rainsplash {
   position: absolute;
   bottom: 0;
@@ -3439,7 +3355,7 @@
   animation: vt-rainsplash-shimmer 3s ease-in-out infinite;
 }
 
-/* Wet reflections appear with rain */
+/* -------------- Wet reflections appear with rain -------------- */
 .vt-home--weather-rainy .vt-home__env-rainsplash {
   opacity: 0.8;
 }
@@ -3447,7 +3363,7 @@
   opacity: 1;
 }
 
-/* Reflection shimmer animation */
+/* -------------- Reflection shimmer animation -------------- */
 @keyframes vt-rainsplash-shimmer {
   0%,
   100% {
@@ -3460,9 +3376,7 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   REDUCED MOTION — disable all new animation layers
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- REDUCED MOTION — disable all new animation layers -------------- */
 @media (prefers-reduced-motion: reduce) {
   .vt-home__env-bird,
   .vt-home__env-firefly,
@@ -3478,19 +3392,15 @@
     animation: none;
     transition: none;
   }
-  /* Still show elements but static */
+  /* -------------- Still show elements but static -------------- */
   .vt-home__env-birds,
   .vt-home__env-fireflies {
     transition: none;
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   RESPONSIVE — scale down landmarks on smaller screens
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- RESPONSIVE — scale down landmarks on smaller screens -------------- */
 @media (max-width: 768px) {
-  /* Scale landmarks to avoid crowding on tablet */
-  /* Image change: Sigiriya tablet size — scales down the PNG landmark */
   .vt-home__landmark--sigiriya {
     width: 120px;
     height: 230px;
@@ -3521,7 +3431,7 @@
     right: 32%;
   }
 
-  /* Fewer/smaller birds on mobile */
+  /* -------------- Fewer/smaller birds on mobile -------------- */
   .vt-home__env-bird--lg {
     width: 16px;
     height: 11px;
@@ -3537,7 +3447,7 @@
 }
 
 @media (max-width: 480px) {
-  /* Hide some landmarks on very small screens for cleanliness */
+  /* -------------- Hide some landmarks on very small screens for cleanliness -------------- */
   .vt-home__landmark--yapahuwa {
     display: none;
   }
@@ -3548,13 +3458,13 @@
     display: none;
   }
 
-  /* Reduce firefly count via display (odd children only) */
+  /* -------------- Reduce firefly count via display (odd children only) -------------- */
   .vt-home__env-firefly:nth-child(even) {
     display: none;
   }
 }
 
-/* ── Shared Section Wrapper ────────────────────────────────────────────────── */
+/* -------------- Shared Section Wrapper -------------- */
 .vt-section {
   width: 100%;
   padding: 3rem 2rem 2.5rem;
@@ -3562,7 +3472,7 @@
   box-sizing: border-box;
 }
 
-/* ── Shared Section Header (title + search bar row) ────────────────────────── */
+/* -------------- Shared Section Header (title + search bar row) -------------- */
 .vt-section__header {
   display: flex;
   align-items: center;
@@ -3581,7 +3491,7 @@
   letter-spacing: -0.01em;
 }
 
-/* Dark variant (used in Tour section) */
+/* -------------- Dark variant (used in Tour section) -------------- */
 .vt-section__title--dark {
   color: #111827;
 }
@@ -3621,8 +3531,8 @@
   color: #9ca3af;
 }
 
-/* ── Card Grid Track ─────────────────────────────────────────────────────── */
-/* 3-up grid that slides — cards animate in on page change */
+/* -------------- Card Grid Track -------------- */
+/* -------------- 3-up grid that slides — cards animate in on page change -------------- */
 .vt-cards__track {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -3642,7 +3552,7 @@
   }
 }
 
-/* ── Individual Card ─────────────────────────────────────────────────────── */
+/* -------------- Individual Card -------------- */
 .vt-card {
   background: #ffffff;
   border-radius: 12px;
@@ -3666,7 +3576,7 @@
   overflow: hidden;
 }
 
-/* add images: background-image set via JSX style prop */
+/* -------------- add images: background-image set via JSX style prop -------------- */
 .vt-card__img {
   width: 100%;
   height: 100%;
@@ -3712,7 +3622,7 @@
   text-decoration: underline;
 }
 
-/* ── Shared Card Slider Nav (dots + arrows) ────────────────────────────────── */
+/* -------------- Shared Card Slider Nav (dots + arrows) -------------- */
 .vt-cards__nav {
   display: flex;
   align-items: center;
@@ -3772,18 +3682,18 @@
   transform: scale(1.08);
 }
 
-/* ── Taxi Section specific ────────────────────────────────────────────────── */
+/* -------------- Taxi Section specific -------------- */
 .vt-taxi {
   background-color: #f9fafb;
   border-bottom: 1px solid #f0f0f0;
 }
 
-/* ── Tour Section specific ────────────────────────────────────────────────── */
+/* -------------- Tour Section specific -------------- */
 .vt-tour {
   background-color: #f9fafb;
 }
 
-/* ── Airport Transfers Section ────────────────────────────────────────────── */
+/* -------------- Airport Transfers Section -------------- */
 .vt-airport {
   background-color: #ffffff;
   border-top: 1px solid #f0f0f0;
@@ -3853,7 +3763,7 @@
   overflow: hidden;
 }
 
-/* add images: background-image set via JSX style prop */
+/* -------------- add images: background-image set via JSX style prop -------------- */
 .vt-airport__card-img {
   width: 100%;
   height: 100%;
@@ -3923,7 +3833,7 @@
   text-decoration: underline;
 }
 
-/* ── Exclusive Rides Section ────────────────────────────────────────────────── */
+/* -------------- Exclusive Rides Section -------------- */
 .vt-exclusive {
   background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 50%, #f9fafb 100%);
   text-align: center;
@@ -3964,7 +3874,7 @@
   letter-spacing: 0.02em;
 }
 
-/* Feature cards row */
+/* -------------- Feature cards row -------------- */
 .vt-exclusive__track {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -4017,13 +3927,13 @@
   line-height: 1.55;
 }
 
-/* ── Tour 2-row × 3-col grid modifier ────────────────────────────────────── */
+/* -------------- Tour 2-row × 3-col grid modifier -------------- */
 .vt-cards__track--two-row {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, auto);
 }
 
-/* ── Responsive — New Sections ────────────────────────────────────────────── */
+/* -------------- Responsive — New Sections -------------- */
 @media (max-width: 900px) {
   .vt-airport__grid {
     grid-template-columns: 1fr;
@@ -4086,11 +3996,9 @@
   }
 }
 
-/* ==========================================================================
-   ADDITIONAL NEW SECTIONS — Itineraries, Moments, ENYTK, Voyara Tales, Reviews
-   ========================================================================== */
+/* -------------- ADDITIONAL NEW SECTIONS — Itineraries, Moments, ENYTK, Voyara Tales, Reviews -------------- */
 
-/* ── Itinerary Section ───────────────────────────────────────────────────── */
+/* -------------- Itinerary Section -------------- */
 .vt-itin {
   background-color: #ffffff;
   border-top: 1px solid #f0f0f0;
@@ -4114,7 +4022,7 @@
   color: #3b9eff;
 }
 
-/* 2-column grid for itinerary cards */
+/* -------------- 2-column grid for itinerary cards -------------- */
 .vt-itin__track {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -4146,7 +4054,7 @@
   overflow: hidden;
 }
 
-/* add images: background-image applied via data-bg + useEffect */
+/* -------------- add images: background-image applied via data-bg + useEffect -------------- */
 .vt-itin__card-img {
   width: 100%;
   height: 100%;
@@ -4185,7 +4093,7 @@
   margin: 0;
 }
 
-/* ── Collect Moments Section ─────────────────────────────────────────────── */
+/* -------------- Collect Moments Section -------------- */
 .vt-moments {
   background: linear-gradient(135deg, #fefefe 0%, #f8f9fa 100%);
   border-top: 1px solid #f0f0f0;
@@ -4219,7 +4127,7 @@
   line-height: 1.6;
 }
 
-/* Scrolling image strip — 5 columns */
+/* -------------- Scrolling image strip — 5 columns -------------- */
 .vt-moments__strip {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -4234,7 +4142,7 @@
   aspect-ratio: 4 / 3;
 }
 
-/* add images: background-image applied via data-bg + useEffect */
+/* -------------- add images: background-image applied via data-bg + useEffect -------------- */
 .vt-moments__img {
   width: 100%;
   height: 100%;
@@ -4248,14 +4156,14 @@
   transform: scale(1.06);
 }
 
-/* ── Everything You Need to Know Section ─────────────────────────────────── */
+/* -------------- Everything You Need to Know Section -------------- */
 .vt-enytk {
   background-color: #ffffff;
   border-top: 1px solid #f0f0f0;
   padding: 0 2rem 3rem;
 }
 
-/* Alternating image + text rows */
+/* -------------- Alternating image + text rows -------------- */
 .vt-enytk__row {
   display: grid;
   gap: 2.5rem;
@@ -4282,7 +4190,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* add images: background-image applied via data-bg + useEffect */
+/* -------------- add images: background-image applied via data-bg + useEffect -------------- */
 .vt-enytk__img {
   width: 100%;
   height: 100%;
@@ -4359,7 +4267,7 @@
   transform: translateY(-2px);
 }
 
-/* Full-width banner inside ENYTK */
+/* -------------- Full-width banner inside ENYTK -------------- */
 .vt-enytk__banner {
   position: relative;
   width: 100%;
@@ -4373,7 +4281,7 @@
   justify-content: center;
 }
 
-/* add images: background-image applied via data-bg + useEffect */
+/* -------------- add images: background-image applied via data-bg + useEffect -------------- */
 .vt-enytk__banner-bg {
   position: absolute;
   inset: 0;
@@ -4414,7 +4322,7 @@
   max-width: 640px;
 }
 
-/* Discover the Soul — side-by-side CTA */
+/* -------------- Discover the Soul — side-by-side CTA -------------- */
 .vt-enytk__soul {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -4488,7 +4396,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* add images: background-image applied via data-bg + useEffect */
+/* -------------- add images: background-image applied via data-bg + useEffect -------------- */
 .vt-enytk__soul-img {
   width: 100%;
   height: 100%;
@@ -4502,7 +4410,7 @@
   transform: scale(1.04);
 }
 
-/* ── Voyara Tales Section ─────────────────────────────────────────────────── */
+/* -------------- Voyara Tales Section -------------- */
 .vt-tales {
   background-color: #f9fafb;
   border-top: 1px solid #f0f0f0;
@@ -4530,7 +4438,7 @@
   line-height: 1.6;
 }
 
-/* 3-column grid matching the design */
+/* -------------- 3-column grid matching the design -------------- */
 .vt-tales__track {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -4562,7 +4470,7 @@
   overflow: hidden;
 }
 
-/* add images: background-image applied via data-bg + useEffect */
+/* -------------- add images: background-image applied via data-bg + useEffect -------------- */
 .vt-tales__card-img {
   width: 100%;
   height: 100%;
@@ -4586,7 +4494,7 @@
   text-align: center;
 }
 
-/* ── Memories / Reviews Section ───────────────────────────────────────────── */
+/* -------------- Memories / Reviews Section -------------- */
 .vt-reviews {
   background-color: #ffffff;
   border-top: 1px solid #f0f0f0;
@@ -4610,7 +4518,7 @@
   color: #3b9eff;
 }
 
-/* 3-column grid for review cards */
+/* -------------- 3-column grid for review cards -------------- */
 .vt-reviews__track {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -4649,7 +4557,7 @@
   flex-shrink: 0;
 }
 
-/* add images: traveller avatar from Packages page — applied via data-bg + useEffect */
+/* -------------- add images: traveller avatar from Packages page — applied via data-bg + useEffect -------------- */
 .vt-reviews__avatar {
   width: 100%;
   height: 100%;
@@ -4707,7 +4615,7 @@
   color: #f59e0b;
 }
 
-/* ── Responsive — Additional Sections ────────────────────────────────────── */
+/* -------------- Responsive — Additional Sections -------------- */
 @media (max-width: 900px) {
   .vt-enytk__row--img-left,
   .vt-enytk__row--img-right {
@@ -4779,28 +4687,21 @@
   }
 }
 
-/* ==========================================================================
-   LOCATION SWITCHER, SPOTLIGHT LANDMARK, BATS, TIME SLIDER
-   All within .vt-home scope — hero section only. No inline styles.
-   ========================================================================== */
+/* -------------- LOCATION SWITCHER, SPOTLIGHT LANDMARK, BATS, TIME SLIDER All within .vt-home scope — hero section only. No inline styles. -------------- */
 
-/* ────────────────────────────────────────────────────────────────────────────
-   LANDMARK SPOTLIGHT — center-stage landmark PNG per selected location
-   add images: .vt-home__landmark-spotlight uses backgroundImage set via
-               data-bg attribute. See LOCATIONS array in JSX for paths.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- LANDMARK SPOTLIGHT — center-stage landmark PNG per selected location
+   add images: .vt-home__landmark-spotlight uses backgroundImage set via data-bg attribute. See LOCATIONS array in JSX for paths. -------------- */
 
-/* Container for the spotlight landmark — center-bottom of hero */
+/* -------------- Container for the spotlight landmark — center-bottom of hero -------------- */
 .vt-home__landmarks-spotlight {
   position: absolute;
   inset: 0;
-  /* z-index: 3 — same layer as CSS-art landmarks, above env (z:2) */
   z-index: 3;
   pointer-events: none;
   overflow: hidden;
 }
 
-/* Individual spotlight landmark — hidden by default */
+/* -------------- Individual spotlight landmark — hidden by default -------------- */
 .vt-home__landmark-spotlight {
   position: absolute;
   bottom: 0;
@@ -4811,7 +4712,7 @@
   background-size: contain;
   background-position: bottom center;
   background-repeat: no-repeat;
-  /* Background color transparent so PNG alpha shows correctly */
+  /* -------------- Background color transparent so PNG alpha shows correctly -------------- */
   background-color: transparent;
   opacity: 0;
   transition:
@@ -4820,13 +4721,13 @@
   will-change: opacity, filter;
 }
 
-/* Active landmark — fully visible */
+/* -------------- Active landmark — fully visible -------------- */
 .vt-home__landmark-spotlight--active {
   opacity: 1;
 }
 
-/* ── Time-of-day visual response for spotlight landmark ──────────────────── */
-/* Dawn: pink-warm backlit silhouette glow */
+/* -------------- Time-of-day visual response for spotlight landmark -------------- */
+/* -------------- Dawn: pink-warm backlit silhouette glow -------------- */
 .vt-home--env-dawn .vt-home__landmark-spotlight--active {
   filter: brightness(0.55) sepia(0.6) hue-rotate(-20deg)
     drop-shadow(0 0 30px rgba(255, 140, 80, 0.6));
@@ -4840,28 +4741,28 @@
   opacity: 0.95;
 }
 
-/* Noon: harsh overhead light, maximum clarity */
+/* -------------- Noon: harsh overhead light, maximum clarity -------------- */
 .vt-home--env-noon .vt-home__landmark-spotlight--active {
   filter: brightness(0.9) saturate(1.05)
     drop-shadow(0 4px 20px rgba(0, 0, 0, 0.35));
   opacity: 1;
 }
 
-/* Evening: deep amber backlit, sunset silhouette */
+/* -------------- Evening: deep amber backlit, sunset silhouette -------------- */
 .vt-home--env-evening .vt-home__landmark-spotlight--active {
   filter: brightness(0.6) sepia(0.7) hue-rotate(-15deg)
     drop-shadow(0 0 50px rgba(255, 100, 30, 0.65));
   opacity: 0.85;
 }
 
-/* Night: dark blue silhouette, moonlight glow */
+/* -------------- Night: dark blue silhouette, moonlight glow -------------- */
 .vt-home--env-night .vt-home__landmark-spotlight--active {
   filter: brightness(0.3) saturate(0.3) hue-rotate(200deg)
     drop-shadow(0 0 25px rgba(150, 180, 255, 0.35));
   opacity: 0.6;
 }
 
-/* Weather modifiers */
+/* -------------- Weather modifiers -------------- */
 .vt-home--weather-misty .vt-home__landmark-spotlight--active {
   filter: blur(2px) brightness(0.5);
   opacity: 0.5;
@@ -4875,8 +4776,7 @@
   opacity: 0.55;
 }
 
-/* ── Per-location landmark sizing ────────────────────────────────────────── */
-/* add images: Adjust width/height per landmark based on your actual PNG aspect ratio */
+/* -------------- Per-location landmark sizing add images: Adjust width/height per landmark based on your actual PNG aspect ratio -------------- */
 .vt-home--location-sigiriya .vt-home__landmark-spotlight {
   width: 200px;
   height: 400px;
@@ -4902,7 +4802,7 @@
   height: 380px;
 }
 
-/* Responsive landmark sizing */
+/* -------------- Responsive landmark sizing -------------- */
 @media (max-width: 768px) {
   .vt-home__landmark-spotlight {
     width: 160px;
@@ -4929,25 +4829,20 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   BATS (Waullu) — night creatures replacing birds at night/late evening
-   add images: CSS clip-path bat silhouettes. Replace <span>s with <img>
-               of bat SVG silhouettes for higher fidelity if desired.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- BATS (Waullu) — night creatures replacing birds at night/late evening
+   add images: CSS clip-path bat silhouettes. Replace <span>s with <img>  of bat SVG silhouettes for higher fidelity if desired. -------------- */
 
-/* Bat flock container — mirrors bird container structure */
+/* -------------- Bat flock container — mirrors bird container structure -------------- */
 .vt-home__env-bats {
   position: absolute;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  /* Hidden by default; toggled by vt-home--show-bats class */
   opacity: 0;
   transition: opacity 3s ease;
-  z-index: 4; /* same layer as birds */
 }
 
-/* Show bats when vt-home--show-bats class is present */
+/* -------------- Show bats when vt-home--show-bats class is present -------------- */
 .vt-home--show-bats .vt-home__env-bats {
   opacity: 1;
 }
@@ -4955,15 +4850,15 @@
   opacity: 0;
 }
 
-/* Hide birds when bats are shown */
+/* -------------- Hide birds when bats are shown -------------- */
 .vt-home--show-birds .vt-home__env-bats {
   opacity: 0;
 }
 
-/* Individual bat — jagged wing silhouette via clip-path */
+/* -------------- Individual bat — jagged wing silhouette via clip-path -------------- */
 .vt-home__env-bat {
   position: absolute;
-  /* Bat wing shape: more jagged and wider than bird */
+  /* -------------- Bat wing shape: more jagged and wider than bird -------------- */
   clip-path: polygon(
     50% 65%,
     /* body center */ 0% 15%,
@@ -4979,30 +4874,29 @@
   background: rgba(8, 5, 18, 0.9);
   transform-origin: center center;
   will-change: transform;
-  /* Bats fly right-to-left (opposite birds) with erratic path */
+  /* -------------- Bats fly right-to-left (opposite birds) with erratic path -------------- */
   animation:
     vt-bat-fly linear infinite,
     vt-bat-flap ease-in-out infinite;
 }
 
-/* Bat size variants */
-/* add images: Bat size SM — small distant bat */
+/* -------------- Bat size variants add images: Bat size SM — small distant bat -------------- */
 .vt-home__env-bat--sm {
   width: 14px;
   height: 9px;
 }
-/* add images: Bat size MD — medium mid-distance bat */
+/* -------------- Bat size MD — medium mid-distance bat -------------- */
 .vt-home__env-bat--md {
   width: 22px;
   height: 14px;
 }
-/* add images: Bat size LG — large close bat */
+/* -------------- Bat size LG — large close bat -------------- */
 .vt-home__env-bat--lg {
   width: 30px;
   height: 18px;
 }
 
-/* Bats fly right-to-left with an erratic vertical path */
+/* -------------- Bats fly right-to-left with an erratic vertical path -------------- */
 @keyframes vt-bat-fly {
   0% {
     transform: translateX(120vw) translateY(0) rotate(5deg);
@@ -5024,7 +4918,7 @@
   }
 }
 
-/* Bat wing flap — wider, faster, more erratic than birds */
+/* -------------- Bat wing flap — wider, faster, more erratic than birds -------------- */
 @keyframes vt-bat-flap {
   0%,
   100% {
@@ -5057,8 +4951,7 @@
   }
 }
 
-/* Bat 1 — large, mid-sky, slow erratic */
-/* add images: Bat 1 timing and position */
+/* -------------- Bat 1 — large, mid-sky, slow erratic add images: Bat 1 timing and position -------------- */
 .vt-home__env-bat--1 {
   top: 18%;
   right: -20%;
@@ -5066,8 +4959,8 @@
   animation-delay: 0s, 0s;
 }
 
-/* Bat 2 — small, high altitude, fast */
-/* add images: Bat 2 timing and position */
+/* -------------- Bat 2 — small, high altitude, fast -------------- */
+/* -------------- add images: Bat 2 timing and position -------------- */
 .vt-home__env-bat--2 {
   top: 8%;
   right: -20%;
@@ -5077,8 +4970,8 @@
     -0.2s;
 }
 
-/* Bat 3 — medium, near moon level */
-/* add images: Bat 3 timing and position */
+/* -------------- Bat 3 — medium, near moon level -------------- */
+/* -------------- add images: Bat 3 timing and position -------------- */
 .vt-home__env-bat--3 {
   top: 14%;
   right: -20%;
@@ -5088,8 +4981,8 @@
     -0.3s;
 }
 
-/* Bat 4 — small, very high */
-/* add images: Bat 4 timing and position */
+/* -------------- Bat 4 — small, very high -------------- */
+/* -------------- add images: Bat 4 timing and position -------------- */
 .vt-home__env-bat--4 {
   top: 5%;
   right: -20%;
@@ -5099,8 +4992,8 @@
     -0.1s;
 }
 
-/* Bat 5 — large, low sweep near landmarks */
-/* add images: Bat 5 timing and position */
+/* -------------- Bat 5 — large, low sweep near landmarks -------------- */
+/* -------------- add images: Bat 5 timing and position -------------- */
 .vt-home__env-bat--5 {
   top: 30%;
   right: -20%;
@@ -5110,8 +5003,8 @@
     -0.4s;
 }
 
-/* Bat 6 — medium, second wave */
-/* add images: Bat 6 timing and position */
+/* -------------- Bat 6 — medium, second wave -------------- */
+/* -------------- add images: Bat 6 timing and position -------------- */
 .vt-home__env-bat--6 {
   top: 22%;
   right: -20%;
@@ -5121,8 +5014,8 @@
     -0.25s;
 }
 
-/* Bat 7 — small, high straggler */
-/* add images: Bat 7 timing and position */
+/* -------------- Bat 7 — small, high straggler -------------- */
+/* -------------- add images: Bat 7 timing and position -------------- */
 .vt-home__env-bat--7 {
   top: 10%;
   right: -20%;
@@ -5132,8 +5025,8 @@
     -0.15s;
 }
 
-/* Bat 8 — medium, diving swooper */
-/* add images: Bat 8 timing and position */
+/* -------------- Bat 8 — medium, diving swooper -------------- */
+/* -------------- add images: Bat 8 timing and position -------------- */
 .vt-home__env-bat--8 {
   top: 35%;
   right: -20%;
@@ -5143,8 +5036,8 @@
     -0.35s;
 }
 
-/* ── Transition between birds and bats ────────────────────────────────────── */
-/* When vt-home--show-birds class is set, birds are on, bats off */
+/* -------------- Transition between birds and bats -------------- */
+/* -------------- When vt-home--show-birds class is set, birds are on, bats off -------------- */
 .vt-home--show-birds .vt-home__env-birds {
   /* Override night suppression for explicit show-birds state */
   opacity: 1;
@@ -5154,13 +5047,8 @@
   opacity: 0.2;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   ENVIRONMENT CONTROLS PANEL
-   Floating panel at bottom of hero containing: location switcher, time slider,
-   Sri Lanka map thumbnail, period icons, and tagline.
-   ──────────────────────────────────────────────────────────────────────────── */
-
-/* Main control panel — horizontal row at the bottom of the hero */
+/* -------------- ENVIRONMENT CONTROLS PANEL Floating panel at bottom of hero containing: location switcher, time slider, Sri Lanka map thumbnail, period icons, and tagline. -------------- */
+/* -------------- Main control panel — horizontal row at the bottom of the hero -------------- */
 .vt-home__env-controls {
   position: absolute;
   bottom: 3.5rem; /* above dots/counter */
@@ -5179,12 +5067,11 @@
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
-  /* Panel fades in */
   animation: vt-controls-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: 0.5s;
 }
 
-/* Period-coloured border accent on the controls panel */
+/* -------------- Period-coloured border accent on the controls panel -------------- */
 .vt-home--env-dawn .vt-home__env-controls {
   border-color: rgba(220, 150, 255, 0.25);
 }
@@ -5212,7 +5099,7 @@
   }
 }
 
-/* ── Location Dropdown ───────────────────────────────────────────────────── */
+/* -------------- Location Dropdown -------------- */
 .vt-home__location-select {
   position: relative;
   flex-shrink: 0;
@@ -5252,7 +5139,7 @@
   font-size: 0.82rem;
 }
 
-/* Chevron icon — rotates when dropdown is open */
+/* -------------- Chevron icon — rotates when dropdown is open -------------- */
 .vt-home__location-btn-chevron {
   font-size: 0.75rem;
   transition: transform 0.2s ease;
@@ -5262,7 +5149,7 @@
   transform: rotate(180deg);
 }
 
-/* Dropdown list — appears above the panel */
+/* -------------- Dropdown list — appears above the panel -------------- */
 .vt-home__location-dropdown {
   position: absolute;
   bottom: calc(100% + 0.5rem);
@@ -5292,7 +5179,7 @@
   }
 }
 
-/* Each location option */
+/* -------------- Each location option -------------- */
 .vt-home__location-option {
   display: flex;
   flex-direction: column;
@@ -5306,7 +5193,7 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Active (selected) option */
+/* -------------- Active (selected) option -------------- */
 .vt-home__location-option--active {
   background: rgba(59, 158, 255, 0.2);
 }
@@ -5325,7 +5212,7 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* ── Time Badge and Slider ────────────────────────────────────────────────── */
+/* -------------- Time Badge and Slider -------------- */
 .vt-home__time-panel {
   position: relative;
   display: flex;
@@ -5334,7 +5221,7 @@
   flex-shrink: 0;
 }
 
-/* Time display button */
+/* -------------- Time display button -------------- */
 .vt-home__time-badge {
   display: inline-flex;
   align-items: center;
@@ -5371,7 +5258,7 @@
   letter-spacing: 0.08em;
 }
 
-/* LIVE pulsing pill */
+/* -------------- LIVE pulsing pill -------------- */
 .vt-home__time-badge-live {
   font-size: 0.6rem;
   font-weight: 800;
@@ -5394,7 +5281,7 @@
   }
 }
 
-/* Slider wrap — appears when time badge is clicked */
+/* -------------- Slider wrap — appears when time badge is clicked -------------- */
 .vt-home__time-slider-wrap {
   position: absolute;
   bottom: calc(100% + 0.5rem);
@@ -5422,7 +5309,7 @@
   letter-spacing: 0.04em;
 }
 
-/* Custom styled range slider */
+/* -------------- Custom styled range slider -------------- */
 .vt-home__time-slider {
   -webkit-appearance: none;
   appearance: none;
@@ -5461,7 +5348,7 @@
   cursor: grab;
 }
 
-/* Reset to live clock button */
+/* -------------- Reset to live clock button -------------- */
 .vt-home__time-reset-btn {
   padding: 0.22rem 0.6rem;
   border-radius: 6px;
@@ -5480,8 +5367,7 @@
   background: rgba(74, 222, 128, 0.28);
 }
 
-/* ── Sri Lanka Map Thumbnail ─────────────────────────────────────────────── */
-/* add images: Small decorative SVG map of Sri Lanka — pure SVG, no image file */
+/* -------------- Sri Lanka Map Thumbnail add images: Small decorative SVG map of Sri Lanka — pure SVG, no image file -------------- */
 .vt-home__sl-map {
   flex-shrink: 0;
   width: 36px;
@@ -5494,7 +5380,7 @@
   height: 100%;
 }
 
-/* Island outline path */
+/* -------------- Island outline path -------------- */
 .vt-home__sl-map-path {
   fill: rgba(255, 255, 255, 0.18);
   stroke: rgba(255, 255, 255, 0.55);
@@ -5502,7 +5388,7 @@
   stroke-linejoin: round;
 }
 
-/* Pulsing location dot on the map */
+/* -------------- Pulsing location dot on the map -------------- */
 .vt-home__sl-map-dot {
   fill: #3b9eff;
   filter: drop-shadow(0 0 4px rgba(59, 158, 255, 0.9));
@@ -5521,7 +5407,7 @@
   }
 }
 
-/* ── Tagline and Period Icons ─────────────────────────────────────────────── */
+/* -------------- Tagline and Period Icons -------------- */
 .vt-home__env-tagline {
   font-family: "Lato", sans-serif;
   font-size: 0.72rem;
@@ -5536,7 +5422,7 @@
   font-weight: 700;
 }
 
-/* Period icons row — 5 small emoji indicators */
+/* -------------- Period icons row — 5 small emoji indicators -------------- */
 .vt-home__env-period-icons {
   display: flex;
   align-items: center;
@@ -5553,13 +5439,13 @@
   cursor: default;
 }
 
-/* Active period icon — bright and slightly enlarged */
+/* -------------- Active period icon — bright and slightly enlarged -------------- */
 .vt-home__env-period-icon--active {
   opacity: 1;
   transform: scale(1.3);
 }
 
-/* ── Responsive — controls panel on smaller screens ─────────────────────── */
+/* -------------- Responsive — controls panel on smaller screens -------------- */
 @media (max-width: 768px) {
   .vt-home__env-controls {
     gap: 0.5rem;
@@ -5568,7 +5454,7 @@
     max-width: 98vw;
   }
 
-  /* Hide map and tagline on tablet to save space */
+  /* -------------- Hide map and tagline on tablet to save space -------------- */
   .vt-home__sl-map {
     display: none;
   }
@@ -5594,7 +5480,7 @@
     padding: 0.4rem 0.5rem;
   }
 
-  /* Hide period icons on mobile */
+  /* -------------- Hide period icons on mobile -------------- */
   .vt-home__env-period-icons {
     display: none;
   }
@@ -5609,9 +5495,7 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   REDUCED MOTION — disable new animation layers
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- REDUCED MOTION — disable new animation layers -------------- */
 @media (prefers-reduced-motion: reduce) {
   .vt-home__env-bat,
   .vt-home__env-bats,
@@ -5624,15 +5508,15 @@
   }
 }
 
-/* New deep-sky layer — positioned BELOW the existing layers for more sky depth */
+/* -------------- New deep-sky layer — positioned BELOW the existing layers for more sky depth -------------- */
 .vt-home__env-sky {
-  /* Re-augment with period-specific sky from CSS variables */
+  /* -------------- Re-augment with period-specific sky from CSS variables -------------- */
   transition:
     background 5s ease-in-out,
     opacity 5s ease-in-out;
 }
 
-/* ── DAWN: deep violet → dusty rose → warm amber horizon ──────────────────── */
+/* -------------- DAWN: deep violet -> dusty rose -> warm amber horizon -------------- */
 .vt-home--env-dawn .vt-home__env-sky {
   background: linear-gradient(
     180deg,
@@ -5647,7 +5531,7 @@
   opacity: 0.9;
 }
 
-/* ── MORNING: rich blue sky → warm horizon golden glow ───────────────────── */
+/* -------------- MORNING: rich blue sky -> warm horizon golden glow -------------- */
 .vt-home--env-morning .vt-home__env-sky {
   background: linear-gradient(
     180deg,
@@ -5661,7 +5545,7 @@
   opacity: 0.8;
 }
 
-/* ── NOON: deep azure overhead → lighter blue-white near horizon ──────────── */
+/* -------------- NOON: deep azure overhead -> lighter blue-white near horizon -------------- */
 .vt-home--env-noon .vt-home__env-sky {
   background: linear-gradient(
     180deg,
@@ -5674,7 +5558,7 @@
   opacity: 0.75;
 }
 
-/* ── EVENING: fiery sunset — deep purple → blood orange → amber ───────────── */
+/* -------------- EVENING: fiery sunset — deep purple -> blood orange -> amber -------------- */
 .vt-home--env-evening .vt-home__env-sky {
   background: linear-gradient(
     180deg,
@@ -5690,7 +5574,7 @@
   opacity: 0.95;
 }
 
-/* ── NIGHT: pitch-black zenith → deep navy → faint purple-blue horizon ───── */
+/* -------------- NIGHT: pitch-black zenith -> deep navy -> faint purple-blue horizon -------------- */
 .vt-home--env-night .vt-home__env-sky {
   background: linear-gradient(
     180deg,
@@ -5704,7 +5588,7 @@
   opacity: 0.95;
 }
 
-/* ── WEATHER OVERRIDES — stormy sky darkens everything ───────────────────── */
+/* -------------- WEATHER OVERRIDES — stormy sky darkens everything -------------- */
 .vt-home--weather-stormy .vt-home__env-sky {
   background: linear-gradient(
     180deg,
@@ -5720,10 +5604,7 @@
   filter: saturate(0.7) brightness(0.85);
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   SUN CORONA — outer glow halo rings for realistic solar atmosphere
-   add images: Pure CSS — no image needed.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- SUN CORONA — outer glow halo rings for realistic solar atmosphere add images: Pure CSS — no image needed. -------------- */
 .vt-home__env-sun::before {
   content: "";
   position: absolute;
@@ -5740,7 +5621,7 @@
   transition: opacity var(--env-transition);
 }
 
-/* Outer diffuse corona ring */
+/* -------------- Outer diffuse corona ring -------------- */
 .vt-home__env-sun::after {
   content: "";
   position: absolute;
@@ -5769,7 +5650,7 @@
   }
 }
 
-/* Dawn sun: low reddish corona */
+/* -------------- Dawn sun: low reddish corona -------------- */
 .vt-home--env-dawn .vt-home__env-sun::before {
   background: radial-gradient(
     circle,
@@ -5779,7 +5660,7 @@
   );
 }
 
-/* Evening sun: dramatic red-orange corona */
+/* -------------- Evening sun: dramatic red-orange corona -------------- */
 .vt-home--env-evening .vt-home__env-sun::before {
   background: radial-gradient(
     circle,
@@ -5789,7 +5670,7 @@
   );
 }
 
-/* Noon sun: white-yellow strong corona */
+/* -------------- Noon sun: white-yellow strong corona -------------- */
 .vt-home--env-noon .vt-home__env-sun::before {
   background: radial-gradient(
     circle,
@@ -5799,16 +5680,13 @@
   );
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   MOON CRATERS & DETAILS — add surface texture to moon disc
-   add images: Pure CSS — no image needed.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- MOON CRATERS & DETAILS — add surface texture to moon disc add images: Pure CSS — no image needed. -------------- */
 .vt-home__env-moon::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  /* Mare and crater pattern via radial gradients */
+  /* -------------- Mare and crater pattern via radial gradients -------------- */
   background:
     radial-gradient(
       circle 8px at 35% 30%,
@@ -5839,7 +5717,7 @@
   transition: opacity var(--env-transition);
 }
 
-/* Moon halo glow ring */
+/* -------------- Moon halo glow ring -------------- */
 .vt-home__env-moon::after {
   content: "";
   position: absolute;
@@ -5869,13 +5747,11 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   ENHANCED CLOUD SHAPES — multi-layer radial puffs for realistic 3D clouds
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- ENHANCED CLOUD SHAPES — multi-layer radial puffs for realistic 3D clouds -------------- */
 
-/* Override cloud bases to be more volumetric */
+/* -------------- Override cloud bases to be more volumetric -------------- */
 .vt-home__env-cloud {
-  /* Layered radial gradients for cloud depth */
+  /* -------------- Layered radial gradients for cloud depth -------------- */
   background:
     radial-gradient(
       ellipse 60% 55% at 40% 40%,
@@ -5898,7 +5774,7 @@
   filter: blur(14px);
 }
 
-/* Dawn / Evening clouds: warm tinted */
+/* -------------- Dawn / Evening clouds: warm tinted -------------- */
 .vt-home--env-dawn .vt-home__env-cloud,
 .vt-home--env-evening .vt-home__env-cloud {
   background:
@@ -5923,7 +5799,7 @@
   filter: blur(16px);
 }
 
-/* Night clouds: dark blue-grey barely visible */
+/* -------------- Night clouds: dark blue-grey barely visible -------------- */
 .vt-home--env-night .vt-home__env-cloud {
   background:
     radial-gradient(
@@ -5941,60 +5817,75 @@
   filter: blur(20px);
 }
 
-/* Storm clouds: dark, heavy, low */
+/* -------------- Storm clouds: dark, heavy, low -------------- */
 .vt-home--weather-stormy .vt-home__env-cloud,
 .vt-home--weather-rainy .vt-home__env-cloud {
   background:
     radial-gradient(
-      ellipse 70% 60% at 40% 40%,
-      rgba(20, 20, 35, 0.9) 0%,
-      rgba(15, 15, 28, 0.7) 45%,
+      ellipse 55% 62% at 50% 42%,
+      rgba(18, 18, 30, 0.96) 0%,
+      rgba(22, 22, 38, 0.82) 38%,
+      rgba(28, 26, 44, 0.5) 62%,
       transparent 80%
     ),
+    /* -------------- Left dark lobe -------------- */
     radial-gradient(
-      ellipse 60% 65% at 70% 50%,
-      rgba(18, 18, 32, 0.85) 0%,
-      rgba(12, 12, 24, 0.6) 45%,
-      transparent 80%
-    );
-  filter: blur(22px);
+        ellipse 42% 55% at 24% 48%,
+        rgba(15, 15, 28, 0.92) 0%,
+        rgba(20, 18, 34, 0.7) 42%,
+        transparent 72%
+      ),
+    /* -------------- Right dark lobe -------------- */
+    radial-gradient(
+        ellipse 38% 52% at 76% 44%,
+        rgba(16, 16, 30, 0.88) 0%,
+        rgba(22, 20, 36, 0.65) 42%,
+        transparent 70%
+      ),
+    /* -------------- Flat anvil base — cumulonimbus underside -------------- */
+    radial-gradient(
+        ellipse 95% 28% at 50% 92%,
+        rgba(14, 13, 24, 0.55) 0%,
+        rgba(18, 16, 30, 0.3) 50%,
+        transparent 78%
+      );
+  filter: blur(8px) brightness(0.7);
+  border-radius: 45% 52% 42% 48% / 55% 58% 45% 52%;
 }
 
-/* Cloud 1 — large and slow; sits high */
+/* -------------- Cloud 1 — large and slow; sits high -------------- */
 .vt-home__env-cloud--1 {
   width: 520px;
   height: 140px;
-  top: 8%;
+  top: 18%;
   left: -600px;
-  animation-duration: 90s;
-  animation-delay: 0s;
+  animation-duration: 10s;
+  animation-delay: 10s;
 }
 
-/* Cloud 2 — medium, mid-sky drift */
+/* -------------- Cloud 2 — medium, mid-sky drift -------------- */
 .vt-home__env-cloud--2 {
   width: 320px;
   height: 90px;
-  top: 18%;
+  top: 28%;
   left: 20%;
-  animation-duration: 130s;
-  animation-delay: -45s;
+  animation-duration: 10s;
+  animation-delay: -40s;
 }
 
-/* Cloud 3 — wide panoramic low cloud */
+/* -------------- Cloud 3 — wide panoramic low cloud -------------- */
 .vt-home__env-cloud--3 {
   width: 450px;
   height: 110px;
-  top: 28%;
+  top: 38%;
   left: 55%;
-  animation-duration: 100s;
-  animation-delay: -70s;
+  animation-duration: 10s;
+  animation-delay: -75s;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   ENHANCED BIRDS — more natural wave flight path + V-formation behaviour
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- ENHANCED BIRDS — more natural wave flight path + V-formation behaviour -------------- */
 
-/* More organic flight path — gentle S-curve wave rather than straight line */
+/* -------------- More organic flight path — gentle S-curve wave rather than straight line -------------- */
 @keyframes vt-bird-fly {
   0% {
     transform: translateX(-15vw) translateY(0) scaleX(1);
@@ -6022,7 +5913,7 @@
   }
 }
 
-/* Enhanced wing flap — more realistic 3-phase stroke */
+/* -------------- Enhanced wing flap — more realistic 3-phase stroke -------------- */
 @keyframes vt-bird-flap {
   0% {
     clip-path: polygon(50% 55%, 0% 15%, 18% 42%, 50% 28%, 82% 42%, 100% 15%);
@@ -6041,19 +5932,19 @@
   } /* back to glide */
 }
 
-/* Birds slightly darker with warm tint in evening */
+/* -------------- Birds slightly darker with warm tint in evening -------------- */
 .vt-home--env-evening .vt-home__env-bird {
   background: rgba(40, 15, 5, 0.9);
 }
 
-/* Birds return flight direction at evening — flip horizontally */
+/* -------------- Birds return flight direction at evening — flip horizontally -------------- */
 .vt-home--env-evening .vt-home__env-bird--6,
 .vt-home--env-evening .vt-home__env-bird--7,
 .vt-home--env-evening .vt-home__env-bird--8 {
   animation-direction: reverse, normal;
 }
 
-/* Birds spread across more varied vertical positions for natural look */
+/* -------------- Birds spread across more varied vertical positions for natural look -------------- */
 .vt-home__env-bird--1 {
   top: 10%;
   animation-duration: 24s, 0.85s;
@@ -6109,11 +6000,9 @@
     -0.7s;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   ENHANCED BATS — erratic swooping flight for night sky
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- ENHANCED BATS — erratic swooping flight for night sky -------------- */
 
-/* Bat flight — right-to-left with vertical swoop dips */
+/* -------------- Bat flight — right-to-left with vertical swoop dips -------------- */
 @keyframes vt-bat-fly {
   0% {
     transform: translateX(115vw) translateY(0) rotate(0deg);
@@ -6141,7 +6030,7 @@
   }
 }
 
-/* Bat wing flap — jagged, fast */
+/* -------------- Bat wing flap — jagged, fast -------------- */
 @keyframes vt-bat-flap {
   0% {
     clip-path: polygon(50% 70%, 0% 10%, 20% 50%, 50% 35%, 80% 50%, 100% 10%);
@@ -6157,12 +6046,9 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   WET GLASS EFFECT — rain droplets on camera/glass for immersive rain
-   add images: Pure CSS — no image.
-   ──────────────────────────────────────────────────────────────────────────── */
+/*  -------------- WET GLASS EFFECT — rain droplets on camera/glass for immersive rain add images: Pure CSS — no image. -------------- */
 
-/* Wet glass overlay — only appears during rain/storm */
+/* -------------- Wet glass overlay — only appears during rain/storm -------------- */
 .vt-home__env-rain::before {
   content: "";
   position: absolute;
@@ -6231,7 +6117,7 @@
   }
 }
 
-/* Heavy rain streaks — wider angled for storm intensity */
+/* -------------- Heavy rain streaks — wider angled for storm intensity -------------- */
 .vt-home--weather-stormy .vt-home__env-raindrop {
   width: 1.5px;
   transform: rotate(15deg);
@@ -6259,10 +6145,7 @@
   animation-duration: 0.62s;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   LIGHTNING FLASH — enhanced for more natural multi-flash pattern
-   add images: Pure CSS — no image.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- LIGHTNING FLASH — enhanced for more natural multi-flash pattern add images: Pure CSS — no image. -------------- */
 .vt-home__env-lightning {
   position: absolute;
   inset: 0;
@@ -6272,7 +6155,7 @@
   transition: none;
 }
 
-/* Multi-flash pattern: quick double-flash then long pause */
+/* -------------- Multi-flash pattern: quick double-flash then long pause -------------- */
 .vt-home--weather-stormy .vt-home__env-lightning {
   animation: vt-lightning-multi 7s ease-in-out infinite;
 }
@@ -6301,7 +6184,7 @@
   }
 }
 
-/* After-glow — blue tint that fades after lightning */
+/* -------------- After-glow — blue tint that fades after lightning -------------- */
 .vt-home__env-lightning::after {
   content: "";
   position: absolute;
@@ -6332,10 +6215,7 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   ENHANCED MIST LAYERS — multi-band animated mist for dawn and morning
-   add images: Pure CSS gradient — no image.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- ENHANCED MIST LAYERS — multi-band animated mist for dawn and morning add images: Pure CSS gradient — no image.-------------- */
 .vt-home__env-mist {
   position: absolute;
   inset: 0;
@@ -6344,7 +6224,7 @@
   transition: opacity 4s ease;
 }
 
-/* Mist band 1 — low ground mist */
+/* -------------- Mist band 1 — low ground mist -------------- */
 .vt-home__env-mist::before {
   content: "";
   position: absolute;
@@ -6363,7 +6243,7 @@
   animation: vt-mist-drift-a 22s ease-in-out infinite;
 }
 
-/* Mist band 2 — mid-height wisp */
+/* -------------- Mist band 2 — mid-height wisp -------------- */
 .vt-home__env-mist::after {
   content: "";
   position: absolute;
@@ -6381,7 +6261,7 @@
   animation: vt-mist-drift-b 30s ease-in-out infinite reverse;
 }
 
-/* Dawn mist: more pink-purple tinted */
+/* -------------- Dawn mist: more pink-purple tinted -------------- */
 .vt-home--env-dawn .vt-home__env-mist::before {
   background: linear-gradient(
     to top,
@@ -6391,7 +6271,7 @@
   );
 }
 
-/* Evening haze: warm amber-purple tint */
+/* -------------- Evening haze: warm amber-purple tint -------------- */
 .vt-home--env-evening .vt-home__env-mist::before {
   background: linear-gradient(
     to top,
@@ -6431,11 +6311,9 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   ENHANCED FIREFLIES — more organic drift patterns + warmer glow variants
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- ENHANCED FIREFLIES — more organic drift patterns + warmer glow variants -------------- */
 
-/* Alternate firefly colour — warm amber/gold for variety */
+/* -------------- Alternate firefly colour — warm amber/gold for variety -------------- */
 .vt-home__env-firefly:nth-child(3n + 2) {
   background: radial-gradient(
     circle,
@@ -6446,7 +6324,7 @@
   box-shadow: 0 0 6px 3px rgba(255, 210, 0, 0.55);
 }
 
-/* Cool blue firefly for moonlit nights */
+/* -------------- Cool blue firefly for moonlit nights -------------- */
 .vt-home__env-firefly:nth-child(5n + 4) {
   background: radial-gradient(
     circle,
@@ -6457,13 +6335,13 @@
   box-shadow: 0 0 6px 3px rgba(100, 170, 255, 0.5);
 }
 
-/* Larger glow fireflies */
+/* -------------- Larger glow fireflies -------------- */
 .vt-home__env-firefly:nth-child(4n + 1) {
   width: 5px;
   height: 5px;
 }
 
-/* Firefly drift — more organic 3D-feel spiral */
+/* -------------- Firefly drift — more organic 3D-feel spiral -------------- */
 @keyframes vt-firefly-drift {
   0% {
     transform: translate(0, 0) scale(1);
@@ -6485,46 +6363,44 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   ENHANCED LANDMARKS — per-period lighting effects
-   ──────────────────────────────────────────────────────────────────────────── */
+/*  -------------- ENHANCED LANDMARKS — per-period lighting effects -------------- */
 
-/* Dawn: cool blue-purple silhouette, barely lit */
+/* -------------- Dawn: cool blue-purple silhouette, barely lit -------------- */
 .vt-home--env-dawn .vt-home__landmark {
   opacity: 0.5;
   filter: brightness(0.5) sepia(0.3) hue-rotate(180deg) saturate(0.6);
 }
 
-/* Morning: warm golden light from the east, natural colours */
+/* -------------- Morning: warm golden light from the east, natural colours -------------- */
 .vt-home--env-morning .vt-home__landmark {
   opacity: 0.7;
   filter: brightness(0.8) sepia(0.15) saturate(1.1);
 }
 
-/* Noon: full midday light, sharp and clear */
+/* -------------- Noon: full midday light, sharp and clear -------------- */
 .vt-home--env-noon .vt-home__landmark {
   opacity: 0.75;
   filter: brightness(0.9) saturate(1) contrast(1.05);
 }
 
-/* Evening: warm amber/orange glow from the west */
+/* -------------- Evening: warm amber/orange glow from the west -------------- */
 .vt-home--env-evening .vt-home__landmark {
   opacity: 0.65;
   filter: brightness(0.65) sepia(0.55) hue-rotate(-15deg) saturate(1.2);
 }
 
-/* Night: deep moonlit blue — silhouette mode */
+/* -------------- Night: deep moonlit blue — silhouette mode -------------- */
 .vt-home--env-night .vt-home__landmark {
   opacity: 0.38;
   filter: brightness(0.3) saturate(0.35) hue-rotate(200deg);
 }
 
-/* Golden-hour weather modifier — intensifies warm tones on landmarks */
+/* -------------- Golden-hour weather modifier — intensifies warm tones on landmarks -------------- */
 .vt-home--weather-golden .vt-home__landmark {
   filter: brightness(0.7) sepia(0.65) hue-rotate(-20deg) saturate(1.4);
 }
 
-/* ── Spotlight landmark enhanced depth shadow ─────────────────────────────── */
+/* -------------- Spotlight landmark enhanced depth shadow -------------- */
 .vt-home__landmark-spotlight {
   filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.45));
   transition:
@@ -6552,18 +6428,14 @@
     saturate(0.4) hue-rotate(200deg);
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   ATMOSPHERIC PARTICLES — dust motes / pollen floating in daytime air
-   add images: Pure CSS radial dot particles — no image.
-   ──────────────────────────────────────────────────────────────────────────── */
-
-/* Atmospheric dust container — visible during morning and noon */
+/*  -------------- ATMOSPHERIC PARTICLES — dust motes / pollen floating in daytime air add images: Pure CSS radial dot particles — no image. -------------- */
+/* -------------- Atmospheric dust container — visible during morning and noon -------------- */
 .vt-home__env-flare::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  /* Tiny dust motes as tiny radial dots */
+  /* -------------- Tiny dust motes as tiny radial dots -------------- */
   background:
     radial-gradient(
       circle 1px at 12% 40%,
@@ -6625,10 +6497,7 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   DAWN GLOW — enhanced multi-layer horizon wash
-   add images: Pure CSS gradient — no image.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- DAWN GLOW — enhanced multi-layer horizon wash add images: Pure CSS gradient — no image. -------------- */
 .vt-home__env-dawn-glow {
   position: absolute;
   bottom: 0;
@@ -6642,7 +6511,7 @@
     background var(--env-transition);
 }
 
-/* Dawn glow: purple-pink-orange rising wash */
+/* -------------- Dawn glow: purple-pink-orange rising wash -------------- */
 .vt-home--env-dawn .vt-home__env-dawn-glow {
   background: linear-gradient(
     to top,
@@ -6655,7 +6524,7 @@
   animation: vt-dawn-glow-pulse 8s ease-in-out infinite;
 }
 
-/* Evening glow: deep red-amber sunset wash */
+/* -------------- Evening glow: deep red-amber sunset wash -------------- */
 .vt-home--env-evening .vt-home__env-dawn-glow {
   background: linear-gradient(
     to top,
@@ -6668,7 +6537,7 @@
   animation: vt-dawn-glow-pulse 10s ease-in-out infinite;
 }
 
-/* Golden weather: extra-intense warm glow */
+/* -------------- Golden weather: extra-intense warm glow -------------- */
 .vt-home--weather-golden.vt-home--env-evening .vt-home__env-dawn-glow {
   background: linear-gradient(
     to top,
@@ -6692,10 +6561,7 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   LENS FLARE — enhanced bokeh rings for golden / morning hours
-   add images: Pure CSS — no image.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- LENS FLARE — enhanced bokeh rings for golden / morning hours add images: Pure CSS — no image. -------------- */
 .vt-home__env-flare {
   position: absolute;
   inset: 0;
@@ -6704,28 +6570,28 @@
   transition: opacity var(--env-transition);
 }
 
-/* Morning: left-side flare from rising sun */
+/* -------------- Morning: left-side flare from rising sun -------------- */
 .vt-home--env-morning .vt-home__env-flare {
   background:
-    /* Primary flare disc near sun */
+    /* -------------- Primary flare disc near sun -------------- */
     radial-gradient(
       circle 80px at 25% 30%,
       rgba(255, 245, 180, 0.3) 0%,
       transparent 100%
     ),
-    /* Secondary bokeh ring */
+    /* -------------- Secondary bokeh ring -------------- */
     radial-gradient(
         circle 40px at 42% 45%,
         rgba(255, 220, 140, 0.18) 0%,
         transparent 100%
       ),
-    /* Tertiary distant ring */
+    /* -------------- Tertiary distant ring -------------- */
     radial-gradient(
         circle 25px at 60% 58%,
         rgba(255, 200, 120, 0.12) 0%,
         transparent 100%
       ),
-    /* Anamorphic horizontal streak */
+    /* -------------- Anamorphic horizontal streak -------------- */
     linear-gradient(
         90deg,
         transparent 10%,
@@ -6737,7 +6603,7 @@
   animation: vt-flare-shimmer 6s ease-in-out infinite;
 }
 
-/* Evening: right-side flare from setting sun */
+/* -------------- Evening: right-side flare from setting sun -------------- */
 .vt-home--env-evening .vt-home__env-flare {
   background:
     radial-gradient(
@@ -6766,7 +6632,7 @@
   animation: vt-flare-shimmer 8s ease-in-out infinite;
 }
 
-/* Noon: overhead high-intensity point flare */
+/* -------------- Noon: overhead high-intensity point flare -------------- */
 .vt-home--env-noon .vt-home__env-flare {
   background:
     radial-gradient(
@@ -6792,11 +6658,7 @@
   }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   OVERLAY TINT — period-specific mood enhancement (supplements existing)
-   ──────────────────────────────────────────────────────────────────────────── */
-
-/* Dawn overlay: blue-violet pre-dawn tint */
+/*--------------OVERLAY TINT — period-specific mood enhancement (supplements existing) Dawn overlay: blue-violet pre-dawn tint--------------*/
 .vt-home--env-dawn .vt-home__overlay {
   background: linear-gradient(
     160deg,
@@ -6807,7 +6669,7 @@
   ) !important;
 }
 
-/* Morning overlay: fresh cool-blue tint */
+/*--------------Morning overlay: fresh cool-blue tint--------------*/
 .vt-home--env-morning .vt-home__overlay {
   background: linear-gradient(
     160deg,
@@ -6818,7 +6680,7 @@
   ) !important;
 }
 
-/* Noon overlay: lightest — bright and airy */
+/*--------------Noon overlay: lightest — bright and airy--------------*/
 .vt-home--env-noon .vt-home__overlay {
   background: linear-gradient(
     160deg,
@@ -6829,7 +6691,7 @@
   ) !important;
 }
 
-/* Evening overlay: warm amber-crimson mood */
+/*--------------Evening overlay: warm amber-crimson mood--------------*/
 .vt-home--env-evening .vt-home__overlay {
   background: linear-gradient(
     160deg,
@@ -6840,7 +6702,7 @@
   ) !important;
 }
 
-/* Night overlay: deep navy-black */
+/*--------------Night overlay: deep navy-black--------------*/
 .vt-home--env-night .vt-home__overlay {
   background: linear-gradient(
     160deg,
@@ -6851,7 +6713,7 @@
   ) !important;
 }
 
-/* Stormy overlay: heavy desaturated grey */
+/*--------------Stormy overlay: heavy desaturated grey--------------*/
 .vt-home--weather-stormy .vt-home__overlay {
   background: linear-gradient(
     160deg,
@@ -6862,9 +6724,7 @@
   ) !important;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   PERIOD ACCENT COLOUR — dynamic CTA / heading highlight per time of day
-   ──────────────────────────────────────────────────────────────────────────── */
+/*--------------PERIOD ACCENT COLOUR — dynamic CTA / heading highlight per time of day--------------*/
 .vt-home--env-dawn {
   --vt-home-accent: #f0924a;
   --vt-home-dot-active: #f0924a;
@@ -6886,9 +6746,7 @@
   --vt-home-dot-active: #a07bff;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   TIME BADGE / CONTROLS — period-specific colour theming
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- TIME BADGE / CONTROLS — period-specific colour theming -------------- */
 .vt-home--env-dawn .vt-home__time-badge-live,
 .vt-home--env-evening .vt-home__time-badge-live {
   background: rgba(240, 145, 74, 0.25);
@@ -6906,9 +6764,7 @@
   border-color: rgba(0, 194, 224, 0.4);
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   REDUCED MOTION — disable new enhanced animations
-   ──────────────────────────────────────────────────────────────────────────── */
+/* -------------- REDUCED MOTION — disable new enhanced animations -------------- */
 @media (prefers-reduced-motion: reduce) {
   .vt-home__env-sun::before,
   .vt-home__env-sun::after,
@@ -6925,5 +6781,3 @@
     transition: opacity 0.3s ease;
   }
 }
-
-/* END — Cinematic Environment v2 =========================================== */

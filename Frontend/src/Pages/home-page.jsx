@@ -1,7 +1,18 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import "../Style/home-page.css";
+//import maskimage from "../assets/Images/maskimage.png";
+//import sun from "../assets/Images/sun.png";
+//import moon from "../assets/Images/moon";
+import full_opacity from "../assets/Images/full_opacity.png";
+import half_opasity from "../assets/Images/half_opacity.png";
+import sigiriya from "../assets/Images/sigiriya.png";
+import anuradhapura from "../assets/Images/anuradhapura.png";
+import polonnaruwa from "../assets/Images/polonnaruwa.png";
+import kandy from "../assets/Images/kandy.png";
+import trincomalee from "../assets/Images/trincomalee.png";
+import yapahuwa from "../assets/Images/yapahuwa.png";
 
-// ── Sri Lankan Location Data ──────────────────────────────────────────────────
+// -------------- Sri Lankan Location Data
 // Each location has: display name, IANA timezone, and the path to its landmark
 // transparent PNG image. Six iconic landmarks of Sri Lanka.
 //
@@ -19,7 +30,6 @@ const LOCATIONS = [
     label: "Sigiriya",
     timezone: "Asia/Colombo",
     // add images: Sigiriya Rock Fortress transparent PNG
-    landmark: "/assets/landmarks/sigiriya-silhouette.png",
     description: "The Lion Rock Fortress",
   },
   {
@@ -27,7 +37,6 @@ const LOCATIONS = [
     label: "Aukana",
     timezone: "Asia/Colombo",
     // add images: Aukana Buddha Statue transparent PNG
-    landmark: "/assets/landmarks/aukana-silhouette.png",
     description: "The Standing Buddha Statue",
   },
   {
@@ -35,7 +44,6 @@ const LOCATIONS = [
     label: "Polonnaruwa",
     timezone: "Asia/Colombo",
     // add images: Polonnaruwa Ancient City transparent PNG
-    landmark: "/assets/landmarks/polonnaruwa-silhouette.png",
     description: "The Ancient Royal City",
   },
   {
@@ -43,7 +51,6 @@ const LOCATIONS = [
     label: "Sri Pada",
     timezone: "Asia/Colombo",
     // add images: Sri Pada (Adam's Peak) transparent PNG
-    landmark: "/assets/landmarks/sripada-silhouette.png",
     description: "The Sacred Mountain",
   },
   {
@@ -51,7 +58,6 @@ const LOCATIONS = [
     label: "Anuradhapura",
     timezone: "Asia/Colombo",
     // add images: Ruwanweli Maha Seya stupa transparent PNG
-    landmark: "/assets/landmarks/ruwanweli-silhouette.png",
     description: "Ruwanweli Maha Seya",
   },
   {
@@ -59,12 +65,11 @@ const LOCATIONS = [
     label: "Sri Maha Bodhi",
     timezone: "Asia/Colombo",
     // add images: Sri Maha Bodhi sacred tree transparent PNG
-    landmark: "/assets/landmarks/srimaha-silhouette.png",
     description: "The Sacred Bodhi Tree",
   },
 ];
 
-// ── Weather API Placeholder ───────────────────────────────────────────────────
+// -------------- Weather API Placeholder
 // Replace this function with a real API call to fetch live weather.
 // Recommended API: OpenWeatherMap — https://openweathermap.org/api
 //
@@ -87,7 +92,7 @@ async function fetchWeatherForLocation(/* locationKey */) {
   return null;
 }
 
-// ── Environment Period Configuration ─────────────────────────────────────────
+// -------------- Environment Period Configuration
 // Each period maps to a real-world hour range (24h clock).
 // The period key becomes the `data-env` attribute on .vt-home — all visual
 // changes (sky colour, overlay tint, particles, sun/moon position, weather)
@@ -107,7 +112,7 @@ const ENV_PERIODS = [
   { key: "night", startH: 20, endH: 3, label: "Night", icon: "🌙" },
 ];
 
-// ── Weather State Pool per Period ─────────────────────────────────────────────
+// -------------- Weather State Pool per Period
 // Weather variants add an extra CSS modifier class: vt-home--weather-<variant>
 // The hook picks one randomly when the period first initialises, then re-picks
 // every WEATHER_CHANGE_MS milliseconds to simulate natural variation.
@@ -122,7 +127,7 @@ const WEATHER_VARIANTS = {
 // How often (ms) the weather variant randomly cycles within the same period
 const WEATHER_CHANGE_MS = 90_000; // 90 seconds
 
-// ── Determine Current Environment Period ─────────────────────────────────────
+// -------------- Determine Current Environment Period
 // Pure function — no side effects. Returns one of the ENV_PERIODS keys.
 // Handles the night period which wraps across midnight (20:00–03:59).
 // @param  {number} h  Integer hour (0–23)
@@ -140,7 +145,7 @@ function getPeriodForHour(h) {
   return "morning"; // fallback
 }
 
-// ── Pick a Random Weather Variant for the Current Period ──────────────────────
+// -------------- Pick a Random Weather Variant for the Current Period
 // Selects one weather variant at random from WEATHER_VARIANTS[periodKey].
 // Falls back to "clear" if the period key is not found.
 // @param  {string} periodKey  One of the ENV_PERIODS keys
@@ -150,7 +155,7 @@ function pickWeather(periodKey) {
   return variants[Math.floor(Math.random() * variants.length)];
 }
 
-// ── Sun/Moon Arc Calculator ───────────────────────────────────────────────────
+// -------------- Sun/Moon Arc Calculator
 // Computes the sun or moon position along a smooth arc across the sky based on
 // the current time expressed as a fraction of the 24-hour day (0.0–1.0).
 //
@@ -173,7 +178,7 @@ function computeSunMoonArc(hourDecimal) {
   // Normalise hour to 0-24 range
   const h = ((hourDecimal % 24) + 24) % 24;
 
-  // ── Sun Arc (active 05:00 – 20:00) ────────────────────────────────────────
+  // -------------- Sun Arc (active 05:00 – 20:00)
   // Map 05:00 → 0.0 (left horizon), 12:30 → 0.5 (zenith), 20:00 → 1.0 (right)
   const sunStart = 5; // hour sun appears at left horizon
   const sunEnd = 20; // hour sun disappears at right horizon
@@ -191,7 +196,7 @@ function computeSunMoonArc(hourDecimal) {
     sunY = 90 - arcH * 78; // % from top: 90% horizon → 12% zenith
   }
 
-  // ── Moon Arc (active 19:00 – 07:00, wraps midnight) ───────────────────────
+  // -------------- Moon Arc (active 19:00 – 07:00, wraps midnight)
   // Moon arc mirrors sun: rises when sun sets and sets when sun rises.
   const moonStart = 19;
   const moonEnd = 7 + 24; // treated as 31 for wrap math
@@ -213,7 +218,7 @@ function computeSunMoonArc(hourDecimal) {
   return { sunX, sunY, sunVisible, moonX, moonY, moonVisible };
 }
 
-// ── Get Current Hour in a Given Timezone ─────────────────────────────────────
+// -------------- Get Current Hour in a Given Timezone
 // Uses Intl.DateTimeFormat to extract the local hour for any IANA timezone.
 // Returns a decimal hour (e.g. 14.5 for 14:30) for smooth arc computation.
 // Falls back to system local hour if the timezone is invalid or unsupported.
@@ -240,12 +245,12 @@ function getHourInTimezone(timezone) {
   }
 }
 
-// ── useEnvironment Hook ───────────────────────────────────────────────────────
+// -------------- useEnvironment Hook
 // Reads the real-world clock and derives the current sky period, weather
 // variant, and sun/moon arc positions for the selected Sri Lankan location.
 // Supports an optional timeOverride (decimal hour 0–24) for the UI time slider.
 //
-// ── Three concerns, three patterns — all lint rules satisfied ────────────────
+// -------------- Three concerns, three patterns — all lint rules satisfied
 //
 //  1. PROP-DERIVED values (period, arc, hourDecimal)
 //     → Computed by useMemo during render. Pure functions of props only.
@@ -267,9 +272,9 @@ function getHourInTimezone(timezone) {
 //  Refs (tzRef, overrideRef, periodRef) are written ONLY inside useEffect
 //  bodies — never during render — providing stale-closure-safe access to the
 //  latest prop values inside the interval callbacks.
-// ─────────────────────────────────────────────────────────────────────────────
+//
 function useEnvironment(timezone = "Asia/Colombo", timeOverride = null) {
-  // ── 1. PROP-DERIVED values — pure render computation (no setState) ─────────
+  // -------------- 1. PROP-DERIVED values — pure render computation (no setState)
   // period, arc, hourDecimal are entirely determined by the two props.
   // useMemo recomputes synchronously whenever the props change — no effect,
   // no setState, no refs touched inside the callback.
@@ -284,7 +289,7 @@ function useEnvironment(timezone = "Asia/Colombo", timeOverride = null) {
     };
   }, [timezone, timeOverride]);
 
-  // ── 2. WEATHER state — only value that requires useState ──────────────────
+  // -------------- 2. WEATHER state — only value that requires useState
   // Randomly initialised on mount; later rotated by the weather timer.
   // The lazy initialiser is safe to call getHourInTimezone() in (runs once).
   const [weather, setWeather] = useState(() => {
@@ -293,13 +298,13 @@ function useEnvironment(timezone = "Asia/Colombo", timeOverride = null) {
     return pickWeather(getPeriodForHour(Math.floor(h)));
   });
 
-  // ── 3. LIVE CLOCK arc/hour — useState driven by setInterval callbacks ─────
+  // -------------- 3. LIVE CLOCK arc/hour — useState driven by setInterval callbacks
   // Initialised from the useMemo values so the first render is correct.
   // The setInterval callbacks update these every 10 s for smooth arc movement.
   const [clockArc, setClockArc] = useState(() => arc);
   const [clockHour, setClockHour] = useState(() => hourDecimal);
 
-  // ── Refs for stale-closure prevention inside callbacks ────────────────────
+  // -------------- Refs for stale-closure prevention inside callbacks
   // Declared here; written ONLY inside the useEffect below (after commit).
   // Never read or written during the render phase itself.
   const periodRef = useRef(period);
@@ -315,7 +320,7 @@ function useEnvironment(timezone = "Asia/Colombo", timeOverride = null) {
     overrideRef.current = timeOverride;
   });
 
-  // ── Clock tick subscriptions — setState inside callbacks only ─────────────
+  // -------------- Clock tick subscriptions — setState inside callbacks only
   // All setWeather / setClockArc / setClockHour calls below are inside
   // setInterval callbacks. React explicitly permits this (external subscription
   // pattern) and the react-hooks/set-state-in-effect rule does NOT fire.
@@ -370,7 +375,7 @@ function useEnvironment(timezone = "Asia/Colombo", timeOverride = null) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeOverride !== null]);
 
-  // ── Merge prop-derived and clock-driven values ────────────────────────────
+  // -------------- Merge prop-derived and clock-driven values
   // Override active  → use useMemo arc (slider-reactive, clock paused)
   // Live clock active → use setInterval-driven clockArc / clockHour
   // period always comes from useMemo (instantly reactive to prop changes)
@@ -382,14 +387,14 @@ function useEnvironment(timezone = "Asia/Colombo", timeOverride = null) {
   return { period, weather, arc: effectiveArc, hourDecimal: effectiveHour };
 }
 
-// ── Slideshow Data ────────────────────────────────────────────────────────────
+// -------------- Slideshow Data
 // add images: Replace each `image` value with your actual slide image paths.
 // Recommended size: 1920×900px. Add or remove slide objects as needed.
 const SLIDES = [
   {
     id: 1,
     // add images: Slide 1 background image
-    image: "/assets/slides/slide1.jpg",
+    image: sigiriya,
     headingLine1: "Your Premium Gateway to",
     headingHighlight: "Sri Lanka",
     subtext:
@@ -400,7 +405,7 @@ const SLIDES = [
   {
     id: 2,
     // add images: Slide 2 background image
-    image: "/assets/slides/slide2.jpg",
+    image: anuradhapura,
     headingLine1: "Discover the Beauty of",
     headingHighlight: "Sri Lanka",
     subtext:
@@ -411,7 +416,7 @@ const SLIDES = [
   {
     id: 3,
     // add images: Slide 3 background image
-    image: "/assets/slides/slide3.jpg",
+    image: polonnaruwa,
     headingLine1: "Unforgettable Journeys Across",
     headingHighlight: "Sri Lanka",
     subtext:
@@ -422,7 +427,7 @@ const SLIDES = [
   {
     id: 4,
     // add images: Slide 4 background image
-    image: "/assets/slides/slide4.jpg",
+    image: kandy,
     headingLine1: "Luxury Transfers Throughout",
     headingHighlight: "Sri Lanka",
     subtext:
@@ -433,7 +438,7 @@ const SLIDES = [
   {
     id: 5,
     // add images: Slide 5 background image
-    image: "/assets/slides/slide5.jpg",
+    image: trincomalee,
     headingLine1: "Experience Island Life in",
     headingHighlight: "Sri Lanka",
     subtext:
@@ -444,7 +449,7 @@ const SLIDES = [
   {
     id: 6,
     // add images: Slide 6 background image
-    image: "/assets/slides/slide6.jpg",
+    image: yapahuwa,
     headingLine1: "Adventure Awaits You in",
     headingHighlight: "Sri Lanka",
     subtext:
@@ -454,10 +459,10 @@ const SLIDES = [
   },
 ];
 
-// ── Auto-play interval (ms) ────────────────────────────────────────────────
-const AUTOPLAY_DELAY = 5000;
+// -------------- Auto-play interval (ms)
+const AUTOPLAY_DELAY = 50000;
 
-// ── Taxi Service Cards — managed by Super Admin ───────────────────────────
+// -------------- Taxi Service Cards — managed by Super Admin
 // add images: Replace `image` values with actual card images (recommended 600×400px)
 // Super Admin: Add/remove card objects here to update what customers see.
 const TAXI_CARDS = [
@@ -499,7 +504,7 @@ const TAXI_CARDS = [
   },
 ];
 
-// ── Tour Cards — managed by Super Admin ───────────────────────────────────
+// -------------- Tour Cards — managed by Super Admin
 // add images: Replace `image` values with actual tour card images (recommended 600×400px)
 // Super Admin: Add/remove tour objects here to update what customers see.
 const TOUR_CARDS = [
@@ -541,7 +546,7 @@ const TOUR_CARDS = [
   },
 ];
 
-// ── "Exclusive Rides" Feature Slides ─────────────────────────────────────
+// -------------- "Exclusive Rides" Feature Slides
 // Super Admin: Edit label/desc to update what customers see.
 const FEATURE_SLIDES = [
   {
@@ -576,7 +581,7 @@ const FEATURE_SLIDES = [
   },
 ];
 
-// ── Itinerary Cards — managed by Super Admin ──────────────────────────────
+// -------------- Itinerary Cards — managed by Super Admin
 // add images: Replace `image` values with actual itinerary card images (recommended 800×600px)
 // Super Admin: Add/remove objects here to update what customers see.
 const ITINERARY_CARDS = [
@@ -606,7 +611,7 @@ const ITINERARY_CARDS = [
   },
 ];
 
-// ── Collect Moments Slide Images — managed by Super Admin ─────────────────
+// -------------- Collect Moments Slide Images — managed by Super Admin
 // add images: Replace `image` values (recommended 400×300px)
 const MOMENTS_IMAGES = [
   { id: 1, image: "/assets/moments/img1.jpg", alt: "Sri Lanka landscape 1" }, // add images
@@ -617,7 +622,7 @@ const MOMENTS_IMAGES = [
   { id: 6, image: "/assets/moments/img6.jpg", alt: "Sri Lanka landscape 6" }, // add images
 ];
 
-// ── Slide 6 Special Layout Images — managed by Super Admin ───────────────────
+// -------------- Slide 6 Special Layout Images — managed by Super Admin ─
 // When the slideshow reaches Slide 6 (index 5), the hero switches from the
 // standard full-bleed slide background to a 6-image mosaic layout.
 // This creates a visually distinct "adventure collage" effect unique to slide 6.
@@ -666,7 +671,7 @@ const SLIDE_6_IMAGES = [
   },
 ];
 
-// ── "Everything You Need to Know" Items — managed by Super Admin ──────────
+// -------------- "Everything You Need to Know" Items — managed by Super Admin
 // Super Admin: Add/remove/edit items. layout: "text-right" | "text-left" | "banner" | "image-right"
 const ENYTK_ITEMS = [
   {
@@ -695,7 +700,7 @@ const ENYTK_ITEMS = [
   },
 ];
 
-// ── Sri Lanka Tour & About US — managed by Super Admin ────────────────────
+// -------------- Sri Lanka Tour & About US — managed by Super Admin
 const SL_TOUR = {
   image: "/assets/sltour/main.jpg", // add images
   desc: "Experience the true essence of paradise with our premier island-wide tour services, where every mile is crafted for your comfort and wonder. From the golden southern coasts to the rain-covered central highlands, we provide more than just a destination. We offer a seamless, worry-free immersion into the heart of Sri Lanka. With our dedicated 24/7 questions and local expertise, you can trust us to handle every detail of your journey. We offer a seamless, worry-free immersion into the heart of Sri Lanka. With our dedicated 24/7 questions and local expertise, you can trust us to handle every detail of your journey that capture the hidden beauty of our island.",
@@ -714,7 +719,7 @@ const DISCOVER_SOUL = {
   seeMore: "#",
 };
 
-// ── Voyara Tales Blog Cards — managed by Super Admin ─────────────────────
+// -------------- Voyara Tales Blog Cards — managed by Super Admin
 // add images: Replace `image` values (recommended 600×400px)
 const VOYARA_TALES = [
   {
@@ -734,7 +739,7 @@ const VOYARA_TALES = [
   },
 ];
 
-// ── Traveller Reviews — pulled from Packages page comments ────────────────
+// -------------- Traveller Reviews — pulled from Packages page comments
 // Super Admin / Packages page: Travellers submit comments there;
 // the approved reviews appear here automatically.
 // For wiring to a real backend, replace this array with an API fetch.
@@ -765,11 +770,11 @@ const TRAVELLER_REVIEWS = [
   },
 ];
 
-// ── Cards per page based on viewport (used for card sliders) ─────────────
+// -------------- Cards per page based on viewport (used for card sliders)
 const CARDS_PER_PAGE = 3;
 const CARD_AUTOPLAY_MS = 3500;
 
-// ── Reusable Card Slider Hook ─────────────────────────────────────────────────
+// -------------- Reusable Card Slider Hook
 // Generic paginated slider used by taxi, tour, itinerary, tales, and reviews.
 // Manages page state, auto-advance timer, and prev/next/goTo navigation.
 // @param  {number} total       Total number of items in the data array
@@ -813,7 +818,7 @@ function useCardSlider(total, perPage, autoplayMs) {
 }
 
 export default function Home() {
-  // ── Hero Slideshow State ──────────────────────────────────────────────────
+  // -------------- Hero Slideshow State
   // `current` — index of the active slide (0-based)
   // `direction` — animation direction: "next" (forward) | "prev" (backward)
   // `timerRef`  — interval ref for auto-advance; kept outside state to avoid re-renders
@@ -906,7 +911,7 @@ export default function Home() {
   // Convenience reference to the currently active slide data object
   const slide = SLIDES[current];
 
-  // ── Slide 6 Special Layout Detection ─────────────────────────────────────
+  // -------------- Slide 6 Special Layout Detection
   // When `current` is 5 (0-based index of Slide 6), activate the mosaic layout.
   // This boolean drives:
   //   1. The vt-home--slide6 CSS class on .vt-home (enables mosaic overlay)
@@ -914,7 +919,7 @@ export default function Home() {
   // The class transitions smoothly via opacity/transform CSS transitions.
   const isSlide6 = current === 5;
 
-  // ── Location Switcher State ───────────────────────────────────────────────
+  // -------------- Location Switcher State
   // Tracks the currently selected Sri Lankan landmark location.
   // Changes the active landmark PNG and the timezone used for env calculations.
   const [selectedLocationKey, setSelectedLocationKey] = useState(
@@ -939,7 +944,7 @@ export default function Home() {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
-  // ── Time Override State (for manual time testing slider) ──────────────────
+  // -------------- Time Override State (for manual time testing slider)
   // null = use real clock; number 0–24 = override hour
   const [timeOverride, setTimeOverride] = useState(null);
   const [showTimeSlider, setShowTimeSlider] = useState(false);
@@ -960,7 +965,7 @@ export default function Home() {
     setSliderHour(new Date().getHours());
   }, []);
 
-  // ── Real-Time Environmental System ───────────────────────────────────────
+  // -------------- Real-Time Environmental System
   // Derives period (dawn/morning/noon/evening/night), weather, and sun/moon arc
   // from the real-world clock for the selected location's timezone.
   // These are applied as CSS class modifiers on .vt-home — no inline styles.
@@ -971,14 +976,14 @@ export default function Home() {
     hourDecimal: envHour,
   } = useEnvironment(selectedLocation.timezone, timeOverride);
 
-  // ── Bats vs Birds — switch based on period ────────────────────────────────
+  // -------------- Bats vs Birds — switch based on period
   // During night / late evening: show bats (waullu). Other times: birds.
   // The CSS classes vt-home--show-birds / vt-home--show-bats toggle visibility.
   const showBats =
     envPeriod === "night" ||
     (envPeriod === "evening" && (envArc?.sunY ?? 0) > 75);
 
-  // ── Format decimal hour for display ──────────────────────────────────────
+  // -------------- Format decimal hour for display
   const displayHour = timeOverride !== null ? timeOverride : envHour;
   const displayTimeStr = (() => {
     const h = Math.floor(displayHour ?? 0);
@@ -986,7 +991,7 @@ export default function Home() {
     return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
   })();
 
-  // ── Taxi Card Slider ──────────────────────────────────────────────────────
+  // -------------- Taxi Card Slider
   const taxi = useCardSlider(
     TAXI_CARDS.length,
     CARDS_PER_PAGE,
@@ -997,7 +1002,7 @@ export default function Home() {
     taxi.page * CARDS_PER_PAGE + CARDS_PER_PAGE,
   );
 
-  // ── Tour Card Slider ──────────────────────────────────────────────────────
+  // -------------- Tour Card Slider
   // Tour shows 2 rows × 3 cols = 6 cards per page
   const TOUR_PER_PAGE = 6;
   const tour = useCardSlider(
@@ -1010,30 +1015,30 @@ export default function Home() {
     tour.page * TOUR_PER_PAGE + TOUR_PER_PAGE,
   );
 
-  // ── Feature Slider ────────────────────────────────────────────────────────
+  // -------------- Feature Slider
   const feat = useCardSlider(FEATURE_SLIDES.length, 3, CARD_AUTOPLAY_MS);
   const featVisible = FEATURE_SLIDES.slice(feat.page * 3, feat.page * 3 + 3);
 
-  // ── Itinerary Slider (2 cards visible at a time) ──────────────────────────
+  // -------------- Itinerary Slider (2 cards visible at a time)
   const itin = useCardSlider(ITINERARY_CARDS.length, 2, CARD_AUTOPLAY_MS);
   const itinVisible = ITINERARY_CARDS.slice(itin.page * 2, itin.page * 2 + 2);
 
-  // ── Moments Image Slider (5 images visible — scrolling strip) ─────────────
+  // -------------- Moments Image Slider (5 images visible — scrolling strip)
   const mom = useCardSlider(MOMENTS_IMAGES.length, 5, 2500);
   const momVisible = MOMENTS_IMAGES.slice(mom.page * 5, mom.page * 5 + 5);
 
-  // ── Voyara Tales Slider (3 cards) ─────────────────────────────────────────
+  // -------------- Voyara Tales Slider (3 cards)
   const tales = useCardSlider(VOYARA_TALES.length, 3, CARD_AUTOPLAY_MS);
   const talesVisible = VOYARA_TALES.slice(tales.page * 3, tales.page * 3 + 3);
 
-  // ── Reviews Slider (3 per page, wraps from Packages comments) ────────────
+  // -------------- Reviews Slider (3 per page, wraps from Packages comments)
   const reviews = useCardSlider(TRAVELLER_REVIEWS.length, 3, 4000);
   const reviewsVisible = TRAVELLER_REVIEWS.slice(
     reviews.page * 3,
     reviews.page * 3 + 3,
   );
 
-  // ── Apply data-bg attributes as CSS backgroundImage (zero inline styles) ──
+  // -------------- Apply data-bg attributes as CSS backgroundImage (zero inline styles)
   // This single effect handles ALL elements that carry a data-bg attribute,
   // including slide backgrounds, landmark spotlight PNGs, card images, airport
   // images, itinerary cards, moments strip images, ENYTK rows, tale cards,
@@ -1052,10 +1057,10 @@ export default function Home() {
     });
   });
 
-  // ── Render ────────────────────────────────────────────────────────────────
+  // -------------- Render
   return (
     <>
-      {/* ── Hero Section — enhanced with real-time environment system ──── */}
+      {/* -------------- Hero Section — enhanced with real-time environment system  */}
       {/*
         CSS class strategy (no inline styles):
           vt-home--env-<period>      → controls sky tone, overlay colour, ambient light
@@ -1117,7 +1122,7 @@ export default function Home() {
           ))}
         </div>
 
-        {/* ── Environment Atmosphere Layer ───────────────────────────────── */}
+        {/* -------------- Environment Atmosphere Layer   */}
         {/*
           All child divs are purely CSS-animated — no JS drives their visuals.
           The parent env/weather classes on .vt-home toggle their opacity and
@@ -1130,12 +1135,12 @@ export default function Home() {
         <div className="vt-home__env" aria-hidden="true">
           {/* Enhanced cinematic sky gradient — richer per-period colours */}
           {/* add images: Pure CSS gradient — no image needed */}
-          <div className="vt-home__env-sky-enhanced" />
+          <div className="vt-home__env-sky-enhanced" img={full_opacity} />
 
           {/* Base sky gradient layer — fades smoothly between period palettes */}
-          <div className="vt-home__env-sky" />
+          <div className="vt-home__env-sky" img={half_opasity} />
 
-          {/* ── Six Sri Lankan Landmark Silhouettes (between sky and clouds) ── */}
+          {/* -------------- Six Sri Lankan Landmark Silhouettes (between sky and clouds) -------------- */}
           {/*
             These 6 landmark images are placed ABOVE the sky gradient but BELOW
             the cloud layer so they appear nestled between the sky and the clouds,
@@ -1224,7 +1229,7 @@ export default function Home() {
           {/* add images: CSS conic-gradient rays from sun position — no image */}
           <div className="vt-home__env-sunrays" />
 
-          {/* ── Cloud System — 2 Layers (Walakulu / වලාකුළු) ──────────────────
+          {/* -------------- Cloud System — 2 Layers (Walakulu / වලාකුළු) 
               Two distinct cloud layers create atmospheric depth:
 
               LAYER 2 — Back Layer (vt-home__env-clouds--back)
@@ -1257,7 +1262,7 @@ export default function Home() {
                                     walakulu-back-1.png  … walakulu-back-7.png
             */}
 
-          {/* ── Cloud Layer 2: Back Layer ──────────────────────────────────── */}
+          {/* -------------- Cloud Layer 2: Back Layer  */}
           {/*
               Back layer — slower, deeper, more transparent. Renders behind the
               front layer to simulate clouds at a greater altitude/distance.
@@ -1296,7 +1301,7 @@ export default function Home() {
             <div className="vt-home__env-cloud vt-home__env-cloud--b7 vt-home__env-cloud--dim" />
           </div>
 
-          {/* ── Cloud Layer 1: Front Layer ─────────────────────────────────── */}
+          {/* -------------- Cloud Layer 1: Front Layer  */}
           {/*
               Front layer — faster drift, lower altitude, more prominent. Renders
               in front of the back layer to simulate close mid-sky clouds.
@@ -1397,56 +1402,7 @@ export default function Home() {
           <div className="vt-home__env-lightning" aria-hidden="true" />
         </div>
 
-        {/* ── Sri Lankan Landmark Silhouettes Layer ──────────────────────── */}
-        {/*
-          Layered CSS-art landmarks. Positioned above the env layer and below
-          slide content. Each landmark is a CSS clip-path / gradient shape.
-          To replace with real photos: add background-image via data-bg to each
-          landmark div and apply useEffect to resolve them (same pattern as slides).
-
-          add images: Each .vt-home__landmark--* below is a landmark silhouette.
-          Replace with actual photograph backgrounds for photorealistic quality.
-          Recommended approach:
-            1. Add data-bg="/assets/landmarks/sigiriya-silhouette.png" to each div
-            2. The existing useEffect(data-bg handler) will apply backgroundImage
-        */}
-        <div className="vt-home__landmarks" aria-hidden="true">
-          {/* Ground plane — dark unified base tying all landmarks together */}
-          <div className="vt-home__landmark vt-home__landmark--ground" />
-
-          {/* Tea plantation rolling hills — leftmost, wide coverage */}
-          {/* add images: Replace with background-image of tea plantation */}
-          <div className="vt-home__landmark vt-home__landmark--teaplantation" />
-
-          {/* Aukana Buddha Statue — tall figure, far left */}
-          {/* add images: Replace with background-image of Aukana Buddha silhouette */}
-          <div className="vt-home__landmark vt-home__landmark--aukana" />
-
-          {/* Yapahuwa Rock Fortress — mid-left rocky formation */}
-          {/* add images: Replace with background-image of Yapahuwa fortress */}
-          <div className="vt-home__landmark vt-home__landmark--yapahuwa" />
-
-          {/* Ancient temple / stupa — mid-right */}
-          {/* add images: Replace with background-image of Sri Lankan dagoba */}
-          <div className="vt-home__landmark vt-home__landmark--temple" />
-
-          {/* Polonnaruwa ruins — pillars and dagoba, far right */}
-          {/* add images: Replace with background-image of Polonnaruwa ruins */}
-          <div className="vt-home__landmark vt-home__landmark--polonnaruwa" />
-
-          {/* Sigiriya Rock Fortress — iconic column, rightmost dominant landmark */}
-          {/* Image change: Sigiriya uses a real transparent PNG via data-bg.
-              The existing useEffect data-bg handler automatically applies
-              this as backgroundImage — no inline style needed. */}
-          <div
-            className="vt-home__landmark vt-home__landmark--sigiriya"
-            data-bg="/assets/landmarks/sigiriya-silhouette.png"
-            role="img"
-            aria-label="Sigiriya Rock Fortress silhouette"
-          />
-        </div>
-
-        {/* ── Birds Layer ─────────────────────────────────────────────────── */}
+        {/* -------------- Birds Layer   */}
         {/*
           8 bird silhouettes flying across the hero sky.
           Visibility is controlled by period class on .vt-home:
@@ -1493,7 +1449,7 @@ export default function Home() {
           <span className="vt-home__env-bird vt-home__env-bird--md vt-home__env-bird--8" />
         </div>
 
-        {/* ── Fireflies Layer ─────────────────────────────────────────────── */}
+        {/* -------------- Fireflies Layer  */}
         {/*
           16 bioluminescent firefly particles floating in the lower hero area.
           Only visible during night and dawn periods.
@@ -1513,12 +1469,12 @@ export default function Home() {
           ))}
         </div>
 
-        {/* ── Environment Badge (period + weather indicator) ──────────────── */}
+        {/* -------------- Environment Badge (period + weather indicator)  */}
         {/*
           Shows the current period icon and label in the top-left corner.
           Styled entirely via CSS — badge colours shift with env period class.
         */}
-        {/* ── Dynamic Sun/Moon Arc — scoped CSS variable override ──────────── */}
+        {/* -------------- Dynamic Sun/Moon Arc — scoped CSS variable override   */}
         {/*
           The sun and moon positions are computed from the actual clock minute
           by minute via computeSunMoonArc(). We inject them as CSS custom
@@ -1543,7 +1499,7 @@ export default function Home() {
           }
         `}</style>
 
-        {/* ── Active Landmark Spotlight Layer ─────────────────────────────── */}
+        {/* -------------- Active Landmark Spotlight Layer  */}
         {/*
           Displays the selected location's landmark PNG as the centered hero
           subject. The landmark image is positioned at bottom-center, reacting
@@ -1582,7 +1538,7 @@ export default function Home() {
           ))}
         </div>
 
-        {/* ── Slide 6 Special Mosaic Layout ───────────────────────────────── */}
+        {/* -------------- Slide 6 Special Mosaic Layout   */}
         {/*
           When Slide 6 (index 5) is active, this 6-image mosaic overlay fades
           in on top of the standard slide background, replacing the single full-
@@ -1624,7 +1580,7 @@ export default function Home() {
           ))}
         </div>
 
-        {/* ── Bats Layer (Waullu) — shown at night in place of birds ──────── */}
+        {/* -------------- Bats Layer (Waullu) — shown at night in place of birds  */}
         {/*
           8 bat silhouettes flying erratically across the night sky.
           Controlled by CSS: visible when .vt-home--show-bats is set.
@@ -1672,7 +1628,7 @@ export default function Home() {
           <span className="vt-home__env-bat vt-home__env-bat--md vt-home__env-bat--8" />
         </div>
 
-        {/* ── Location Switcher Control Panel ─────────────────────────────── */}
+        {/* -------------- Location Switcher Control Panel  */}
         {/*
           Floating control panel at the bottom of the hero.
           Contains:
@@ -1688,7 +1644,7 @@ export default function Home() {
           role="region"
           aria-label="Environment controls"
         >
-          {/* ── Location Selector Dropdown ─────────────────────────────────── */}
+          {/* -------------- Location Selector Dropdown  */}
           <div
             className={`vt-home__location-select${locationDropdownOpen ? " vt-home__location-select--open" : ""}`}
             ref={dropdownRef}
@@ -1755,7 +1711,7 @@ export default function Home() {
             )}
           </div>
 
-          {/* ── Time Display + Slider Toggle ────────────────────────────────── */}
+          {/* -------------- Time Display + Slider Toggle  */}
           <div className="vt-home__time-panel">
             {/* Current time badge — clicking shows the slider */}
             <button
@@ -1816,7 +1772,7 @@ export default function Home() {
             )}
           </div>
 
-          {/* ── Sri Lanka Map Thumbnail ──────────────────────────────────────── */}
+          {/* -------------- Sri Lanka Map Thumbnail  */}
           {/*
             Small decorative SVG outline of Sri Lanka shown in the control panel.
             Purely decorative — no image file needed (pure SVG paths).
@@ -1872,13 +1828,13 @@ export default function Home() {
             </svg>
           </div>
 
-          {/* ── Bottom credit / tagline ──────────────────────────────────────── */}
+          {/* -------------- Bottom credit / tagline  */}
           <p className="vt-home__env-tagline" aria-live="polite">
             Discover the Beauty of{" "}
             <span className="vt-home__env-tagline-highlight">Sri Lanka</span>
           </p>
 
-          {/* ── Period icons row — visual indicator of current time-of-day ───── */}
+          {/* -------------- Period icons row — visual indicator of current time-of-day  */}
           <div
             className="vt-home__env-period-icons"
             aria-label="Time of day indicators"
@@ -1957,7 +1913,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Premium Lanka Taxi Service Section ─────────────────────────── */}
+      {/* -------------- Premium Lanka Taxi Service Section  */}
       <section
         className="vt-section vt-taxi"
         aria-label="Premium Lanka Taxi Service"
@@ -2041,7 +1997,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Premium Colombo Airport Transfers Section ───────────────────── */}
+      {/* -------------- Premium Colombo Airport Transfers Section  */}
       <section className="vt-section vt-airport" aria-label="Airport Transfers">
         <div className="vt-airport__header">
           <h2 className="vt-airport__title">
@@ -2123,7 +2079,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Exclusive Rides CTA Section ──────────────────────────────────── */}
+      {/* -------------- Exclusive Rides CTA Section  */}
       <section className="vt-section vt-exclusive" aria-label="Exclusive Rides">
         <div className="vt-exclusive__header">
           <p className="vt-exclusive__looking">Looking for an</p>
@@ -2186,7 +2142,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Tour Section ─────────────────────────────────────────────────── */}
+      {/* -------------- Tour Section   */}
       <section className="vt-section vt-tour" aria-label="Tour">
         <div className="vt-section__header">
           <h2 className="vt-section__title vt-section__title--dark">Tour</h2>
@@ -2263,7 +2219,7 @@ export default function Home() {
           </button>
         </div>
       </section>
-      {/* ── Unforgettable Personalized Itineraries Section ──────────────── */}
+      {/* -------------- Unforgettable Personalized Itineraries Section  */}
       <section
         className="vt-section vt-itin"
         aria-label="Unforgettable Personalized Itineraries"
@@ -2333,7 +2289,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Collect Moments Section ───────────────────────────────────────── */}
+      {/* -------------- Collect Moments Section  */}
       <section
         className="vt-section vt-moments"
         aria-label="Collect Moments Not Just Miles"
@@ -2403,7 +2359,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Everything You Need to Know Section ──────────────────────────── */}
+      {/* -------------- Everything You Need to Know Section  */}
       <section
         className="vt-section vt-enytk"
         aria-label="Everything You Need to Know"
@@ -2550,7 +2506,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Voyara Tales Section ──────────────────────────────────────────── */}
+      {/* -------------- Voyara Tales Section  */}
       <section className="vt-section vt-tales" aria-label="Voyara Tales">
         <div className="vt-tales__header">
           <h2 className="vt-tales__title">Voyara Tales</h2>
@@ -2615,7 +2571,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Memories Shared by Our Travelers Section ──────────────────────── */}
+      {/* -------------- Memories Shared by Our Travelers Section  */}
       {/* Reviews are pulled from the Packages page traveller comment section */}
       <section
         className="vt-section vt-reviews"
