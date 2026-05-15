@@ -4,26 +4,25 @@ import "../Style/home-page.css";
 //import sun from "../assets/Images/sun.png";
 //import moon from "../assets/Images/moon";
 import full_opacity from "../assets/Images/full_opacity.png";
-import half_opasity from "../assets/Images/half_opacity.png";
+import half_opacity from "../assets/Images/half_opacity.png";
 import sigiriya from "../assets/Images/sigiriya.png";
 import anuradhapura from "../assets/Images/anuradhapura.png";
 import polonnaruwa from "../assets/Images/polonnaruwa.png";
 import kandy from "../assets/Images/kandy.png";
 import trincomalee from "../assets/Images/trincomalee.png";
 import yapahuwa from "../assets/Images/yapahuwa.png";
+// add images: Night variants — replace each path with your actual night/lit scene image
+import sigiriyaNight from "../assets/Images/sigiriya-night.png";
+import anuradhapuraNight from "../assets/Images/anuradhapura-night.png";
+import polonnaruwaNight from "../assets/Images/polonnaruwa-night.png";
+import kandyNight from "../assets/Images/kandy-night.png";
+import trincomaleeNight from "../assets/Images/trincomalee-night.png";
+import yapahuwaNight from "../assets/Images/yapahuwa-night.png";
 
 // -------------- Sri Lankan Location Data
-// Each location has: display name, IANA timezone, and the path to its landmark
-// transparent PNG image. Six iconic landmarks of Sri Lanka.
-//
+// Each location has:
 // add images: Replace each `landmark` path with your actual transparent PNG.
-// Recommended size: 400–800px tall, transparent background.
-// Naming convention: /assets/landmarks/<name>-silhouette.png
-//
 // Landmark image display notes:
-//   • The active landmark renders in .vt-home__landmark-spotlight (center-bottom)
-//   • CSS class vt-home--location-<key> is added to .vt-home so per-location
-//     sizing tweaks can be made in CSS without touching JSX.
 const LOCATIONS = [
   {
     key: "sigiriya",
@@ -146,34 +145,12 @@ function getPeriodForHour(h) {
 }
 
 // -------------- Pick a Random Weather Variant for the Current Period
-// Selects one weather variant at random from WEATHER_VARIANTS[periodKey].
-// Falls back to "clear" if the period key is not found.
-// @param  {string} periodKey  One of the ENV_PERIODS keys
-// @returns {string}           Weather variant e.g. "clear", "rainy", "stormy"
 function pickWeather(periodKey) {
   const variants = WEATHER_VARIANTS[periodKey] ?? ["clear"];
   return variants[Math.floor(Math.random() * variants.length)];
 }
 
 // -------------- Sun/Moon Arc Calculator
-// Computes the sun or moon position along a smooth arc across the sky based on
-// the current time expressed as a fraction of the 24-hour day (0.0–1.0).
-//
-// Arc model:
-//   • Sun rises East (left) at ~06:00, reaches zenith at 12:00, sets West
-//     (right) at ~19:00.
-//   • Moon mirrors the sun: rises after sunset and sets before sunrise.
-//   • Both travel along a parabolic arc: y = 1 − 4(x − 0.5)².
-//     x=0 → far left at horizon; x=0.5 → top-center zenith; x=1 → far right.
-//
-// Returns CSS custom-property values (percentage strings) consumed by the
-// existing --env-sun-x / --env-sun-y variables via the period class cascade.
-// These are set as data attributes (data-sun-x, data-sun-y) on .vt-home
-// and read by CSS via `attr()` — keeping all rendering in CSS.
-//
-// NOTE: The returned values are used to generate CSS variable override strings
-// that are injected via a <style> tag scoped to the section (still no inline
-// style on any element). See the `<style>` block rendered inside .vt-home.
 function computeSunMoonArc(hourDecimal) {
   // Normalise hour to 0-24 range
   const h = ((hourDecimal % 24) + 24) % 24;
@@ -246,33 +223,6 @@ function getHourInTimezone(timezone) {
 }
 
 // -------------- useEnvironment Hook
-// Reads the real-world clock and derives the current sky period, weather
-// variant, and sun/moon arc positions for the selected Sri Lankan location.
-// Supports an optional timeOverride (decimal hour 0–24) for the UI time slider.
-//
-// -------------- Three concerns, three patterns — all lint rules satisfied
-//
-//  1. PROP-DERIVED values (period, arc, hourDecimal)
-//     → Computed by useMemo during render. Pure functions of props only.
-//       No setState, no ref reads/writes inside the memo.
-//       ✅ react-hooks/set-state-in-effect  — no setState in any effect body
-//       ✅ react-hooks/refs                 — no ref access inside useMemo
-//
-//  2. WEATHER state (randomly chosen; rotated by a timer)
-//     → Stored in useState. Cannot be derived from props alone.
-//       Updated ONLY inside setInterval callbacks — never synchronously
-//       in an effect body.
-//       ✅ react-hooks/set-state-in-effect
-//
-//  3. LIVE CLOCK arc/hour (smooth 10-second updates when no override)
-//     → Stored in two useState values (clockArc, clockHour).
-//       Updated by setInterval callbacks — external subscription pattern.
-//       ✅ react-hooks/set-state-in-effect
-//
-//  Refs (tzRef, overrideRef, periodRef) are written ONLY inside useEffect
-//  bodies — never during render — providing stale-closure-safe access to the
-//  latest prop values inside the interval callbacks.
-//
 function useEnvironment(timezone = "Asia/Colombo", timeOverride = null) {
   // -------------- 1. PROP-DERIVED values — pure render computation (no setState)
   // period, arc, hourDecimal are entirely determined by the two props.
@@ -393,8 +343,10 @@ function useEnvironment(timezone = "Asia/Colombo", timeOverride = null) {
 const SLIDES = [
   {
     id: 1,
-    // add images: Slide 1 background image
+    // add images: Slide 1 background image (day)
     image: sigiriya,
+    // add images: Slide 1 background image (night) — replace with a night/lit scene
+    nightImage: sigiriyaNight,
     headingLine1: "Your Premium Gateway to",
     headingHighlight: "Sri Lanka",
     subtext:
@@ -404,8 +356,10 @@ const SLIDES = [
   },
   {
     id: 2,
-    // add images: Slide 2 background image
+    // add images: Slide 2 background image (day)
     image: anuradhapura,
+    // add images: Slide 2 background image (night) — replace with a night/lit scene
+    nightImage: anuradhapuraNight,
     headingLine1: "Discover the Beauty of",
     headingHighlight: "Sri Lanka",
     subtext:
@@ -415,8 +369,10 @@ const SLIDES = [
   },
   {
     id: 3,
-    // add images: Slide 3 background image
+    // add images: Slide 3 background image (day)
     image: polonnaruwa,
+    // add images: Slide 3 background image (night) — replace with a night/lit scene
+    nightImage: polonnaruwaNight,
     headingLine1: "Unforgettable Journeys Across",
     headingHighlight: "Sri Lanka",
     subtext:
@@ -426,8 +382,10 @@ const SLIDES = [
   },
   {
     id: 4,
-    // add images: Slide 4 background image
+    // add images: Slide 4 background image (day)
     image: kandy,
+    // add images: Slide 4 background image (night) — replace with a night/lit scene
+    nightImage: kandyNight,
     headingLine1: "Luxury Transfers Throughout",
     headingHighlight: "Sri Lanka",
     subtext:
@@ -437,8 +395,10 @@ const SLIDES = [
   },
   {
     id: 5,
-    // add images: Slide 5 background image
+    // add images: Slide 5 background image (day)
     image: trincomalee,
+    // add images: Slide 5 background image (night) — replace with a night/lit scene
+    nightImage: trincomaleeNight,
     headingLine1: "Experience Island Life in",
     headingHighlight: "Sri Lanka",
     subtext:
@@ -448,8 +408,10 @@ const SLIDES = [
   },
   {
     id: 6,
-    // add images: Slide 6 background image
+    // add images: Slide 6 background image (day)
     image: yapahuwa,
+    // add images: Slide 6 background image (night) — replace with a night/lit scene
+    nightImage: yapahuwaNight,
     headingLine1: "Adventure Awaits You in",
     headingHighlight: "Sri Lanka",
     subtext:
@@ -460,7 +422,7 @@ const SLIDES = [
 ];
 
 // -------------- Auto-play interval (ms)
-const AUTOPLAY_DELAY = 50000;
+const AUTOPLAY_DELAY = 5000;
 
 // -------------- Taxi Service Cards — managed by Super Admin
 // add images: Replace `image` values with actual card images (recommended 600×400px)
@@ -983,6 +945,12 @@ export default function Home() {
     envPeriod === "night" ||
     (envPeriod === "evening" && (envArc?.sunY ?? 0) > 75);
 
+  // -------------- Night image switching
+  // When the environment period is night or dawn, use each slide's nightImage
+  // instead of its daytime image. Falls back to the day image if nightImage
+  // is not supplied, so existing slides without nightImage still work.
+  const isNightPeriod = envPeriod === "night" || envPeriod === "dawn";
+
   // -------------- Format decimal hour for display
   const displayHour = timeOverride !== null ? timeOverride : envHour;
   const displayTimeStr = (() => {
@@ -1109,10 +1077,11 @@ export default function Home() {
             >
               {/* add images: Slide background — Ken Burns zoom applied via CSS.
                   The data-bg attribute is picked up by the useEffect data-bg handler
-                  below, which applies it as backgroundImage without inline styles. */}
+                  below, which applies it as backgroundImage without inline styles.
+                  At night/dawn the slide's nightImage is used instead of image. */}
               <div
                 className="vt-home__slide-bg"
-                data-bg={s.image}
+                data-bg={isNightPeriod && s.nightImage ? s.nightImage : s.image}
                 role="img"
                 aria-label={`Slide ${i + 1} background`}
               />
@@ -1138,7 +1107,7 @@ export default function Home() {
           <div className="vt-home__env-sky-enhanced" img={full_opacity} />
 
           {/* Base sky gradient layer — fades smoothly between period palettes */}
-          <div className="vt-home__env-sky" img={half_opasity} />
+          <div className="vt-home__env-sky" img={half_opacity} />
 
           {/* -------------- Six Sri Lankan Landmark Silhouettes (between sky and clouds) -------------- */}
           {/*
@@ -1229,76 +1198,60 @@ export default function Home() {
           {/* add images: CSS conic-gradient rays from sun position — no image */}
           <div className="vt-home__env-sunrays" />
 
-          {/* -------------- Cloud System — 2 Layers (Walakulu / වලාකුළු) 
-              Two distinct cloud layers create atmospheric depth:
-
-              LAYER 2 — Back Layer (vt-home__env-clouds--back)
-                Rendered first (behind layer 1) — slower drift, slightly smaller.
-                7 clouds — opacity pattern: 1,3,4,7 → 50% | 2,5,6 → 100%
-                Mimics distant clouds high in the sky.
-
-              LAYER 1 — Front Layer (vt-home__env-clouds--front)
-                Rendered second (in front of layer 2) — faster drift, slightly larger.
-                7 clouds — opacity pattern: 1,3,4,7 → 100% | 2,5,6 → 50%
-                Mimics near clouds at mid-sky level.
-
-              Both layers share --env-cloud-opacity from the environment system so
-              they react to period (dawn/morning/noon/evening/night) and weather
-              (clear, cloudy, stormy, etc.) identically. Individual cloud alpha is
-              stacked ON TOP of the layer opacity via the CSS --cloud-alpha variable.
-
-              add images: Each .vt-home__env-cloud div uses a data-bg attribute to
-              load a real cloud PNG. The useEffect data-bg handler applies it as
-              backgroundImage automatically. To use real cloud images:
-                1. Place your cloud PNG files in /assets/clouds/
-                2. Add data-bg="/assets/clouds/cloud-N.png" to each cloud div below
-                3. Remove the CSS radial-gradient background from those cloud rules
-                4. Recommended cloud image: 600–1200px wide, transparent PNG
-
-              WHERE TO ADD CLOUD IMAGES:
-                Front layer clouds → data-bg="/assets/clouds/walakulu-front-N.png"
-                Back  layer clouds → data-bg="/assets/clouds/walakulu-back-N.png"
-                Naming convention : walakulu-front-1.png … walakulu-front-7.png
-                                    walakulu-back-1.png  … walakulu-back-7.png
-            */}
-
-          {/* -------------- Cloud Layer 2: Back Layer  */}
-          {/*
-              Back layer — slower, deeper, more transparent. Renders behind the
-              front layer to simulate clouds at a greater altitude/distance.
-              Opacity spec: clouds 1,3,4,7 → 50% | clouds 2,5,6 → 100%
-          */}
+          {/* -------------- Cloud System — 2 Layers  -------------- */}
+          {/* -------------- Cloud Layer 2: Back Layer -------------- */}
           <div
             className="vt-home__env-clouds vt-home__env-clouds--back"
             aria-hidden="true"
           >
             {/* Back Cloud 1 — opacity: 50% (dim) — large, upper-left */}
             {/* add images: data-bg="/assets/clouds/walakulu-back-1.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--b1 vt-home__env-cloud--dim" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--b1 vt-home__env-cloud--dim"
+              data-bg={half_opacity}
+            />
 
             {/* Back Cloud 2 — opacity: 100% (bright) — medium, upper-centre-left */}
             {/* add images: data-bg="/assets/clouds/walakulu-back-2.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--b2 vt-home__env-cloud--bright" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--b2 vt-home__env-cloud--bright"
+              data-bg={full_opacity}
+            />
 
             {/* Back Cloud 3 — opacity: 50% (dim) — small, high upper-right */}
             {/* add images: data-bg="/assets/clouds/walakulu-back-3.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--b3 vt-home__env-cloud--dim" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--b3 vt-home__env-cloud--dim"
+              data-bg={half_opacity}
+            />
 
             {/* Back Cloud 4 — opacity: 50% (dim) — wide, mid-left */}
             {/* add images: data-bg="/assets/clouds/walakulu-back-4.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--b4 vt-home__env-cloud--dim" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--b4 vt-home__env-cloud--dim"
+              data-bg={half_opacity}
+            />
 
             {/* Back Cloud 5 — opacity: 100% (bright) — large, mid-right */}
             {/* add images: data-bg="/assets/clouds/walakulu-back-5.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--b5 vt-home__env-cloud--bright" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--b5 vt-home__env-cloud--bright"
+              data-bg={full_opacity}
+            />
 
             {/* Back Cloud 6 — opacity: 100% (bright) — medium, centre */}
             {/* add images: data-bg="/assets/clouds/walakulu-back-6.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--b6 vt-home__env-cloud--bright" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--b6 vt-home__env-cloud--bright"
+              data-bg={full_opacity}
+            />
 
             {/* Back Cloud 7 — opacity: 50% (dim) — small, far right */}
             {/* add images: data-bg="/assets/clouds/walakulu-back-7.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--b7 vt-home__env-cloud--dim" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--b7 vt-home__env-cloud--dim"
+              data-bg={half_opacity}
+            />
           </div>
 
           {/* -------------- Cloud Layer 1: Front Layer  */}
@@ -1313,43 +1266,52 @@ export default function Home() {
           >
             {/* Front Cloud 1 — opacity: 100% (bright) — large, mid-left */}
             {/* add images: data-bg="/assets/clouds/walakulu-front-1.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--f1 vt-home__env-cloud--bright" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f1 vt-home__env-cloud--bright"
+              data-bg={full_opacity}
+            />
 
             {/* Front Cloud 2 — opacity: 50% (dim) — medium, centre-left */}
             {/* add images: data-bg="/assets/clouds/walakulu-front-2.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--f2 vt-home__env-cloud--dim" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f2 vt-home__env-cloud--dim"
+              data-bg={half_opacity}
+            />
 
             {/* Front Cloud 3 — opacity: 100% (bright) — large, centre */}
             {/* add images: data-bg="/assets/clouds/walakulu-front-3.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--f3 vt-home__env-cloud--bright" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f3 vt-home__env-cloud--bright"
+              data-bg={full_opacity}
+            />
 
             {/* Front Cloud 4 — opacity: 100% (bright) — wide, right-of-centre */}
             {/* add images: data-bg="/assets/clouds/walakulu-front-4.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--f4 vt-home__env-cloud--bright" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f4 vt-home__env-cloud--bright"
+              data-bg={full_opacity}
+            />
 
             {/* Front Cloud 5 — opacity: 50% (dim) — medium, right */}
             {/* add images: data-bg="/assets/clouds/walakulu-front-5.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--f5 vt-home__env-cloud--dim" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f5 vt-home__env-cloud--dim"
+              data-bg={half_opacity}
+            />
 
             {/* Front Cloud 6 — opacity: 50% (dim) — small, far right */}
             {/* add images: data-bg="/assets/clouds/walakulu-front-6.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--f6 vt-home__env-cloud--dim" />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f6 vt-home__env-cloud--dim"
+              data-bg={half_opacity}
+            />
 
             {/* Front Cloud 7 — opacity: 100% (bright) — large, trailing */}
             {/* add images: data-bg="/assets/clouds/walakulu-front-7.png" */}
-            <div className="vt-home__env-cloud vt-home__env-cloud--f7 vt-home__env-cloud--bright" />
-          </div>
-
-          {/* Rain streaks — activated by rainy/stormy weather variants via CSS */}
-          <div className="vt-home__env-rain" aria-hidden="true">
-            {/* 40 raindrop streaks — CSS distributes positions and speeds */}
-            {Array.from({ length: 40 }).map((_, ri) => (
-              <span
-                key={ri}
-                className={`vt-home__env-raindrop vt-home__env-raindrop--${(ri % 5) + 1}`}
-                aria-hidden="true"
-              />
-            ))}
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f7 vt-home__env-cloud--bright"
+              data-bg={full_opacity}
+            />
           </div>
 
           {/* Mist layer — activated by misty weather variant via CSS */}
@@ -1402,19 +1364,63 @@ export default function Home() {
           <div className="vt-home__env-lightning" aria-hidden="true" />
         </div>
 
-        {/* -------------- Birds Layer   */}
+        {/* -------------- Top-level Weather Overlay — Rain + Front Clouds above all content --------------*/}
         {/*
-          8 bird silhouettes flying across the hero sky.
-          Visibility is controlled by period class on .vt-home:
-            dawn/morning/evening → fully visible
-            noon → 60% visible
-            night → hidden
-          Bird sizes (sm/md/lg) create natural depth/distance illusion.
-          Each bird has independent flight duration and delay for organic scatter.
-
-          add images: Replace each bird <span> with an <img> of a bird silhouette
-                      SVG for higher-quality wing detail. Animate with CSS.
+          This container sits above .vt-home__content (z:10) and all UI elements,
+          placing rain streaks and the front cloud layer visually over the text/buttons
+          to create a clear sense of stormy depth. Text remains legible via enhanced
+          text-shadow on .vt-home__heading and .vt-home__subtext (see CSS).
+          pointer-events: none ensures all UI interactions still work through this layer.
         */}
+        <div className="vt-home__weather-overlay" aria-hidden="true">
+          {/* -------------- Front Cloud Layer (duplicated above content) -------------- */}
+          <div
+            className="vt-home__env-clouds vt-home__env-clouds--front vt-home__env-clouds--overlay"
+            aria-hidden="true"
+          >
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f1 vt-home__env-cloud--bright"
+              data-bg={full_opacity}
+            />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f2 vt-home__env-cloud--dim"
+              data-bg={half_opacity}
+            />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f3 vt-home__env-cloud--bright"
+              data-bg={full_opacity}
+            />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f4 vt-home__env-cloud--bright"
+              data-bg={full_opacity}
+            />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f5 vt-home__env-cloud--dim"
+              data-bg={half_opacity}
+            />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f6 vt-home__env-cloud--dim"
+              data-bg={half_opacity}
+            />
+            <div
+              className="vt-home__env-cloud vt-home__env-cloud--f7 vt-home__env-cloud--bright"
+              data-bg={full_opacity}
+            />
+          </div>
+
+          {/* -------------- Rain streaks above all content -------------- */}
+          <div className="vt-home__env-rain" aria-hidden="true">
+            {Array.from({ length: 40 }).map((_, ri) => (
+              <span
+                key={ri}
+                className={`vt-home__env-raindrop vt-home__env-raindrop--${(ri % 5) + 1}`}
+                aria-hidden="true"
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* -------------- Birds Layer --------------*/}
         <div className="vt-home__env-birds" aria-hidden="true">
           {/* Bird 1 — large foreground bird, slow flight */}
           {/* add images: Bird silhouette 1 — upper sky, slow */}
@@ -1449,17 +1455,10 @@ export default function Home() {
           <span className="vt-home__env-bird vt-home__env-bird--md vt-home__env-bird--8" />
         </div>
 
-        {/* -------------- Fireflies Layer  */}
-        {/*
-          16 bioluminescent firefly particles floating in the lower hero area.
-          Only visible during night and dawn periods.
-          Each firefly has independent drift duration, glow pulse, and position.
-          Controlled entirely by CSS — no JS animation logic.
-
-          add images: No image — pure CSS radial-gradient glow dots.
-        */}
+        {/* -------------- Fireflies Layer --------------*/}
+        {/* --------------add images: No image — pure CSS radial-gradient glow dots. --------------*/}
         <div className="vt-home__env-fireflies" aria-hidden="true">
-          {/* 16 fireflies — CSS nth-child positions and timing */}
+          {/* --------------16 fireflies — CSS nth-child positions and timing --------------*/}
           {Array.from({ length: 16 }).map((_, fi) => (
             <span
               key={fi}
@@ -1469,26 +1468,7 @@ export default function Home() {
           ))}
         </div>
 
-        {/* -------------- Environment Badge (period + weather indicator)  */}
-        {/*
-          Shows the current period icon and label in the top-left corner.
-          Styled entirely via CSS — badge colours shift with env period class.
-        */}
-        {/* -------------- Dynamic Sun/Moon Arc — scoped CSS variable override   */}
-        {/*
-          The sun and moon positions are computed from the actual clock minute
-          by minute via computeSunMoonArc(). We inject them as CSS custom
-          properties using a scoped <style> tag inside the section.
-
-          WHY a <style> tag and not inline styles?
-            • The brief requires "no inline style" on DOM elements.
-            • A <style> tag is a CSS mechanism (not an element attribute), so it
-              satisfies the constraint while still enabling JS-driven positions.
-            • The override is automatically scoped to .vt-home because it uses
-              the section's own CSS variables.
-            • Only the arc variables are overridden here; all other env variables
-              remain fully CSS-driven via the period/weather classes.
-        */}
+        {/* -------------- Environment Badge (period + weather indicator) --------------*/}
         <style>{`
           /* Sun/moon arc positions computed from real-time clock */
           .vt-home--location-${selectedLocationKey} {
@@ -1501,18 +1481,9 @@ export default function Home() {
 
         {/* -------------- Active Landmark Spotlight Layer  */}
         {/*
-          Displays the selected location's landmark PNG as the centered hero
-          subject. The landmark image is positioned at bottom-center, reacting
-          to time via CSS filter (brightness shifts per env period class).
-
-          add images: Each location's `landmark` path points to a transparent
-          PNG (see LOCATIONS array at top of file). Replace placeholder paths
-          with actual landmark silhouette images.
-
+          Displays the selected location's landmark PNG as the centered hero subject.
+          add images: Each location's `landmark` path points to a transparent PNG (see LOCATIONS array at top of file). 
           CSS class: vt-home__landmark-spotlight
-            • Centered horizontally, anchored to bottom
-            • Transitions opacity and filter smoothly on location change
-            • Period-responsive: glows at dawn/morning, darkens at night
         */}
         <div className="vt-home__landmarks-spotlight" aria-hidden="true">
           {/* Ground plane — dark base behind spotlight landmark */}
@@ -1852,6 +1823,31 @@ export default function Home() {
             ))}
           </div>
         </div>
+
+        {/* -------------- Weather Badge — visible rain/storm indicator  */}
+        {/* Only rendered when weather is rainy or stormy so users clearly see it */}
+        {(envWeather === "rainy" || envWeather === "stormy") && (
+          <div
+            className={[
+              "vt-home__weather-badge",
+              `vt-home__weather-badge--${envWeather}`,
+            ].join(" ")}
+            aria-live="polite"
+            role="status"
+            aria-label={
+              envWeather === "stormy"
+                ? "Current weather: Stormy"
+                : "Current weather: Rainy"
+            }
+          >
+            <span className="vt-home__weather-badge-icon" aria-hidden="true">
+              {envWeather === "stormy" ? "⛈️" : "🌧️"}
+            </span>
+            <span className="vt-home__weather-badge-label">
+              {envWeather === "stormy" ? "Stormy" : "Rainy"}
+            </span>
+          </div>
+        )}
 
         <div className="vt-home__content" key={current}>
           <h1 className="vt-home__heading">

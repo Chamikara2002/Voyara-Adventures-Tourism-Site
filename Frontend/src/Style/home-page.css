@@ -45,7 +45,7 @@
 .vt-home__track {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 3;
 }
 
 /* -------------- Individual Slide -------------- */
@@ -351,8 +351,8 @@
 /* -------------- Mobile -------------- */
 @media (max-width: 480px) {
   .vt-home {
-    min-height: 420px;
-    height: 92svh;
+    min-height: 425px;
+    height: 93svh;
   }
 
   .vt-home__heading {
@@ -648,7 +648,7 @@
    burying the scene in excessive darkness. --------------  */
 .vt-home--weather-rainy {
   --env-cloud-opacity: 0.9;
-  --env-rain-opacity: 0.95;
+  --env-rain-opacity: 100;
   --env-mist-opacity: 0.65;
   --env-sun-opacity: 0.5;
   --env-flare-opacity: 0;
@@ -661,7 +661,7 @@
 /* -------------- Overlay at ~30% — stormy atmosphere visible but scene details preserved. -------------- */
 .vt-home--weather-stormy {
   --env-cloud-opacity: 0.95;
-  --env-rain-opacity: 0.95;
+  --env-rain-opacity: 100;
   --env-mist-opacity: 0.65;
   --env-sun-opacity: 0.5;
   --env-flare-opacity: 0;
@@ -669,6 +669,58 @@
   --env-overlay-start: rgba(10, 15, 37, 0.26);
   --env-overlay-mid: rgba(10, 15, 37, 0.21);
   --env-overlay-end: rgba(10, 15, 37, 0.19);
+}
+
+/* -------------- Weather Badge — rain / storm visible indicator -------------- */
+/* Floats in the top-right corner of the hero, clearly showing rainy/stormy state */
+.vt-home__weather-badge {
+  position: absolute;
+  top: 20px;
+  right: 80px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px 6px 10px;
+  border-radius: 999px;
+  background: rgba(20, 40, 80, 0.65);
+  border: 1px solid rgba(100, 160, 255, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #d0e8ff;
+  font-family: "Lato", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: none;
+  animation: vt-weather-badge-in 0.4s ease forwards;
+}
+
+.vt-home__weather-badge--stormy {
+  background: rgba(30, 20, 60, 0.7);
+  border-color: rgba(160, 120, 255, 0.45);
+  color: #e0d8ff;
+}
+
+.vt-home__weather-badge-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.vt-home__weather-badge-label {
+  line-height: 1;
+}
+
+@keyframes vt-weather-badge-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* -------------- Misty -------------- */
@@ -705,25 +757,6 @@
 }
 
 /*  -------------- Z-Index Layer Order (full hero stack from bottom to top)  -------------- 
-   z:0  — .vt-home__track         (slide background images)
-   z:2  — .vt-home__env           (sky, sun, moon, clouds, rain — env system)
-            Within .vt-home__env:
-              sky-enhanced -> sky -> env-landmarks -> stormclouds -> sunrays
-              -> back-cloud-layer -> sun/moon/moonrays/stars/flare/dawn -> lightning
-              -> front-cloud-layer (rendered last = on top within env)
-   z:3  — .vt-home__landmarks     (CSS-art/PNG landmark silhouettes)
-   z:3  — .vt-home__landmarks-spotlight (active location landmark PNG)
-   z:4  — .vt-home__slide6-mosaic (Slide 6 special 6-image grid — above landmarks)
-   z:5  — .vt-home__env-birds     (birds / bats layer)
-   z:5  — .vt-home__env-fireflies (firefly glow particles)
-   z:10 — .vt-home__content       (heading, subtext, CTA button)
-   z:20 — .vt-home__arrow         (prev/next arrows)
-   z:20 — .vt-home__dots          (slide dot indicators)
-   z:20 — .vt-home__counter       (slide counter)
-   z:25 — .vt-home__env-controls  (location selector + time slider)
-   z:25 — .vt-home__env-badge     (period/weather badge top-left)
-   -------------- */
-
 /* -------------- SKY GRADIENT LAYER add images: pure CSS gradient — no image needed -------------- */
 .vt-home__env-sky {
   position: absolute;
@@ -1223,40 +1256,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   }
 }
 
-/* -------------- CLOUD SYSTEM — 2 Layers Two distinct cloud layers provide atmospheric depth and parallax illusion.
-
-   LAYER ARCHITECTURE: vt-home__env-clouds--back  (Layer 2 — background, slower, higher altitude)
-                      vt-home__env-clouds--front (Layer 1 — foreground, faster, lower altitude)
-
-   OPACITY SPECIFICATION:
-     Back  layer: clouds 1,3,4,7 -> 50% opacity  |  clouds 2,5,6 -> 100% opacity
-     Front layer: clouds 1,3,4,7 -> 100% opacity |  clouds 2,5,6 -> 50%  opacity
-     Both layers are additionally controlled by --env-cloud-opacity so the
-     entire cloud system reacts to period (dawn/morning/noon/evening/night)
-     and weather (clear/cloudy/rainy/stormy) identically.
-
-   Z-INDEX ORDER (within .vt-home__env, z:2):
-     sky-enhanced -> sky -> [env-landmarks] -> stormclouds ->
-     sunrays -> [BACK CLOUD LAYER] -> sun/moon -> [FRONT CLOUD LAYER] ->
-     rain -> mist -> fog -> rainsplash -> stars -> flare -> dawn-glow -> lightning
-
-   ENVIRONMENT RESPONSIVENESS:
-     Cloud tint shifts per period via filter: hue-rotate + brightness. This
-     gives clouds a pink-purple tint at dawn/evening, a warm-white at noon,
-     and a cool-blue at night — reacting to the same CSS variables as the sky.
-
-   add images: To use real cloud PNG images:
-     1. Place PNGs in /public/assets/clouds/
-        Naming: walakulu-front-1.png … walakulu-front-7.png
-                walakulu-back-1.png  … walakulu-back-7.png
-     2. Add data-bg="/assets/clouds/walakulu-front-N.png" to each front cloud div
-        Add data-bg="/assets/clouds/walakulu-back-N.png"  to each back cloud div
-     3. Override the CSS background on those individual cloud rules to `none`
-        (or remove the radial-gradient background property)
-     4. The useEffect data-bg handler will auto-apply backgroundImage — done! -------------- */
-
-/* -------------- Shared cloud layer wrapper Both front and back layers inherit --env-cloud-opacity so they dim/brighten
-   in unison when the period or weather class changes. -------------- */
+/* -------------- CLOUD SYSTEM — 2 Layers Two distinct cloud layers provide atmospheric depth and parallax illusion. -------------- */
 .vt-home__env-clouds {
   position: absolute;
   inset: 0;
@@ -1280,66 +1280,31 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
 .vt-home__env-clouds--front {
   /* z-index 15 — above back clouds (z:10), keeps front layer on top */
   z-index: 15;
+  /* The front cloud layer is duplicated in .vt-home__weather-overlay above all content.
+     Hide this copy inside .vt-home__env so clouds are not rendered twice. */
+  display: none;
 }
 
 /* -------------- Individual Cloud Base Style Shared visual properties for all 14 clouds (7 front + 7 back).
    Cloud shape: layered radial-gradient ellipses to form distinct cumulus puffs. add images: Override background with background-image when using real PNGs. -------------- */
 .vt-home__env-cloud {
   position: absolute;
-  border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+  height: 50%;
   /* -------------- Distinct cumulus cloud shape — multiple radial blobs layered -------------- */
-  background:
-    /* -------------- Main central puff — brightest core -------------- */
-    radial-gradient(
-      ellipse 55% 60% at 50% 45%,
-      rgba(255, 255, 255, 0.96) 0%,
-      rgba(245, 248, 255, 0.82) 35%,
-      transparent 75%
-    ),
-    /* -------------- Left lobe — secondary puff -------------- */
-    radial-gradient(
-        ellipse 40% 55% at 28% 50%,
-        rgba(255, 255, 255, 0.88) 0%,
-        rgba(240, 244, 252, 0.65) 40%,
-        transparent 72%
-      ),
-    /* -------------- Right lobe — tertiary puff -------------- */
-    radial-gradient(
-        ellipse 38% 52% at 74% 52%,
-        rgba(255, 255, 255, 0.85) 0%,
-        rgba(240, 244, 252, 0.6) 40%,
-        transparent 70%
-      ),
-    /* -------------- Base shadow — subtle grey underside for depth -------------- */
-    radial-gradient(
-        ellipse 80% 30% at 50% 90%,
-        rgba(180, 195, 220, 0.38) 0%,
-        transparent 70%
-      );
-  filter: blur(6px);
+  background-size: 100% 150%;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: none;
   animation: vt-env-cloud-drift linear infinite;
-  /* -------------- add images: when using real cloud PNGs, add:
-     background-size: contain;
-     background-repeat: no-repeat;
-     background-position: center;
-     filter: none;  (remove blur when using image)  -------------- */
 }
 
-/* -------------- Cloud Opacity Modifiers 
-   .vt-home__env-cloud--dim    -> 50%  individual cloud alpha
-   .vt-home__env-cloud--bright -> 100% individual cloud alpha
-   These stack with the parent layer's --env-cloud-opacity via CSS opacity. -------------- */
+/* -------------- Cloud Opacity Modifiers -------------- */
 .vt-home__env-cloud--dim {
-  /* 50% opacity for dim clouds (back:1,3,4,7 | front:2,5,6) */
   opacity: 0.5;
 }
 .vt-home__env-cloud--bright {
-  /* 100% opacity for bright clouds (back:2,5,6 | front:1,3,4,7) */
   opacity: 1;
 }
-
-/* -------------- Period-Responsive Cloud Tint Cloud colour shifts with environment period using filter adjustments.
-   This ensures clouds look correct at dawn (pink), noon (white), night (blue). -------------- */
 
 /* -------------- Dawn: soft pink-lavender tint on clouds -------------- */
 .vt-home--env-dawn .vt-home__env-cloud {
@@ -1361,9 +1326,6 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
 .vt-home--env-night .vt-home__env-cloud {
   filter: blur(10px) sepia(0.1) hue-rotate(200deg) brightness(0.55);
 }
-
-/* -------------- BACK LAYER CLOUD POSITIONS & TIMING 7 clouds — opacity: 1,3,4,7 = dim (50%) | 2,5,6 = bright (100%)
-   Back clouds drift slower (larger animation-duration values) and start at higher vertical positions to simulate altitude. -------------- */
 
 /* -------------- Back Cloud 1 — dim (50%) — large, upper-left starting position add images: data-bg="/assets/clouds/walakulu-back-1.png" -------------- */
 .vt-home__env-cloud--b1 {
@@ -1437,9 +1399,6 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   animation-duration: 115s;
   animation-delay: -50s;
 }
-
-/* -------------- FRONT LAYER CLOUD POSITIONS & TIMING 7 clouds — opacity: 1,3,4,7 = bright (100%) | 2,5,6 = dim (50%)
-   Front clouds drift faster (smaller animation-duration values) and sit at lower vertical positions to simulate closer proximity to viewer. -------------- */
 
 /* -------------- Front Cloud 1 — bright (100%) — large, mid-left foreground add images: data-bg="/assets/clouds/walakulu-front-1.png" -------------- */
 .vt-home__env-cloud--f1 {
@@ -1950,37 +1909,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   }
 }
 
-/* -------------- SLIDE 6 — Special 6-Image Mosaic Layout 
-/* When the slideshow reaches Slide 6 (index 5), the hero switches from the
-   standard full-bleed slide background to a 3×2 grid mosaic of adventure images.
-
-   ACTIVATION:
-     .vt-home--slide6 is added to .vt-home when current === 5 in JSX.
-     When present -> mosaic fades in (opacity 1, transform scale(1)).
-     When absent  -> mosaic is invisible (opacity 0, transform scale(0.97)).
-     Transition matches --vt-home-transition for consistency with slide changes.
-
-   Z-INDEX:
-     .vt-home__slide6-mosaic sits at z-index: 4.
-     Visual hierarchy from bottom to top:
-       Slide track (z:0) -> env layer (z:2) -> landmarks (z:3) ->
-       [THIS MOSAIC z:4] -> birds/bats (z:5) -> content (z:10) -> arrows (z:20)
-     This places the mosaic between the landmark PNG layer and the UI content,
-     satisfying: Sky -> Main Images -> Cloud Layers -> Content.
-
-   GRID LAYOUT:
-     3 columns × 2 rows, edge-to-edge, no gaps between cells.
-     Each cell fills its grid area with cover background-sizing.
-     Inner borders created by a subtle semi-transparent overlay on hover only.
-
-   ENVIRONMENT RESPONSIVENESS:
-     The mosaic overlay itself dims/brightens with the env period using filter
-     on .vt-home--slide6 .vt-home__slide6-mosaic. Cloud layers remain above it.
-
-   add images: Images are set via data-bg attributes in JSX (SLIDE_6_IMAGES array).
-   The existing useEffect data-bg handler applies backgroundImage automatically.
-   -------------- */
-
+/* -------------- SLIDE 6 — Special 6-Image Mosaic Layout -------------- */
 /* -------------- Mosaic container — overlays the entire hero -------------- */
 .vt-home__slide6-mosaic {
   position: absolute;
@@ -1990,14 +1919,11 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
   gap: 3px; /* hairline dividers between cells */
-  background: rgba(0, 0, 0, 0.6); /* gap colour — dark tint */
-  /* -------------- Z-index: above landmarks (z:3), below content (z:10) -------------- */
+  background: rgba(0, 0, 0, 0.6);
   z-index: 4;
-  /* -------------- Initial state — invisible and slightly scaled down -------------- */
   opacity: 0;
   transform: scale(0.97);
-  pointer-events: none; /* non-interactive when hidden */
-  /* -------------- Smooth enter/exit matching the slide transition speed -------------- */
+  pointer-events: none;
   transition:
     opacity 0.7s cubic-bezier(0.77, 0, 0.18, 1),
     transform 0.7s cubic-bezier(0.77, 0, 0.18, 1);
@@ -2100,12 +2026,6 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   }
 }
 
-/*  -------------- ENHANCED ENVIRONMENT SYSTEM — Birds, Fireflies, Landmarks, Parallax All changes are HERO SECTION ONLY (.vt-home scope).
-   No inline styles used anywhere. All visual changes are CSS-class-driven. -------------- */
-
-/* -------------- Additional Sky Gradient Colours per Period These complement the existing --env-sky-* variables with richer per-period
-   sky gradients rendered directly on .vt-home__env-sky-enhanced. The existing .vt-home__env-sky is kept; this layer adds cinematic depth. -------------- */
-
 /* -------------- Sky enhanced layer — stacked above base sky, below sun/moon -------------- */
 .vt-home__env-sky-enhanced {
   position: absolute;
@@ -2193,10 +2113,6 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   opacity: 1;
 }
 
-/* -------------- LANDMARK SILHOUETTES — Sri Lankan tourism landmarks as layered SVG-like
-   CSS shapes in the background, visible through the environment layers. add images: Each landmark section below is a CSS-art landmark silhouette.
-               To use actual images, replace with img/background-image elements in JSX and mark with "add images" comment. -------------- */
-
 /* -------------- Landmark parallax container — sits just above the slide track -------------- */
 .vt-home__landmarks {
   position: absolute;
@@ -2263,9 +2179,6 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   }
 }
 
-/* -------------- Sigiriya Rock Fortress — real transparent PNG via data-bg Image change: The JSX div now carries data-bg="/assets/landmarks/sigiriya-silhouette.png"
-   The useEffect data-bg handler applies it as backgroundImage automatically. CSS below positions, sizes, and filters the image in sync with env periods.
-   No clip-path art needed — the transparent PNG provides the correct silhouette. -------------- */
 .vt-home__landmark--sigiriya {
   /* -------------- Position — dominant rightmost landmark -------------- */
   right: 8%;
@@ -2307,14 +2220,14 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   );
   clip-path: polygon(
     40% 0%,
-    /* -------------- head top -------------- */ 60% 0%,
+    60% 0%,
     65% 5%,
-    /* -------------- shoulder right -------------- */ 80% 15%,
-    /* -------------- arm right -------------- */ 82% 25%,
-    /* -------------- hand right extended up -------------- */ 75% 28%,
+    80% 15%,
+    82% 25%,
+    75% 28%,
     70% 30%,
-    /* body right -------------- */ 75% 60%,
-    /* robe base right -------------- */ 80% 100%,
+    75% 60%,
+    80% 100%,
     20% 100%,
     25% 60%,
     30% 30%,
@@ -4696,7 +4609,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
 .vt-home__landmarks-spotlight {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 4;
   pointer-events: none;
   overflow: hidden;
 }
@@ -4828,9 +4741,6 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
     height: 180px;
   }
 }
-
-/* -------------- BATS (Waullu) — night creatures replacing birds at night/late evening
-   add images: CSS clip-path bat silhouettes. Replace <span>s with <img>  of bat SVG silhouettes for higher fidelity if desired. -------------- */
 
 /* -------------- Bat flock container — mirrors bird container structure -------------- */
 .vt-home__env-bats {
@@ -5750,107 +5660,21 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
 /* -------------- ENHANCED CLOUD SHAPES — multi-layer radial puffs for realistic 3D clouds -------------- */
 
 /* -------------- Override cloud bases to be more volumetric -------------- */
-.vt-home__env-cloud {
-  /* -------------- Layered radial gradients for cloud depth -------------- */
-  background:
-    radial-gradient(
-      ellipse 60% 55% at 40% 40%,
-      rgba(255, 255, 255, 0.92) 0%,
-      rgba(240, 244, 252, 0.65) 45%,
-      transparent 80%
-    ),
-    radial-gradient(
-      ellipse 50% 60% at 70% 45%,
-      rgba(255, 255, 255, 0.8) 0%,
-      rgba(235, 240, 250, 0.5) 45%,
-      transparent 80%
-    ),
-    radial-gradient(
-      ellipse 45% 50% at 25% 55%,
-      rgba(255, 255, 255, 0.85) 0%,
-      rgba(240, 243, 252, 0.55) 45%,
-      transparent 80%
-    );
-  filter: blur(14px);
-}
-
-/* -------------- Dawn / Evening clouds: warm tinted -------------- */
+/* Dawn / Evening — tint only, no gradient overriding image */
 .vt-home--env-dawn .vt-home__env-cloud,
 .vt-home--env-evening .vt-home__env-cloud {
-  background:
-    radial-gradient(
-      ellipse 60% 55% at 40% 40%,
-      rgba(255, 210, 160, 0.8) 0%,
-      rgba(255, 180, 120, 0.5) 45%,
-      transparent 80%
-    ),
-    radial-gradient(
-      ellipse 50% 60% at 70% 45%,
-      rgba(255, 200, 140, 0.7) 0%,
-      rgba(255, 160, 100, 0.4) 45%,
-      transparent 80%
-    ),
-    radial-gradient(
-      ellipse 45% 50% at 25% 55%,
-      rgba(255, 220, 170, 0.75) 0%,
-      rgba(255, 185, 130, 0.45) 45%,
-      transparent 80%
-    );
-  filter: blur(16px);
+  filter: sepia(0.3) hue-rotate(-15deg) brightness(0.9);
 }
 
-/* -------------- Night clouds: dark blue-grey barely visible -------------- */
+/* Night — darken only */
 .vt-home--env-night .vt-home__env-cloud {
-  background:
-    radial-gradient(
-      ellipse 60% 55% at 40% 40%,
-      rgba(40, 50, 80, 0.6) 0%,
-      rgba(30, 40, 70, 0.4) 45%,
-      transparent 80%
-    ),
-    radial-gradient(
-      ellipse 50% 60% at 70% 45%,
-      rgba(35, 45, 75, 0.5) 0%,
-      rgba(25, 35, 65, 0.35) 45%,
-      transparent 80%
-    );
-  filter: blur(20px);
+  filter: brightness(0.55) hue-rotate(200deg);
 }
 
-/* -------------- Storm clouds: dark, heavy, low -------------- */
+/* Storm / Rainy — darken only */
 .vt-home--weather-stormy .vt-home__env-cloud,
 .vt-home--weather-rainy .vt-home__env-cloud {
-  background:
-    radial-gradient(
-      ellipse 55% 62% at 50% 42%,
-      rgba(18, 18, 30, 0.96) 0%,
-      rgba(22, 22, 38, 0.82) 38%,
-      rgba(28, 26, 44, 0.5) 62%,
-      transparent 80%
-    ),
-    /* -------------- Left dark lobe -------------- */
-    radial-gradient(
-        ellipse 42% 55% at 24% 48%,
-        rgba(15, 15, 28, 0.92) 0%,
-        rgba(20, 18, 34, 0.7) 42%,
-        transparent 72%
-      ),
-    /* -------------- Right dark lobe -------------- */
-    radial-gradient(
-        ellipse 38% 52% at 76% 44%,
-        rgba(16, 16, 30, 0.88) 0%,
-        rgba(22, 20, 36, 0.65) 42%,
-        transparent 70%
-      ),
-    /* -------------- Flat anvil base — cumulonimbus underside -------------- */
-    radial-gradient(
-        ellipse 95% 28% at 50% 92%,
-        rgba(14, 13, 24, 0.55) 0%,
-        rgba(18, 16, 30, 0.3) 50%,
-        transparent 78%
-      );
-  filter: blur(8px) brightness(0.7);
-  border-radius: 45% 52% 42% 48% / 55% 58% 45% 52%;
+  filter: brightness(0.5) saturate(0.3);
 }
 
 /* -------------- Cloud 1 — large and slow; sits high -------------- */
@@ -6780,4 +6604,83 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
     animation: none;
     transition: opacity 0.3s ease;
   }
+}
+
+/* ============================================================
+   TOP-LEVEL WEATHER OVERLAY
+   Positions rain streaks and the front cloud layer ABOVE all
+   hero content (text, CTA, arrows, dots, controls) to create
+   a clear sense of stormy depth. pointer-events: none ensures
+   all interactive UI elements remain fully clickable underneath.
+   ============================================================ */
+
+/* -------------- Weather overlay container -------------- */
+/* Sits above .vt-home__content (z:10), arrows/dots (z:20),
+   controls (z:22) — at z:28, below the location dropdown (z:30) */
+.vt-home__weather-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 28;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* -------------- Cloud layer inside the overlay -------------- */
+/* Inherit opacity from the same --env-cloud-opacity variable
+   so weather/period CSS classes still drive cloud visibility */
+.vt-home__env-clouds--overlay {
+  position: absolute;
+  inset: 0;
+  opacity: var(--env-cloud-opacity, 0);
+  transition: opacity var(--env-transition);
+  pointer-events: none;
+  /* Sits at top of overlay stacking context */
+  z-index: 2;
+}
+
+/* -------------- Rain inside the overlay -------------- */
+/* The .vt-home__env-rain opacity variable is still driven by
+   weather classes on .vt-home, so rainy/stormy still shows rain */
+.vt-home__weather-overlay .vt-home__env-rain {
+  z-index: 1;
+}
+
+/* ============================================================
+   TEXT LEGIBILITY ENHANCEMENTS FOR STORMY / RAINY WEATHER
+   When rain and clouds are drawn over the text, stronger
+   text-shadow and a subtle semi-transparent backdrop help the
+   heading and subtext remain clearly readable.
+   ============================================================ */
+
+/* -------------- Rainy weather: deepen text shadows -------------- */
+.vt-home--weather-rainy .vt-home__heading,
+.vt-home--weather-stormy .vt-home__heading {
+  text-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.75),
+    0 4px 24px rgba(0, 0, 0, 0.6),
+    0 0 48px rgba(0, 0, 0, 0.4);
+}
+
+.vt-home--weather-rainy .vt-home__subtext,
+.vt-home--weather-stormy .vt-home__subtext {
+  text-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.8),
+    0 2px 12px rgba(0, 0, 0, 0.55);
+}
+
+/* -------------- Content area: translucent dark backdrop for storm/rain -------------- */
+.vt-home--weather-rainy .vt-home__content,
+.vt-home--weather-stormy .vt-home__content {
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    rgba(5, 8, 20, 0.35) 0%,
+    transparent 75%
+  );
+}
+
+/* -------------- Rainy weather: slightly reduce cloud opacity in overlay
+   so the front-cloud layer doesn't fully obscure the text area -------------- */
+.vt-home--weather-rainy .vt-home__env-clouds--overlay,
+.vt-home--weather-stormy .vt-home__env-clouds--overlay {
+  opacity: 0.55;
 }
