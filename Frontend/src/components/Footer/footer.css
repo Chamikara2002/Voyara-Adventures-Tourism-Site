@@ -6,7 +6,6 @@
   --footer-text-muted: rgba(255, 255, 255, 0.65);
   --footer-icon-border: rgba(255, 255, 255, 0.5);
   --footer-icon-size: 38px;
-  --footer-gap: 3rem;
 
   background-color: var(--footer-bg);
   color: var(--footer-text-primary);
@@ -14,13 +13,13 @@
   padding: 3rem 0 0;
 }
 
-/* ---------- Inner grid ---------- */
+/* ---------- Inner grid — Desktop (default) ---------- */
 .footer__inner {
   display: grid;
-  /* Brand | Quick Links | Contact | Social */
-  grid-template-columns: 1fr auto auto auto;
-  gap: var(--footer-gap);
+  grid-template-columns: auto auto auto auto;
+  gap: 9rem;
   align-items: start;
+  justify-content: center;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 3rem 2.5rem;
@@ -29,18 +28,24 @@
 /* ---------- Brand column ---------- */
 .footer__brand {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
-  max-width: 280px;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.25rem;
 }
 
-/* add images: logo sizing */
+.footer__brand-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .footer__logo {
-  width: 120px;
+  width: 10rem;
   height: auto;
   object-fit: contain;
-  filter: brightness(0) invert(1); /* keeps logo white on dark bg */
+  filter: brightness(0) invert(1);
+  flex-shrink: 0;
 }
 
 .footer__brand-name {
@@ -50,6 +55,8 @@
   letter-spacing: 0.02em;
   color: var(--footer-text-primary);
   margin: 0;
+  text-align: center;
+  width: 200px;
 }
 
 .footer__tagline {
@@ -59,10 +66,10 @@
   color: var(--footer-text-muted);
   margin: 0;
   text-align: center;
+  width: 350px;
 }
 
 /* ---------- Quick Links column ---------- */
-/* add quick link section */
 .footer__links {
   min-width: 110px;
 }
@@ -120,7 +127,6 @@
 }
 
 /* ---------- Social icons column ---------- */
-/* add social media icon */
 .footer__social {
   display: flex;
   flex-direction: column;
@@ -166,34 +172,145 @@
   margin: 0;
 }
 
-/* ---------- Responsive ---------- */
-@media (max-width: 900px) {
+/* =====================================================
+   RESPONSIVE BREAKPOINTS
+   ===================================================== */
+
+/* ---------- Laptop (≤1280px) ---------- */
+/* Tighten gaps, shrink brand widths */
+@media (max-width: 1280px) {
   .footer__inner {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 5rem;
+    padding: 0 2.5rem 2.5rem;
   }
 
-  .footer__social {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+  .footer__tagline {
+    width: 260px;
+  }
+
+  .footer__brand-name {
+    width: auto;
   }
 }
 
-@media (max-width: 560px) {
+/* ---------- Tablet landscape (≤1024px) ---------- */
+/* Reduce gap further, logo smaller */
+@media (max-width: 1024px) {
   .footer__inner {
-    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 0 2rem 2.5rem;
+  }
+
+  .footer__logo {
+    width: 80px;
+  }
+
+  .footer__tagline {
+    width: 200px;
+  }
+}
+
+/* ---------- Tablet portrait (≤900px) ---------- */
+/* Switch to 2×2 grid:
+   Row 1: [Brand (full-width)]
+   Row 2: [Quick Links] [Contact]
+   Row 3: [Social (full-width, horizontal)]            */
+@media (max-width: 900px) {
+  .footer__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 3rem;
+    justify-content: stretch;
+    padding: 0 2rem 2rem;
+  }
+
+  /* Brand spans both columns */
+  .footer__brand {
+    grid-column: 1 / -1;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .footer__tagline {
+    width: auto;
+    max-width: 320px;
+  }
+
+  .footer__brand-name {
+    width: auto;
+  }
+
+  /* Quick Links — left cell, centered */
+  .footer__links {
+    justify-self: center;
+  }
+
+  /* Contact — right cell, left-aligned */
+  .footer__contact {
+    justify-self: start;
+  }
+
+  /* Social spans both columns as a horizontal row */
+  .footer__social {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+}
+
+/* ---------- Large mobile (≤640px) ---------- */
+/* Tighter padding, brand stacks vertically */
+@media (max-width: 640px) {
+  .footer__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 1.5rem;
     padding: 0 1.5rem 2rem;
   }
 
   .footer__brand {
+    flex-direction: column;
     align-items: center;
-    max-width: 100%;
-    text-align: center;
+    gap: 1rem;
+  }
+
+  .footer__logo {
+    width: 90px;
+  }
+
+  .footer__brand-text {
+    align-items: center;
+  }
+
+  .footer__tagline {
+    max-width: 280px;
+  }
+
+  .footer__bottom {
+    padding: 1rem 1.5rem;
+  }
+}
+
+/* ---------- Small mobile (≤480px) ---------- */
+/* Single column, everything centered */
+@media (max-width: 480px) {
+  .footer__inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1.25rem 2rem;
+  }
+
+  .footer__brand {
+    grid-column: 1;
   }
 
   .footer__links {
+    justify-self: center;
     text-align: center;
+  }
+
+  .footer__contact {
+    justify-self: stretch;
   }
 
   .footer__contact .footer__col-title {
@@ -206,11 +323,35 @@
   }
 
   .footer__social {
-    flex-direction: row;
+    grid-column: 1;
     justify-content: center;
   }
 
   .footer__bottom {
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.25rem;
+  }
+}
+
+/* ---------- Extra small mobile (≤360px) ---------- */
+@media (max-width: 360px) {
+  .footer__inner {
+    padding: 0 1rem 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .footer__logo {
+    width: 70px;
+  }
+
+  .footer__brand-name {
+    font-size: 1.15rem;
+  }
+
+  .footer__tagline {
+    font-size: 0.78rem;
+  }
+
+  .footer__bottom {
+    padding: 0.85rem 1rem;
   }
 }

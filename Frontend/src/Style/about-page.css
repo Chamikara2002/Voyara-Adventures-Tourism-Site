@@ -1,0 +1,373 @@
+/* ── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --ap-blue-dark:    #0a1628;
+  --ap-blue-mid:     #0d2247;
+  --ap-blue-ocean:   #0e3a6e;
+  --ap-teal:         #1ecbe1;
+  --ap-teal-soft:    #52d9ea;
+  --ap-white:        #ffffff;
+  --ap-white-70:     rgba(255, 255, 255, 0.70);
+  --ap-white-30:     rgba(255, 255, 255, 0.15);
+  --ap-gold:         #c9a84c;
+  --ap-font-display: 'Playfair Display', Georgia, serif;
+  --ap-font-body:    'DM Sans', 'Segoe UI', sans-serif;
+  --ap-radius-sm:    0.5rem;
+  --ap-radius-md:    1rem;
+  --ap-radius-xl:    2rem;
+  --ap-transition:   0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ap-max-width:    1200px;
+}
+
+/* ── Google Fonts import ────────────────────────────────────── */
+/*@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');*/
+
+/* ── Page Wrapper ───────────────────────────────────────────── */
+.ap-page {
+  font-family: var(--ap-font-body);
+  color: var(--ap-white);
+  background-color: var(--ap-blue-dark);
+  overflow-x: hidden;
+}
+
+/* ================================================================
+   HERO SLIDESHOW SECTION
+   ================================================================ */
+.ap-hero {
+  position: relative;
+  width: 100%;
+  height: 95svh;           /* full viewport height */
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ── Slide stack ────────────────────────────────────────────── */
+.ap-hero__slides {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Individual slide */
+.ap-hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.04);
+  transition:
+    opacity 1s var(--ap-transition),
+    transform 6s ease-out;
+}
+
+/* Active slide */
+.ap-hero__slide--active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+
+/* Slide image fills the frame */
+.ap-hero__slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  user-select: none;
+}
+
+/* ── Dark gradient overlay ──────────────────────────────────── */
+.ap-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 22, 40, 0.30) 0%,
+    rgba(10, 22, 40, 0.55) 50%,
+    rgba(10, 22, 40, 0.80) 100%
+  );
+}
+
+/* ── Hero text ──────────────────────────────────────────────── */
+.ap-hero__content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  animation: ap-fadeUp 0.9s ease both;
+}
+
+@keyframes ap-fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ap-hero__title {
+  font-family: var(--ap-font-display);
+  font-size: clamp(2.6rem, 7vw, 5.5rem);
+  font-weight: 900;
+  color: var(--ap-white);
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.45);
+}
+
+.ap-hero__subtitle {
+  font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+  font-weight: 300;
+  color: var(--ap-white-70);
+  max-width: 560px;
+  margin: 0;
+  line-height: 1.65;
+}
+
+/* ── CTA button ─────────────────────────────────────────────── */
+.ap-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.75rem 2rem;
+  border: 1.5px solid var(--ap-teal);
+  border-radius: 999px;
+  color: var(--ap-white);
+  font-family: var(--ap-font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  background: rgba(30, 203, 225, 0.10);
+  backdrop-filter: blur(8px);
+  transition:
+    background var(--ap-transition),
+    box-shadow var(--ap-transition),
+    transform 0.2s ease;
+}
+
+.ap-hero__cta:hover,
+.ap-hero__cta:focus-visible {
+  background: rgba(30, 203, 225, 0.25);
+  box-shadow: 0 0 24px rgba(30, 203, 225, 0.40);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.ap-hero__cta-icon {
+  font-size: 0.8rem;
+  color: var(--ap-teal);
+}
+
+/* ── Bullet navigation ──────────────────────────────────────── */
+.ap-hero__bullets {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  gap: 0.55rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ap-hero__bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: none;
+  background: var(--ap-white-30);
+  cursor: pointer;
+  padding: 0;
+  transition:
+    width var(--ap-transition),
+    background var(--ap-transition);
+}
+
+/* Active bullet stretches into a pill and turns teal */
+.ap-hero__bullet--active {
+  width: 28px;
+  background: var(--ap-teal);
+}
+
+.ap-hero__bullet:hover {
+  background: var(--ap-teal-soft);
+}
+
+.ap-hero__bullet:focus-visible {
+  outline: 2px solid var(--ap-teal);
+  outline-offset: 3px;
+}
+
+/* ================================================================
+   OUR STORY SECTION
+   ================================================================ */
+.ap-story {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3rem;
+  max-width: var(--ap-max-width);
+  margin: 0 auto;
+  padding: 6rem 1.5rem;
+}
+
+.ap-story__inner {
+  flex: 1 1 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.ap-story__eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ap-teal);
+}
+
+.ap-story__heading {
+  font-family: var(--ap-font-display);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 700;
+  color: var(--ap-white);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.ap-story__body {
+  font-size: 1rem;
+  color: var(--ap-white-70);
+  line-height: 1.75;
+  margin: 0;
+  max-width: 480px;
+}
+
+
+
+/* Est. badge overlaid on the image */
+.ap-story__image-badge {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  background: var(--ap-teal);
+  color: var(--ap-blue-dark);
+  font-family: var(--ap-font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+}
+
+
+/* ================================================================
+   RESPONSIVE BREAKPOINTS
+   ================================================================ */
+
+/* ── Tablet (≤ 768px) ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ap-hero {
+    min-height: 480px;
+  }
+
+  .ap-story {
+    flex-direction: column;
+    padding: 4rem 1.25rem;
+  }
+
+  .ap-story__body {
+    max-width: 100%;
+  }
+
+  .ap-stats__item + .ap-stats__item::before {
+    display: none;  /* remove vertical dividers on small screens */
+  }
+
+  .ap-stats__item {
+    flex: 1 1 calc(50% - 1rem);
+    border-bottom: 1px solid var(--ap-white-30);
+  }
+
+  .ap-security {
+    flex-direction: column;
+    text-align: center;
+    padding: 4rem 1.25rem;
+  }
+
+  .ap-security__badges {
+    justify-content: center;
+  }
+
+  .ap-services {
+    padding: 4rem 1.25rem;
+  }
+
+  .ap-team {
+    padding: 4rem 1.25rem;
+  }
+
+  .ap-cta {
+    padding: 4rem 1.25rem;
+  }
+}
+
+/* ── Mobile (≤ 480px) ───────────────────────────────────────── */
+@media (max-width: 480px) {
+  .ap-hero__cta {
+    font-size: 0.88rem;
+    padding: 0.65rem 1.5rem;
+  }
+
+  .ap-stats__item {
+    flex: 1 1 100%;
+  }
+
+  .ap-services__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ap-team__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ap-security__visual {
+    width: 160px;
+    height: 160px;
+  }
+
+  .ap-security__ring--1 { width: 110px; height: 110px; }
+  .ap-security__ring--2 { width: 135px; height: 135px; }
+  .ap-security__ring--3 { width: 160px; height: 160px; }
+
+  .ap-security__shield {
+    width: 80px;
+    height: 80px;
+  }
+
+  .ap-security__shield-icon {
+    font-size: 2rem;
+  }
+}
+
+/* ── Reduced motion preference ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ap-hero__slide,
+  .ap-hero__cta,
+  .ap-hero__content,
+  .ap-security__shield,
+  .ap-security__ring,
+  .ap-services__card,
+  .ap-team__avatar-wrap {
+    animation: none;
+    transition: none;
+  }
+}

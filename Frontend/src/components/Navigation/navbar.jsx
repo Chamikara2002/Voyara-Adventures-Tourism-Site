@@ -5,22 +5,22 @@ import LanguageSwitcher from "../Navigation/language-switcher"; // ← NEW IMPOR
 // ── Navigation Menu Items ──────────────────────────────────────────────────
 // add menu section: Add or remove nav links here. Set `dropdown` for sub-items.
 const NAV_ITEMS = [
-  { label: "Home", href: "#" },
-  { label: "About", href: "#" },
-  { label: "Service", href: "#" },
-  { label: "Packages", href: "#" },
-  { label: "Tours", href: "#" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Service", href: "/services" },
+  { label: "Packages", href: "/packages" },
+  { label: "Tours", href: "/tours" },
   {
     label: "Booking",
     href: "#",
     dropdown: [
-      { label: "Individual Booking", href: "#" },
-      { label: "Couple Booking", href: "#" },
-      { label: "Group Booking", href: "#" },
+      { label: "Individual Booking", href: "/booking/individual" },
+      { label: "Couple Booking", href: "/booking/couple" },
+      { label: "Group Booking", href: "/booking/group" },
     ],
   },
-  { label: "Itineraries", href: "#" },
-  { label: "Contact", href: "#" },
+  { label: "Itineraries", href: "/itineraries" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
