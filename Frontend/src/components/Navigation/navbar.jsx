@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import "../Navigation/navbar.css";
-import LanguageSwitcher from "../Navigation/language-switcher"; // ← NEW IMPORT
-
+import LanguageSwitcher from "../Navigation/language-switcher";
+import logo from "../../assets/Images/navbaricon.png";
+//import User from "../../assets/Icons/user.png";
 // ── Navigation Menu Items ──────────────────────────────────────────────────
 // add menu section: Add or remove nav links here. Set `dropdown` for sub-items.
 const NAV_ITEMS = [
@@ -28,7 +29,26 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState("Home"); // ── Tracks active nav item
+
+  // ── Derive active item from current URL pathname ──────────────────────────
+  const getActiveItem = () => {
+    const path = window.location.pathname;
+    for (const item of NAV_ITEMS) {
+      if (item.dropdown) {
+        if (item.dropdown.some((sub) => sub.href === path)) return item.label;
+      }
+      if (item.href === path) return item.label;
+      if (item.href === "/" && path === "/") return item.label;
+    }
+    // Fallback: match by first path segment
+    const segment = "/" + path.split("/").filter(Boolean)[0];
+    const match = NAV_ITEMS.find(
+      (item) => item.href === segment || item.dropdown?.some((s) => s.href.startsWith(segment))
+    );
+    return match ? match.label : "";
+  };
+
+  const activeItem = getActiveItem();
 
   const dropdownRef = useRef(null);
   const navRef = useRef(null);
@@ -111,7 +131,7 @@ export default function Navbar() {
         {/* add image: Replace src with your actual logo path e.g. "/assets/logo.png" */}
         <a href="#" className="vt-navbar__brand">
           <img
-            src="/assets/logo.png"
+            src={logo}
             alt="Voyara Tours lighthouse logo"
             className="vt-navbar__logo"
           />
@@ -120,7 +140,7 @@ export default function Navbar() {
         {/* ── DESKTOP NAV LINKS ── */}
         {/* add menu section: Desktop nav rendered from NAV_ITEMS array */}
         <div className="vt-navbar__nav-wrapper">
-          <span className="vt-navbar__nav-label">Navigation</span>
+          {/* <span className="vt-navbar__nav-label">Navigation</span> */}
           <ul className="vt-navbar__menu">
             {NAV_ITEMS.map((item) =>
               item.dropdown ? (
@@ -135,7 +155,6 @@ export default function Navbar() {
                     className={`vt-navbar__menu-link${activeItem === item.label ? " vt-navbar__menu-link--active" : ""}`}
                     onClick={(e) => {
                       handleBookingClick(e);
-                      setActiveItem(item.label);
                     }}
                     aria-haspopup="true"
                     aria-expanded={dropdownOpen}
@@ -176,7 +195,6 @@ export default function Navbar() {
                   <a
                     href={item.href}
                     className={`vt-navbar__menu-link${activeItem === item.label ? " vt-navbar__menu-link--active" : ""}`}
-                    onClick={() => setActiveItem(item.label)}
                   >
                     {item.label}
                   </a>
@@ -190,7 +208,7 @@ export default function Navbar() {
         {/* add image: Replace src with dynamic user avatar or a static placeholder */}
         <div className="vt-navbar__profile">
           <img
-            src="/assets/avatar.png"
+            src={logo}
             alt="User profile"
             className="vt-navbar__avatar"
           />

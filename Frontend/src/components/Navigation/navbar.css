@@ -240,7 +240,7 @@
   width: var(--vt-avatar-size);
   height: var(--vt-avatar-size);
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: fill;
   border: 2px solid var(--vt-avatar-border);
   display: block;
   background-color: #3b3b4f; /* fallback if image missing */
