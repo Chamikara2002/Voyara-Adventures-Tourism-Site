@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "../Style/about-page.css";
+import "../Style/service-page.css";
 import png1 from "../assets/Images/png1.png";
 import png2 from "../assets/Images/png2.png";
 import png3 from "../assets/Images/png3.png";
@@ -344,7 +344,7 @@ export default function AboutPage() {
         </div>
 
         <div className="ap-hero__content">
-          <h1 className="ap-hero__title">About Us.</h1>
+          <h1 className="ap-hero__title">OUR SERVICES.</h1>
           <p className="ap-hero__subtitle">
             Seamless airport transfers and curated tours designed for the elite
             traveler.

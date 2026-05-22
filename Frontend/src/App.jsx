@@ -8,7 +8,9 @@ import {
 
 // Pages Imports
 import Home from "./Pages/home-page";
-import About from "./Pages/about-page";
+import Service from "./Pages/service-page";
+import Packages from "./Pages/packages-page";
+import Tour from "./Pages/tours-page";
 import Navbar from "./components/Navigation/navbar";
 import Footer from "./components/Footer/footer";
 
@@ -22,10 +24,10 @@ function AppContent() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        {/* <Route path="/services" element={<Services />} /> {/* ← මේ විදිහට routes හදාගන්න */} 
-        {/* <Route path="/packages" element={<Packages />} /> */}
-        {/* අනිත් routes ටිකත් මෙතනට දාන්න */}
+        <Route path="/services" element={<Service />} />
+        {/* <Route path="/about" element={<About />} />*/} 
+        <Route path="/packages" element={<Packages />} />
+        <Route path="/tours" element={<Tour />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Footer />
