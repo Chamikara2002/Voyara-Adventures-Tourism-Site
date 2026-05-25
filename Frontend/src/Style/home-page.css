@@ -3389,10 +3389,11 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
 .vt-section__header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1.75rem;
+  text-align: center;
 }
 
 .vt-section__title {
@@ -3402,6 +3403,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #111827;
   margin: 0;
   letter-spacing: -0.01em;
+  text-align: center;
 }
 
 /* -------------- Dark variant (used in Tour section) -------------- */
@@ -3509,6 +3511,9 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   flex-direction: column;
   gap: 0.6rem;
   flex: 1;
+  /* All breakpoints: text centered inside card */
+  align-items: center;
+  text-align: center;
 }
 
 .vt-card__title {
@@ -3518,6 +3523,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #111827;
   margin: 0;
   line-height: 1.3;
+  text-align: center;
 }
 
 .vt-card__readmore {
@@ -3527,7 +3533,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   text-decoration: none;
   letter-spacing: 0.02em;
   transition: color 0.2s ease;
-  align-self: flex-start;
+  align-self: center;
 }
 
 .vt-card__readmore:hover {
@@ -3625,6 +3631,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #111827;
   margin: 0 0 0.4rem;
   letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .vt-airport__title-highlight {
@@ -3637,6 +3644,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #6b7280;
   margin: 0;
   font-weight: 400;
+  text-align: center;
 }
 
 .vt-airport__subtitle-highlight {
@@ -3711,6 +3719,8 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   flex-direction: column;
   gap: 0.7rem;
   flex: 1;
+  align-items: center;
+  text-align: center;
 }
 
 .vt-airport__card-title {
@@ -3719,6 +3729,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   font-weight: 700;
   color: #111827;
   margin: 0;
+  text-align: center;
 }
 
 .vt-airport__card-desc {
@@ -3727,10 +3738,11 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #6b7280;
   line-height: 1.65;
   margin: 0;
+  text-align: center;
 }
 
 .vt-airport__card-btn {
-  align-self: flex-start;
+  align-self: center;
   font-family: "Lato", sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
@@ -3766,6 +3778,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #6b7280;
   margin: 0 0 0.35rem;
   letter-spacing: 0.04em;
+  text-align: center;
 }
 
 .vt-exclusive__title {
@@ -3776,6 +3789,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   margin: 0 0 0.4rem;
   line-height: 1.2;
   letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .vt-exclusive__noproblem {
@@ -3785,6 +3799,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #111827;
   margin: 0;
   letter-spacing: 0.02em;
+  text-align: center;
 }
 
 /* -------------- Feature cards row -------------- */
@@ -3846,7 +3861,16 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   grid-template-rows: repeat(2, auto);
 }
 
-/* -------------- Responsive — New Sections -------------- */
+/* =============================================================
+   RESPONSIVE CARD GRID — Breakpoint Map
+   Mobile  : < 768px   → 1 card  visible per row  (hide cards 2+)
+   Tablet  : 768–1023px → 2 cards visible per row  (hide card  3)
+   Desktop : ≥ 1024px  → 3 cards visible per row  (all shown)
+   Text is centered on every breakpoint.
+   No JS / logic changes — extra rendered cards hidden via CSS.
+   ============================================================= */
+
+/* -------------- Airport grid stacks at 900px -------------- */
 @media (max-width: 900px) {
   .vt-airport__grid {
     grid-template-columns: 1fr;
@@ -3854,58 +3878,177 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   }
 }
 
-@media (max-width: 768px) {
-  .vt-section {
-    padding: 2.25rem 1.25rem 2rem;
-  }
-
+/* -------------- TABLET  768px – 1023px  →  2 columns -------------- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* --- General card track: 2 cols, hide 3rd card --- */
   .vt-cards__track {
     grid-template-columns: repeat(2, 1fr);
   }
+  .vt-cards__track > .vt-card:nth-child(n+3) {
+    display: none;
+  }
 
+  /* --- Tour (two-row): 2 cols, hide cards 3–6 --- */
   .vt-cards__track--two-row {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
   }
+  .vt-cards__track--two-row > .vt-card:nth-child(n+3) {
+    display: none;
+  }
 
+  /* --- Exclusive feature track: 2 cols, hide 3rd card --- */
   .vt-exclusive__track {
     grid-template-columns: repeat(2, 1fr);
     max-width: 560px;
   }
+  .vt-exclusive__track > .vt-exclusive__card:nth-child(n+3) {
+    display: none;
+  }
 
+  /* --- Airport: 1 col stack --- */
+  .vt-airport__grid {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+  }
+
+  /* --- Section padding --- */
+  .vt-section {
+    padding: 2.25rem 1.25rem 2rem;
+  }
   .vt-airport__card-body {
     padding: 1rem 1.1rem 1.25rem;
   }
-
   .vt-exclusive {
     padding: 2.5rem 1.25rem 2.25rem;
   }
+
+  /* --- Text center on tablet --- */
+  .vt-card__body {
+    align-items: center;
+    text-align: center;
+  }
+  .vt-card__readmore {
+    align-self: center;
+  }
+  .vt-airport__card-body {
+    align-items: center;
+    text-align: center;
+  }
+  .vt-airport__card-btn {
+    align-self: center;
+  }
+  .vt-itin__card-body {
+    align-items: center;
+    text-align: center;
+  }
+  .vt-section__header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 }
 
-@media (max-width: 520px) {
+/* -------------- MOBILE  < 768px  →  1 column -------------- */
+@media (max-width: 767px) {
+  /* --- Section layout --- */
+  .vt-section {
+    padding: 2.25rem 1.25rem 2rem;
+  }
   .vt-section__header {
     flex-direction: column;
     align-items: flex-start;
   }
-
   .vt-section__search-bar {
     width: 100%;
   }
+  .vt-airport__card-body {
+    padding: 1rem 1.1rem 1.25rem;
+  }
+  .vt-exclusive {
+    padding: 2.5rem 1.25rem 2.25rem;
+  }
+  .vt-exclusive__title {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+  }
 
+  /* --- General card track: 1 col, hide cards 2 & 3 --- */
   .vt-cards__track {
     grid-template-columns: 1fr;
   }
+  .vt-cards__track > .vt-card:nth-child(n+2) {
+    display: none;
+  }
 
+  /* --- Tour (two-row): 1 col, hide cards 2–6 --- */
   .vt-cards__track--two-row {
     grid-template-columns: 1fr;
   }
+  .vt-cards__track--two-row > .vt-card:nth-child(n+2) {
+    display: none;
+  }
 
+  /* --- Exclusive feature track: 1 col, hide cards 2 & 3 --- */
   .vt-exclusive__track {
     grid-template-columns: 1fr;
   }
+  .vt-exclusive__track > .vt-exclusive__card:nth-child(n+2) {
+    display: none;
+  }
 
-  .vt-exclusive__title {
-    font-size: clamp(1.3rem, 6vw, 1.8rem);
+  /* --- Text center on mobile --- */
+  .vt-card__body {
+    align-items: center;
+    text-align: center;
+  }
+  .vt-card__readmore {
+    align-self: center;
+  }
+  .vt-airport__card-body {
+    align-items: center;
+    text-align: center;
+  }
+  .vt-airport__card-btn {
+    align-self: center;
+  }
+  .vt-itin__card-body {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* -------------- DESKTOP / LARGE  ≥ 1024px  →  3 columns -------------- */
+@media (min-width: 1024px) {
+  .vt-cards__track {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .vt-cards__track--two-row {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+  }
+  .vt-exclusive__track {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 860px;
+  }
+
+  /* --- Text center on desktop / large screens --- */
+  .vt-card__body {
+    align-items: center;
+    text-align: center;
+  }
+  .vt-card__readmore {
+    align-self: center;
+  }
+  .vt-airport__card-body {
+    align-items: center;
+    text-align: center;
+  }
+  .vt-airport__card-btn {
+    align-self: center;
+  }
+  .vt-itin__card-body {
+    align-items: center;
+    text-align: center;
   }
 }
 
@@ -3929,6 +4072,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #111827;
   margin: 0;
   letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .vt-itin__title-highlight {
@@ -3987,6 +4131,8 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   flex-direction: column;
   gap: 0.55rem;
   flex: 1;
+  align-items: center;
+  text-align: center;
 }
 
 .vt-itin__card-title {
@@ -3996,6 +4142,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #111827;
   margin: 0;
   line-height: 1.3;
+  text-align: center;
 }
 
 .vt-itin__card-desc {
@@ -4004,6 +4151,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #6b7280;
   line-height: 1.65;
   margin: 0;
+  text-align: center;
 }
 
 /* -------------- Collect Moments Section -------------- */
@@ -4025,6 +4173,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #111827;
   margin: 0 0 0.6rem;
   letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .vt-moments__title-highlight {
@@ -4038,6 +4187,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   margin: 0 auto;
   max-width: 640px;
   line-height: 1.6;
+  text-align: center;
 }
 
 /* -------------- Scrolling image strip — 5 columns -------------- */
@@ -4121,6 +4271,8 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
+  align-items: center;
+  text-align: center;
 }
 
 .vt-enytk__row-title {
@@ -4131,6 +4283,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   margin: 0;
   letter-spacing: -0.01em;
   line-height: 1.2;
+  text-align: center;
 }
 
 .vt-enytk__row-title-highlight {
@@ -4144,6 +4297,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #111827;
   margin: 0;
   line-height: 1.3;
+  text-align: center;
 }
 
 .vt-enytk__row-desc,
@@ -4153,10 +4307,11 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #6b7280;
   line-height: 1.7;
   margin: 0;
+  text-align: center;
 }
 
 .vt-enytk__row-btn {
-  align-self: flex-start;
+  align-self: center;
   display: inline-flex;
   align-items: center;
   font-family: "Lato", sans-serif;
@@ -4224,6 +4379,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #ffffff;
   margin: 0 0 0.5rem;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  text-align: center;
 }
 
 .vt-enytk__banner-sub {
@@ -4233,6 +4389,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   margin: 0;
   line-height: 1.6;
   max-width: 640px;
+  text-align: center;
 }
 
 /* -------------- Discover the Soul — side-by-side CTA -------------- */
@@ -4251,6 +4408,8 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  align-items: center;
+  text-align: center;
 }
 
 .vt-enytk__soul-title {
@@ -4261,6 +4420,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   margin: 0;
   letter-spacing: -0.01em;
   line-height: 1.25;
+  text-align: center;
 }
 
 .vt-enytk__soul-highlight {
@@ -4273,10 +4433,11 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #6b7280;
   line-height: 1.7;
   margin: 0;
+  text-align: center;
 }
 
 .vt-enytk__soul-btn {
-  align-self: flex-start;
+  align-self: center;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -4341,6 +4502,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #111827;
   margin: 0 0 0.45rem;
   letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .vt-tales__sub {
@@ -4349,6 +4511,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #6b7280;
   margin: 0;
   line-height: 1.6;
+  text-align: center;
 }
 
 /* -------------- 3-column grid matching the design -------------- */
@@ -4425,6 +4588,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #111827;
   margin: 0;
   letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .vt-reviews__title-highlight {
@@ -4493,6 +4657,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   font-weight: 700;
   color: #111827;
   margin: 0;
+  text-align: center;
 }
 
 .vt-reviews__comment {
@@ -4501,6 +4666,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #6b7280;
   line-height: 1.55;
   margin: 0;
+  text-align: center;
 }
 
 .vt-reviews__date {
@@ -4509,6 +4675,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #9ca3af;
   margin: 0;
   letter-spacing: 0.02em;
+  text-align: center;
 }
 
 .vt-reviews__stars {
@@ -4528,7 +4695,15 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   color: #f59e0b;
 }
 
-/* -------------- Responsive — Additional Sections -------------- */
+/* =============================================================
+   RESPONSIVE — Itineraries, Moments, Tales, Reviews
+   Mobile  < 768px   : 1 card  (hide 2nd card for itin/moments/tales/reviews)
+   Tablet  768–1023px: 2 cards (hide 3rd for tales/reviews; itin 1-col)
+   Desktop ≥ 1024px  : default col counts (itin=2, moments=5, tales=3, reviews=3)
+   Text centered on all breakpoints.
+   ============================================================= */
+
+/* -------------- ENYTK stacks at 900px -------------- */
 @media (max-width: 900px) {
   .vt-enytk__row--img-left,
   .vt-enytk__row--img-right {
@@ -4552,21 +4727,44 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   }
 }
 
-@media (max-width: 768px) {
+/* -------------- TABLET  768px – 1023px -------------- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Itinerary: 1 col, show only 1 card */
   .vt-itin__track {
     grid-template-columns: 1fr;
   }
+  .vt-itin__track > .vt-itin__card:nth-child(n+2) {
+    display: none;
+  }
 
+  /* Moments: 3 cols, hide 4th & 5th images */
   .vt-moments__strip {
     grid-template-columns: repeat(3, 1fr);
   }
+  .vt-moments__strip > .vt-moments__img-wrap:nth-child(n+4) {
+    display: none;
+  }
 
+  /* Tales: 2 cols, hide 3rd card */
   .vt-tales__track {
     grid-template-columns: repeat(2, 1fr);
   }
+  .vt-tales__track > .vt-tales__card:nth-child(n+3) {
+    display: none;
+  }
 
+  /* Reviews: 2 cols, hide 3rd card */
   .vt-reviews__track {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .vt-reviews__track > .vt-reviews__card:nth-child(n+3) {
+    display: none;
+  }
+
+  /* Text center — itin card body */
+  .vt-itin__card-body {
+    align-items: center;
+    text-align: center;
   }
 
   .vt-enytk {
@@ -4574,19 +4772,41 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   }
 }
 
-@media (max-width: 520px) {
+/* -------------- MOBILE  < 768px -------------- */
+@media (max-width: 767px) {
+  /* Itinerary: 1 col, show only 1 card */
+  .vt-itin__track {
+    grid-template-columns: 1fr;
+  }
+  .vt-itin__track > .vt-itin__card:nth-child(n+2) {
+    display: none;
+  }
+
+  /* Moments: 2 cols, hide 3rd–5th images */
   .vt-moments__strip {
     grid-template-columns: repeat(2, 1fr);
   }
+  .vt-moments__strip > .vt-moments__img-wrap:nth-child(n+3) {
+    display: none;
+  }
 
+  /* Tales: 1 col, hide 2nd & 3rd card */
   .vt-tales__track {
     grid-template-columns: 1fr;
   }
+  .vt-tales__track > .vt-tales__card:nth-child(n+2) {
+    display: none;
+  }
 
+  /* Reviews: 1 col, hide 2nd & 3rd card */
   .vt-reviews__track {
     grid-template-columns: 1fr;
   }
+  .vt-reviews__track > .vt-reviews__card:nth-child(n+2) {
+    display: none;
+  }
 
+  /* Font sizes */
   .vt-itin__title,
   .vt-moments__title,
   .vt-tales__title,
@@ -4594,9 +4814,47 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
     font-size: clamp(1.3rem, 6vw, 1.8rem);
   }
 
+  /* Text center — itin card body */
+  .vt-itin__card-body {
+    align-items: center;
+    text-align: center;
+  }
+
   .vt-enytk__row {
     gap: 1.5rem;
     padding: 2rem 0;
+  }
+  .vt-enytk {
+    padding: 0 1.25rem 2.5rem;
+  }
+}
+
+/* -------------- DESKTOP  ≥ 1024px -------------- */
+@media (min-width: 1024px) {
+  /* Itinerary: 2 cols */
+  .vt-itin__track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Moments: 5 cols */
+  .vt-moments__strip {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  /* Tales: 3 cols */
+  .vt-tales__track {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Reviews: 3 cols */
+  .vt-reviews__track {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Text center — itin card body */
+  .vt-itin__card-body {
+    align-items: center;
+    text-align: center;
   }
 }
 
