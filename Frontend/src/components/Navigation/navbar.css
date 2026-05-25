@@ -1,0 +1,526 @@
+/* ── Design Tokens ───────────────────────────────────────────────────────── */
+.vt-navbar {
+  --vt-nav-bg: #2b2b2b;
+  --vt-nav-bg-hover: rgba(255, 255, 255, 0.07);
+  --vt-nav-text: #d4d4d4;
+  --vt-nav-text-hover: #ffffff;
+  --vt-nav-label: rgba(255, 255, 255, 0.35);
+  --vt-nav-active-underline: #a78bfa;
+  --vt-nav-border-bottom: rgba(255, 255, 255, 0.08);
+
+  /* Dropdown */
+  --vt-dropdown-bg: #1c1a2e;
+  --vt-dropdown-border: #6d4fc4;
+  --vt-dropdown-item-from: #7c3aed;
+  --vt-dropdown-item-to: #3b82f6;
+  --vt-dropdown-text: #ffffff;
+
+  /* Avatar */
+  --vt-avatar-size: 40px;
+  --vt-avatar-border: #7c3aed;
+
+  /* Mobile drawer */
+  --vt-drawer-width: 280px;
+  --vt-drawer-bg: #1e1e2e;
+  --vt-overlay-bg: rgba(0, 0, 0, 0.55);
+
+  /* Hamburger */
+  --vt-hamburger-color: #ffffff;
+  --vt-hamburger-line-h: 2px;
+  --vt-hamburger-gap: 5px;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--vt-nav-bg);
+  border-bottom: 1px solid var(--vt-nav-border-bottom);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+}
+
+/* ── Main container ──────────────────────────────────────────────────────── */
+.vt-navbar__container {
+  display: flex;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 72px;
+  gap: 0.5rem;
+  position: relative;
+}
+
+/* ── Logo / Brand ────────────────────────────────────────────────────────── */
+/* add image: logo image controlled here */
+.vt-navbar__brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.vt-navbar__logo {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  display: block;
+}
+
+/* ── Desktop Nav Wrapper ─────────────────────────────────────────────────── */
+.vt-navbar__nav-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-left: 1.25rem;
+}
+
+/* "Navigation" label above menu */
+.vt-navbar__nav-label {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--vt-nav-label);
+  text-transform: none;
+  margin-bottom: 2px;
+  padding-left: 0.25rem;
+  /* user-select: none; */
+}
+
+/* ── Desktop Menu List ───────────────────────────────────────────────────── */
+/* add menu section: ul holds all desktop nav items */
+.vt-navbar__menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.15rem;
+}
+
+/* ── Menu Item ───────────────────────────────────────────────────────────── */
+.vt-navbar__menu-item {
+  position: relative;
+}
+
+/* ── Menu Link ───────────────────────────────────────────────────────────── */
+.vt-navbar__menu-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--vt-nav-text);
+  text-decoration: none;
+  padding: 0.45rem 0.75rem;
+  border-radius: 4px;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.vt-navbar__menu-link:hover {
+  color: var(--vt-nav-text-hover);
+  background-color: var(--vt-nav-bg-hover);
+}
+
+/* Active / selected link (Booking) with underline */
+.vt-navbar__menu-link--active {
+  color: var(--vt-nav-text-hover);
+}
+
+.vt-navbar__menu-link--active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  /* border-top: 6px solid var(--vt-nav-active-underline); */
+}
+
+/* ── Caret arrow below active item ───────────────────────────────────────── */
+.vt-navbar__caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  margin-left: 2px;
+  transition: transform 0.2s ease;
+}
+
+.vt-navbar__menu-item--open .vt-navbar__caret {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown Panel ──────────────────────────────────────────────────────── */
+.vt-navbar__dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  background-color: var(--vt-dropdown-bg);
+  border: 1.5px solid var(--vt-dropdown-border);
+  border-radius: 8px;
+  min-width: 190px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-8px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s;
+  z-index: 200;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+}
+
+.vt-navbar__dropdown--open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Dropdown Item ───────────────────────────────────────────────────────── */
+.vt-navbar__dropdown-item {
+  list-style: none;
+}
+
+/* ── Dropdown Link — gradient pill buttons ───────────────────────────────── */
+.vt-navbar__dropdown-link {
+  display: block;
+  text-align: center;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--vt-dropdown-text);
+  text-decoration: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  background: linear-gradient(
+    90deg,
+    var(--vt-dropdown-item-from),
+    var(--vt-dropdown-item-to)
+  );
+  border: 1.5px solid rgba(100, 80, 200, 0.5);
+  transition:
+    filter 0.2s ease,
+    transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.vt-navbar__dropdown-link:hover {
+  filter: brightness(1.15);
+  transform: scale(1.03);
+}
+
+/* ── Profile Avatar ──────────────────────────────────────────────────────── */
+/* add image: avatar image controlled here */
+.vt-navbar__profile {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.vt-navbar__avatar {
+  width: var(--vt-avatar-size);
+  height: var(--vt-avatar-size);
+  border-radius: 50%;
+  object-fit: fill;
+  border: 2px solid var(--vt-avatar-border);
+  display: block;
+  background-color: #3b3b4f; /* fallback if image missing */
+}
+
+/* ── Hamburger Button (mobile only) ─────────────────────────────────────── */
+/* Mobile responsive: shown only on small screens, left side */
+.vt-navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--vt-hamburger-gap);
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.vt-navbar__hamburger:hover {
+  background-color: var(--vt-nav-bg-hover);
+}
+
+.vt-navbar__hamburger-line {
+  display: block;
+  width: 100%;
+  height: var(--vt-hamburger-line-h);
+  background-color: var(--vt-hamburger-color);
+  border-radius: 2px;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* Animate hamburger to X when open */
+.vt-navbar__hamburger--active .vt-navbar__hamburger-line:nth-child(1) {
+  transform: translateY(
+      calc(var(--vt-hamburger-gap) + var(--vt-hamburger-line-h))
+    )
+    rotate(45deg);
+}
+
+.vt-navbar__hamburger--active .vt-navbar__hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.vt-navbar__hamburger--active .vt-navbar__hamburger-line:nth-child(3) {
+  transform: translateY(
+      calc(-1 * (var(--vt-hamburger-gap) + var(--vt-hamburger-line-h)))
+    )
+    rotate(-45deg);
+}
+
+/* ── Mobile Drawer ───────────────────────────────────────────────────────── */
+/* Mobile responsive: slides in from left */
+.vt-navbar__mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--vt-drawer-width);
+  height: 100vh;
+  height: 100dvh;
+  background-color: var(--vt-drawer-bg);
+  z-index: 1100;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  padding: 1.5rem 1rem 2rem;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.vt-navbar__mobile-drawer--open {
+  transform: translateX(0);
+}
+
+/* ── Mobile Brand in Drawer ──────────────────────────────────────────────── */
+/* add image: mobile drawer logo */
+.vt-navbar__mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vt-navbar__mobile-logo {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.vt-navbar__mobile-brand-name {
+  font-family: "Georgia", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* ── Mobile Menu List ────────────────────────────────────────────────────── */
+/* add menu section: mobile menu list */
+.vt-navbar__mobile-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.vt-navbar__mobile-item {
+  list-style: none;
+}
+
+/* ── Mobile Links ────────────────────────────────────────────────────────── */
+.vt-navbar__mobile-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #cccccc;
+  text-decoration: none;
+  padding: 0.65rem 0.75rem;
+  border-radius: 6px;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.vt-navbar__mobile-link:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+}
+
+/* Booking toggle button caret */
+.vt-navbar__mobile-caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.vt-navbar__mobile-link--dropdown-open .vt-navbar__mobile-caret {
+  transform: rotate(180deg);
+}
+
+/* ── Mobile Submenu ──────────────────────────────────────────────────────── */
+.vt-navbar__mobile-submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 0.75rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.28s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.vt-navbar__mobile-submenu--open {
+  max-height: 200px;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+.vt-navbar__mobile-subitem {
+  list-style: none;
+}
+
+.vt-navbar__mobile-sublink {
+  display: block;
+  text-align: center;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.45rem 1rem;
+  border-radius: 50px;
+  background: linear-gradient(
+    90deg,
+    var(--vt-dropdown-item-from),
+    var(--vt-dropdown-item-to)
+  );
+  border: 1.5px solid rgba(100, 80, 200, 0.45);
+  transition: filter 0.2s ease;
+}
+
+.vt-navbar__mobile-sublink:hover {
+  filter: brightness(1.15);
+}
+
+/* ── Overlay (behind drawer) ─────────────────────────────────────────────── */
+.vt-navbar__overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--vt-overlay-bg);
+  z-index: 1050;
+  cursor: pointer;
+}
+
+/* ── Responsive Breakpoints ──────────────────────────────────────────────── */
+
+/* Desktop: show normal nav, hide hamburger */
+@media (min-width: 901px) {
+  .vt-navbar__hamburger {
+    display: none;
+  }
+
+  .vt-navbar__nav-wrapper {
+    display: flex;
+  }
+
+  .vt-navbar__mobile-drawer {
+    display: none;
+  }
+}
+
+/* Mobile: hide desktop nav, show hamburger on LEFT and avatar on RIGHT */
+@media (max-width: 900px) {
+  .vt-navbar__container {
+    justify-content: space-between;
+  }
+
+  /* Hamburger on the far left */
+  .vt-navbar__hamburger {
+    display: flex;
+    order: 0;
+  }
+
+  /* Logo centered */
+  .vt-navbar__brand {
+    order: 1;
+    flex: 1;
+    justify-content: center;
+  }
+
+  /* Profile avatar on far right */
+  .vt-navbar__profile {
+    order: 2;
+    margin-left: 0;
+  }
+
+  /* Hide desktop nav */
+  .vt-navbar__nav-wrapper {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .vt-navbar__container {
+    padding: 0 1rem;
+    height: 60px;
+  }
+
+  .vt-navbar__logo {
+    height: 44px;
+  }
+
+  .vt-navbar__avatar {
+    width: 34px;
+    height: 34px;
+  }
+}

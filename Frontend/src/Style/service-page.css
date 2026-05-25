@@ -1,0 +1,799 @@
+/* ============================================================
+   ABOUT PAGE — about-page.css
+   Fonts:  Montserrat (headings) · Lato (body) — same as home
+   Prefix: ap-  (about page)
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap");
+
+/* ── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --ap-teal:         #00bcd4;
+  --ap-teal-dark:    #0097a7;
+  --ap-dark:         #1a1a2e;
+  --ap-text:         #2c2c3e;
+  --ap-muted:        #5a5a72;
+  --ap-bg:           #ffffff;
+  --ap-off-white:    #f8f9fb;
+  --ap-border:       rgba(0, 0, 0, 0.08);
+
+  /* collage */
+  --ap-collage-radius:  18px;
+  --ap-collage-border:  3px;
+  --ap-collage-label-bg: rgba(72, 41, 120, 0.82);
+
+  /* spacing */
+  --ap-section-pad:  5rem 2rem;
+  --ap-block-gap:    4rem;
+}
+
+/* ── Page shell ─────────────────────────────────────────────── */
+.ap-page {
+  font-family: "Lato", sans-serif;
+  color: var(--ap-text);
+  background-color: var(--ap-bg);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ── Global accent colour helper ────────────────────────────── */
+.ap-accent-teal {
+  color: var(--ap-teal);
+}
+
+/* ============================================================
+   HERO SLIDESHOW
+   ============================================================ */
+.ap-hero {
+  position: relative;
+  width: 100%;
+  height: 93svh;
+  min-height: 480px;
+  overflow: hidden;
+}
+
+/* Slide stack */
+.ap-hero__slides {
+  position: absolute;
+  inset: 0;
+}
+
+.ap-hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.ap-hero__slide--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ap-hero__slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Gradient overlay */
+.ap-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(10, 15, 40, 0.6) 0%,
+    rgba(5, 10, 30, 0.25) 60%,
+    rgba(5, 10, 30, 0.5) 100%
+  );
+}
+
+/* Hero text */
+.ap-hero__content {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1.5rem 5rem;
+}
+
+.ap-hero__title {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.ap-hero__subtitle {
+  font-family: "Lato", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 540px;
+  line-height: 1.65;
+  margin: 0 0 2rem;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+.ap-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: "Lato", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, 0.18);
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  letter-spacing: 0.03em;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+.ap-hero__cta:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.85);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+}
+
+.ap-hero__cta:active {
+  transform: translateY(0);
+}
+
+.ap-hero__cta-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Dot bullets */
+.ap-hero__bullets {
+  position: absolute;
+  bottom: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ap-hero__bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background-color 0.35s ease,
+    width 0.35s ease;
+}
+
+.ap-hero__bullet--active {
+  width: 28px;
+  background-color: var(--ap-teal);
+}
+
+/* ============================================================
+   SHARED SECTION WRAPPERS
+   ============================================================ */
+.ap-why,
+.ap-fleet,
+.ap-airport,
+.ap-experts {
+  padding: var(--ap-section-pad);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Section header — centred block used by Why Choose Us */
+.ap-why__header,
+.ap-fleet__header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 3rem;
+}
+
+.ap-why__heading,
+.ap-fleet__heading {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: var(--ap-dark);
+  margin: 0 0 1rem;
+}
+
+.ap-why__heading-accent {
+  color: var(--ap-teal);
+}
+
+.ap-why__intro,
+.ap-fleet__intro {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--ap-muted);
+  margin: 0;
+}
+
+/* ── Divider between Why Choose Us blocks ───────────────────── */
+.ap-why__divider {
+  width: 100%;
+  max-width: 70rem;
+  height: 3px;
+  background: var(--ap-teal);
+  border-radius: 2px;
+  margin: 3.5rem auto;
+  opacity: 0.35;
+}
+
+/* Fleet hero image */
+.ap-fleet__img-wrap {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto 3rem;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+}
+
+.ap-fleet__img {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ============================================================
+   PHOTO COLLAGE WIDGET
+   Matches the Sri Lanka image grid shown in the screenshots
+   ============================================================ */
+.ap-collage {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  flex-shrink: 0;
+  /* Gradient stroke border via padding trick */
+  padding: var(--ap-collage-border);
+  border-radius: calc(var(--ap-collage-radius) + var(--ap-collage-border));
+  background: linear-gradient(135deg, var(--ap-teal) 0%, #9c27b0 100%);
+  box-shadow: 0 6px 32px rgba(0, 188, 212, 0.18), 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.ap-collage__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 130px);
+  gap: 3px;
+  border-radius: calc(var(--ap-collage-radius) - 1px);
+  overflow: hidden;
+  background-color: #000;
+}
+
+.ap-collage__cell {
+  overflow: hidden;
+  background-color: #1a1a2e;
+}
+
+.ap-collage__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.ap-collage__cell:hover .ap-collage__img {
+  transform: scale(1.06);
+}
+
+/* "Sri Lanka" label bar — sits over the middle row */
+.ap-collage__label {
+  position: absolute;
+  left: var(--ap-collage-border);
+  right: var(--ap-collage-border);
+  /* Vertically centred over the grid */
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--ap-collage-label-bg);
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+/* ============================================================
+   CONTENT BLOCK
+   Wraps one collage + copy row + the What We Offer list below
+   ============================================================ */
+.ap-content-block {
+  margin-bottom: var(--ap-block-gap);
+}
+
+/* ── Top row: collage on left, copy on right (default / ODD) ── */
+.ap-content-block__row {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+  margin-bottom: 3rem;
+}
+
+/* ── EVEN blocks: flip order so collage is on the right ──────── */
+.ap-content-block__row--reverse {
+  flex-direction: row-reverse;
+}
+
+/* Copy side */
+.ap-content-block__copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.ap-content-block__title {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+  font-weight: 800;
+  color: var(--ap-dark);
+  line-height: 1.2;
+  margin: 0 0 1.1rem;
+}
+
+.ap-content-block__body {
+  font-size: 1rem;
+  line-height: 1.78;
+  color: var(--ap-muted);
+  margin: 0;
+}
+
+/* ============================================================
+   WHAT WE OFFER LIST BLOCK
+   ============================================================ */
+.ap-offer-block {
+  max-width: 1100px;
+  margin: 0 auto;
+  border: 1.5px solid var(--ap-border);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  background-color: var(--ap-off-white);
+}
+
+.ap-offer-block__heading {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  color: var(--ap-dark);
+  text-align: center;
+  margin: 0 0 0.5rem;
+}
+
+.ap-offer-block__divider {
+  width: 50px;
+  height: 3px;
+  background: var(--ap-teal);
+  border-radius: 2px;
+  margin: 0 auto 2rem;
+}
+
+.ap-offer-block__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ap-offer-block__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/* Teal numbered circle */
+.ap-offer-block__num {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ap-teal) 0%, var(--ap-teal-dark) 100%);
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  box-shadow: 0 2px 8px rgba(0, 188, 212, 0.35);
+}
+
+.ap-offer-block__text {
+  font-size: 0.97rem;
+  line-height: 1.65;
+  color: var(--ap-text);
+}
+
+.ap-offer-block__item-title {
+  font-weight: 700;
+  color: var(--ap-dark);
+}
+
+.ap-offer-block__item-sep {
+  color: var(--ap-muted);
+}
+
+.ap-offer-block__item-body {
+  color: var(--ap-muted);
+}
+
+/* ============================================================
+   FLEET SLIDESHOW — full-width mid-page image strip
+   ============================================================ */
+/* ============================================================
+   FLEET SLIDESHOW — rounded banner box (Image 1 design)
+   ============================================================ */
+
+/* Outer wrapper — page-width padding, centres the banner */
+.ap-fleet-slideshow {
+  width: 100%;
+  padding: 3rem 2rem;
+  box-sizing: border-box;
+  background-color: var(--ap-bg);
+}
+
+/* The rounded dark banner box */
+.ap-fleet-slideshow__banner {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 420px;
+  background-color: #0d1b2a;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.22);
+}
+
+/* Slide stack — fills the banner box */
+.ap-fleet-slideshow__slides {
+  position: absolute;
+  inset: 0;
+}
+
+.ap-fleet-slideshow__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.ap-fleet-slideshow__slide--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ap-fleet-slideshow__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Dark overlay — heavier at bottom for text legibility */
+.ap-fleet-slideshow__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 10, 30, 0.18) 0%,
+    rgba(5, 10, 30, 0.28) 45%,
+    rgba(5, 10, 30, 0.72) 100%
+  );
+  z-index: 1;
+}
+
+/* Caption — centred over lower portion */
+.ap-fleet-slideshow__caption {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 15;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.ap-fleet-slideshow__caption-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.ap-fleet-slideshow__caption-sub {
+  font-family: "Lato", sans-serif;
+  font-size: clamp(0.78rem, 1.4vw, 0.95rem);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.82);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+  display: block;
+}
+
+/* Dot bullets */
+.ap-fleet-slideshow__bullets {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.ap-fleet-slideshow__bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50px;
+  background-color: #b0b8c8;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background-color 0.35s ease,
+    width 0.35s ease;
+}
+
+.ap-fleet-slideshow__bullet--active {
+  width: 28px;
+  background-color: var(--ap-teal);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* Large screen (1024px and up) */
+@media (min-width: 1024px) {
+  .ap-why,
+  .ap-fleet,
+  .ap-airport,
+  .ap-experts {
+    padding: 5rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ap-content-block__row {
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .ap-collage {
+    max-width: 460px;
+    flex-shrink: 0;
+  }
+
+  .ap-collage__grid {
+    grid-template-rows: repeat(2, 145px);
+  }
+
+  .ap-content-block__title {
+    font-size: 2.2rem;
+  }
+
+  .ap-content-block__body {
+    font-size: 1.05rem;
+  }
+
+  .ap-offer-block {
+    max-width: 900px;
+  }
+
+  .ap-why__header {
+    max-width: 800px;
+  }
+}
+
+/* Extra large screen (1440px and up) */
+@media (min-width: 1440px) {
+  .ap-why,
+  .ap-fleet,
+  .ap-airport,
+  .ap-experts {
+    padding: 2rem 4rem;
+    max-width: 1400px;
+  }
+
+  .ap-collage {
+    max-width: 520px;
+  }
+
+  .ap-collage__grid {
+    grid-template-rows: repeat(2, 160px);
+  }
+
+  .ap-offer-block {
+    max-width: 1000px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .ap-content-block__row,
+  .ap-content-block__row--reverse {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .ap-collage {
+    max-width: 100%;
+  }
+
+  .ap-collage__grid {
+    grid-template-rows: repeat(2, 110px);
+  }
+
+  .ap-why,
+  .ap-fleet,
+  .ap-airport,
+  .ap-experts {
+    padding: 3rem 1.5rem;
+  }
+
+  .ap-content-block__copy {
+    text-align: center;
+  }
+
+  .ap-fleet-slideshow {
+    padding: 1rem 1.5rem;
+  }
+
+  .ap-fleet-slideshow__banner {
+    min-height: 320px;
+  }
+
+  .ap-fleet-slideshow__caption-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+  .ap-hero {
+    height: 95svh;
+    min-height: 420px;
+  }
+
+  .ap-hero__title {
+    font-size: clamp(1.8rem, 9vw, 2.6rem);
+  }
+
+  .ap-hero__subtitle {
+    font-size: 0.9rem;
+  }
+
+  .ap-hero__bullet {
+    width: 8px;
+    height: 8px;
+  }
+
+  .ap-hero__bullet--active {
+    width: 22px;
+  }
+
+  .ap-collage {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .ap-collage__grid {
+    grid-template-rows: repeat(2, 90px);
+  }
+
+  .ap-collage__label {
+    font-size: 1.05rem;
+    padding: 0.55rem 0.75rem;
+  }
+
+  .ap-offer-block {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .ap-offer-block__num {
+    width: 26px;
+    height: 26px;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .ap-offer-block__text {
+    font-size: 0.9rem;
+  }
+
+  .ap-why,
+  .ap-fleet,
+  .ap-airport,
+  .ap-experts {
+    padding: 2.5rem 1rem;
+  }
+
+  .ap-why__divider {
+    margin: 2rem auto;
+  }
+
+  .ap-fleet-slideshow {
+    padding: 1.5rem 1rem;
+  }
+
+  .ap-fleet-slideshow__banner {
+    min-height: 240px;
+    border-radius: 14px;
+  }
+
+  .ap-fleet-slideshow__caption-title {
+    font-size: 1.2rem;
+  }
+
+  .ap-fleet-slideshow__caption-sub {
+    font-size: 0.72rem;
+  }
+
+  .ap-fleet-slideshow__bullet {
+    width: 8px;
+    height: 8px;
+  }
+
+  .ap-fleet-slideshow__bullet--active {
+    width: 22px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ap-hero__slide {
+    transition: opacity 0.3s ease;
+  }
+
+  .ap-fleet-slideshow__slide {
+    transition: opacity 0.3s ease;
+  }
+
+  .ap-collage__img {
+    transition: none;
+  }
+
+  .ap-hero__cta {
+    transition: none;
+  }
+}
