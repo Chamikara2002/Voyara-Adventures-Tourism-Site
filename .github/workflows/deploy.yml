@@ -9,7 +9,7 @@ jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
-
+    
     defaults:
       run:
         working-directory: ./Frontend
@@ -35,5 +35,5 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./Frontend/dist/
+        local-dir: ./Frontend/dist/ 
         server-dir: /voyaratours.com/
