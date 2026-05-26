@@ -1051,7 +1051,7 @@
 }
 
 .pkg-comfort__accent {
-  color: #e879f9;
+  color: var(--pkg-blue-bright);
 }
 
 .pkg-comfort__track-wrap {
@@ -1068,7 +1068,7 @@
   border-radius: 50%;
   border: 1.5px solid rgba(232, 121, 249, 0.4);
   background: var(--pkg-white);
-  color: #e879f9;
+  color: var(--pkg-blue-bright);
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
@@ -1216,7 +1216,7 @@
   height: 0.55rem;
   border-radius: 50%;
   border: none;
-  background: rgba(232, 121, 249, 0.25);
+  background: rgba(56, 191, 255, 0.25);
   cursor: pointer;
   transition:
     background var(--pkg-transition),
@@ -1225,7 +1225,7 @@
 }
 
 .pkg-comfort__dot--active {
-  background: #e879f9;
+  background: #38bfff;
   transform: scale(1.3);
 }
 
@@ -1643,7 +1643,7 @@
 @media (max-width: 480px) {
   /* Hero */
   .pkg-hero {
-    min-height: 85svh;
+    min-height: 93svh;
   }
   .pkg-hero__content {
     padding: 1.5rem 1rem;
@@ -1783,7 +1783,7 @@
 /* ---- Large Mobile (481px – 767px) ---- */
 @media (min-width: 481px) and (max-width: 767px) {
   .pkg-hero {
-    min-height: 80svh;
+    min-height: 93svh;
   }
 
   .pkg-provinces__track {
@@ -1832,7 +1832,7 @@
 /* ---- Tablet (768px – 1023px) ---- */
 @media (min-width: 768px) and (max-width: 1023px) {
   .pkg-hero {
-    min-height: 75svh;
+    min-height: 93svh;
   }
 
   .pkg-provinces__track {

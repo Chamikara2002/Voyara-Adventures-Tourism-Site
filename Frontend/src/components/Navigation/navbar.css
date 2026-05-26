@@ -490,16 +490,23 @@
     order: 0;
   }
 
-  /* Logo centered */
+  /* Logo centered — hidden on mobile/tablet */
   .vt-navbar__brand {
     order: 1;
     flex: 1;
     justify-content: center;
+    display: none;
   }
 
-  /* Profile avatar on far right */
-  .vt-navbar__profile {
+  /* Language switcher: push everything to the right */
+  .vt-lang {
     order: 2;
+    margin-left: auto;
+  }
+
+  /* Profile avatar: last on the right */
+  .vt-navbar__profile {
+    order: 3;
     margin-left: 0;
   }
 
@@ -517,6 +524,7 @@
 
   .vt-navbar__logo {
     height: 44px;
+    display: none;
   }
 
   .vt-navbar__avatar {
