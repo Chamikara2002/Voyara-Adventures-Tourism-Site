@@ -13,6 +13,7 @@ import About from "./Pages/about-page";
 import Service from "./Pages/service-page";
 import Packages from "./Pages/packages-page";
 import Tour from "./Pages/tours-page";
+import Contact from "./Pages/contact-page";
 import Navbar from "./components/Navigation/navbar";
 import Footer from "./components/Footer/footer";
 
@@ -40,6 +41,7 @@ function AppContent() {
         <Route path="/about" element={<About />} /> 
         <Route path="/packages" element={<Packages />} />
         <Route path="/tours" element={<Tour />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Footer />
