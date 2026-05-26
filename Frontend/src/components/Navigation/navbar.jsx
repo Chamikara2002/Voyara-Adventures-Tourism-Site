@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
 import "../Navigation/navbar.css";
 import LanguageSwitcher from "../Navigation/language-switcher";
 import logo from "../../assets/Images/navbaricon.png";
@@ -32,10 +31,8 @@ export default function Navbar() {
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
 
   // ── Derive active item from current URL pathname ──────────────────────────
-  const location = useLocation();
-
   const getActiveItem = () => {
-    const path = location.pathname;
+    const path = window.location.pathname;
     for (const item of NAV_ITEMS) {
       if (item.dropdown) {
         if (item.dropdown.some((sub) => sub.href === path)) return item.label;
@@ -132,13 +129,15 @@ export default function Navbar() {
 
         {/* ── CENTER-LEFT: Logo + Brand ── */}
         {/* add image: Replace src with your actual logo path e.g. "/assets/logo.png" */}
-        <Link to="/" className="vt-navbar__brand">
+        <a href="#" className="vt-navbar__brand">
           <img
             src={logo}
             alt="Voyara Tours lighthouse logo"
             className="vt-navbar__logo"
           />
-        </Link>
+        </a>
+
+        {/* ── DESKTOP NAV LINKS ── */}
         {/* add menu section: Desktop nav rendered from NAV_ITEMS array */}
         <div className="vt-navbar__nav-wrapper">
           {/* <span className="vt-navbar__nav-label">Navigation</span> */}
@@ -178,14 +177,14 @@ export default function Navbar() {
                         className="vt-navbar__dropdown-item"
                         role="none"
                       >
-                        <Link
-                          to={sub.href}
+                        <a
+                          href={sub.href}
                           className="vt-navbar__dropdown-link"
                           role="menuitem"
                           onClick={handleDropdownLinkClick}
                         >
                           {sub.label}
-                        </Link>
+                        </a>
                       </li>
                     ))}
                   </ul>
@@ -193,12 +192,12 @@ export default function Navbar() {
               ) : (
                 // ── Regular nav item ──────────────────────────────────────
                 <li key={item.label} className="vt-navbar__menu-item">
-                  <Link
-                    to={item.href}
+                  <a
+                    href={item.href}
                     className={`vt-navbar__menu-link${activeItem === item.label ? " vt-navbar__menu-link--active" : ""}`}
                   >
                     {item.label}
-                  </Link>
+                  </a>
                 </li>
               ),
             )}
@@ -264,26 +263,26 @@ export default function Navbar() {
                 >
                   {item.dropdown.map((sub) => (
                     <li key={sub.label} className="vt-navbar__mobile-subitem">
-                      <Link
-                        to={sub.href}
+                      <a
+                        href={sub.href}
                         className="vt-navbar__mobile-sublink"
                         onClick={handleDropdownLinkClick}
                       >
                         {sub.label}
-                      </Link>
+                      </a>
                     </li>
                   ))}
                 </ul>
               </li>
             ) : (
               <li key={item.label} className="vt-navbar__mobile-item">
-                <Link
-                  to={item.href}
+                <a
+                  href={item.href}
                   className="vt-navbar__mobile-link"
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.label}
-                </Link>
+                </a>
               </li>
             ),
           )}
