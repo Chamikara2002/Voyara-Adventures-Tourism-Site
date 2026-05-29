@@ -4233,7 +4233,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   align-items: center;
   padding: 3rem 0;
   border-bottom: 1px solid #f3f4f6;
-  max-width: 1100px;
+  /* max-width: 1100px; */
   margin: 0 auto;
 }
 
@@ -4398,7 +4398,7 @@ Image: /assets/landmarks/aukana-silhouette.png  (transparent PNG) --------------
   grid-template-columns: 1fr 1fr;
   gap: 2.5rem;
   align-items: center;
-  max-width: 1100px;
+  /* max-width: 1100px; */
   margin: 3rem auto 0;
   padding-top: 1rem;
   border-top: 1px solid #f3f4f6;
