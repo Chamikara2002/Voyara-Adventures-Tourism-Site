@@ -11,15 +11,16 @@ const NAV_ITEMS = [
   { label: "Service", href: "/services" },
   { label: "Packages", href: "/packages" },
   { label: "Tours", href: "/tours" },
-  {
-    label: "Booking",
-    href: "#",
-    dropdown: [
-      { label: "Individual Booking", href: "/booking/individual" },
-      { label: "Couple Booking", href: "/booking/couple" },
-      { label: "Group Booking", href: "/booking/group" },
-    ],
-  },
+  { label: "Booking", href: "/booking" },
+  // {
+  //   label: "Booking",
+  //   href: "#",
+  //   dropdown: [
+  //     { label: "Individual Booking", href: "/booking/individual" },
+  //     { label: "Couple Booking", href: "/booking/couple" },
+  //     { label: "Group Booking", href: "/booking/group" },
+  //   ],
+  // },
   { label: "Itineraries", href: "/itineraries" },
   { label: "Contact", href: "/contact" },
 ];

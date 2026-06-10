@@ -11,6 +11,7 @@ import About from "./Pages/about-page";
 import Service from "./Pages/service-page";
 import Packages from "./Pages/packages-page";
 import Tour from "./Pages/tours-page";
+import Booking from "./Pages/booking-page";
 import Contact from "./Pages/contact-page";
 import WCButtons from "./components/Whatsapp-&-Chat-Bot/whatsapp-chat-bot";
 import ChatB from "./components/Chat-Bot/chat-bot-page";
@@ -18,16 +19,16 @@ import Navbar from "./components/Navigation/navbar";
 import Footer from "./components/Footer/footer";
 
 function AppContent() {
-
   return (
     <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Service />} />
-        <Route path="/about" element={<About />} /> 
+        <Route path="/about" element={<About />} />
         <Route path="/packages" element={<Packages />} />
         <Route path="/tours" element={<Tour />} />
+        <Route path="/booking" element={<Booking />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
