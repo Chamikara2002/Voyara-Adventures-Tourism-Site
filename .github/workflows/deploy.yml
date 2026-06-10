@@ -41,8 +41,9 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./Frontend/dist/ 
         server-dir: /voyaratours.com/
-        protocol: ftp 
+        protocol: ftps            #ftp 
         port: 21  
         state-name: .ftp-deploy-sync-state.json
         timeout: 900000              
         dangerous-clean-slate: false
+        log-level: verbose
