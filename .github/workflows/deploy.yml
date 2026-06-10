@@ -44,6 +44,6 @@ jobs:
         protocol: ftps            #ftp 
         port: 21  
         state-name: .ftp-deploy-sync-state.json
-        timeout: 900000              
-        dangerous-clean-slate: false
+        dangerous-clean-slate: true  
+        timeout: 900000
         log-level: verbose
